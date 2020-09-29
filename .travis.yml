@@ -9,6 +9,6 @@ deploy:
   provider: heroku
   api_key:
     secure: en6T3iH9K2NGYPYqnhc/SqrTWwpMoGXC0W0+2quld5FN6b/+eA7MxDf3vTbNg9sW+lfTz5CgZ4xqGYIENbweBA9H80ZCtsSwKGt0Jx5eMCz4g9pkUgvBJw3vFbCWkfGGbDgNk6ug7nJrw9tWuL4yOKwOe4lrhKInp9OUACkHhaiS4pw0gqTcaCnU7ujND0VgYGFsrSpr18Z7J51dAj4shkBYaAmynS1N2TgWtF+lBhqxPVKzXGJyVeKa3dR6uLYBbTSd8r1nK2bQnd06FiT0padrB79P18FLt+A8yZO+nrvsi4sfzT5MmDBTfO+bJGGuk0chetRf3WwwODiS/RdpTsLAc02n0F1OCfBAYolndGMY5oWfvfnbNko4ChoKM9mafcdeLYfaeqqPxAeoPiwUZlAVGEsrug3uVjKuWSMVqA/GLeGINwrzr5ZX5y6YSTgws3jmRXwFv9ZWv6ekyHG8fHV2rJ0mZekNlezF/JA1/4d3XNi7vvZRx+tCWBOwwu9GMwd51LALtgcY0v7menbTz2tEnTW1DKttlgcK+JQVkb6qSIfBuiScV31KQBc+x0ph0NQhYo2fuNZfCu64sTmjTj6kOy1UqV/AghqmIk5vIhZ7HqdHode+DtGUUp5fnjkOmGCHatYRFYDlFTr7IVi3ZoZXpF/iEZRDAezxHrwW/Tc=
-    app: tinyfunds
-    on:
-      repo: uva-cs3240-f20/project-1-32
+  app: tinyfunds
+  on:
+    repo: uva-cs3240-f20/project-1-32
