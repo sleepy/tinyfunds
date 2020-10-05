@@ -1,0 +1,32 @@
+{% load socialaccount %}
+{% load static %}
+<html>
+  <link rel="stylesheet" href="{% static 'tinyfunds/style.css' %}">
+  <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">
+  <head>
+    <title>Tinyfunds</title>
+  </head>
+  <body>
+      <div id="banner">
+          <h2>Welcome to our Donation App</h2>
+          <h1>Tinyfunds</h1>
+      </div>
+
+  {% if user.is_authenticated %}
+
+  <div id="user_info">
+      <h4>Welcome, {{ user.username }}!</h4>
+      <br><br>
+      Your email: {{ user.email}}
+      <br>
+      You are person #{{ user.id }} to register!
+  </div>
+  <form action="{% url 'account_logout' %}" method="get">
+  <button id="logout_button" class="btn-danger" action="submit">Logout</button>
+  </form>
+ 
+  {% else %}
+  <a class="page-scroll btn btn-xl" id="oauth-button" href="{% provider_login_url 'google' %}"></a>
+  {% endif %}
+  </body>
+</html>

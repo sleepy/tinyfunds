@@ -1,0 +1,40 @@
+body {
+    text-align: center !important;
+    align-content: center !important;
+    justify-content: center !important;
+    margin-top: 40px !important;
+    margin-left: auto;
+    margin-right: auto;
+    content:url('images/oauth.png')
+            url('images/oauth2.png');
+}
+h2 {
+}
+h1 {
+    color: green !important;
+}
+p {
+}
+
+#oauth-button {
+    width: 250px;
+    height: 60px;
+    margin-top: 50px;
+    border: 0;
+    background-image: url("images/oauth2.png");
+    background-size: 100%;
+    background-size: 250px auto;
+    cursor: pointer;
+}
+#oauth-button:hover{
+    background-image: url("images/oauth.png");
+}
+#user_info {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+#logout_button {
+    border-radius: 10px;
+    width: 120px;
+    height:50px;
+}
