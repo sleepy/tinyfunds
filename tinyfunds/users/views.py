@@ -23,10 +23,13 @@ def user(request, pk):
     if (request.method == "POST"):
         new_name = request.POST['name']
         new_bio = request.POST['bio']
+        new_pfp = request.POST['pfp']
         if new_name != "":
             user.name = new_name
         if new_bio != "":
             user.bio = new_bio
+        if new_pfp != "":
+            user.pfp = new_pfp
         user.save()
     return render(request, 'account/account.html', {
         'user': user,
