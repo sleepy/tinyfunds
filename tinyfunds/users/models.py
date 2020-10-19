@@ -20,14 +20,20 @@ class UserManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         return user
+
     def create_superuser(self, email, password, **extra_fields):
         user = self._create_user(email, password, True, True, **extra_fields)
         user.save(using=self._db)
         return user
 
+    def __str__(self):
+        return "gamerg8"
+
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=254, unique=True)
     name = models.CharField(max_length=254, null=True, blank=True)
+    bio = models.CharField(max_length=254, null=True, blank=True)
+    pfp = models.CharField(max_length=1024, null=False, blank=False, default="https://avatars2.githubusercontent.com/u/3195011?s=460&u=f421eadccb78b212d516b6b38cab7f2de97522e4&v=4")
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -42,3 +48,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_absolute_url(self):
         return "/users/%i/" % (self.pk)
+
+    def __str__(self):
+        return self.email
