@@ -10,6 +10,7 @@ from urllib.parse import parse_qs, urlparse
 
 #Django Imports
 from django.conf import settings
+from django.test import TestCase
 from django.contrib.auth.models import AnonymousUser, User
 from django.contrib.messages.middleware import MessageMiddleware
 from django.contrib.sessions.middleware import SessionMiddleware
@@ -17,17 +18,21 @@ from django.contrib.sites.models import Site
 from django.test.client import RequestFactory
 from django.test.utils import override_settings
 from django.urls import reverse
+from django.utils import timezone
 
-#AllAuth install at tinyfunds proj: env/bin/...ajango-allauth/allauth/.../socialaccount/tests.py
-from allauth.account import app_settings as account_settings
-from allauth.account.models import EmailAddress
-from allauth.account.utils import user_email, user_username
-from allauth.tests import MockedResponse, TestCase, mocked_response
-from allauth.utils import get_user_model
-from allauth.socialaccount import app_settings, providers
-from allauth.socialaccount.helpers import complete_social_login
-from allauth.socialaccount.models import SocialAccount, SocialApp, SocialLogin
-from allauth.socialaccount.views import signup
+#Model Imports
+from .models import Event
+
+# #AllAuth install at tinyfunds proj: env/bin/...ajango-allauth/allauth/.../socialaccount/tests.py
+# from allauth.account import app_settings as account_settings
+# from allauth.account.models import EmailAddress
+# from allauth.account.utils import user_email, user_username
+# from allauth.tests import MockedResponse, TestCase, mocked_response
+# from allauth.utils import get_user_model
+# from allauth.socialaccount import app_settings, providers
+# from allauth.socialaccount.helpers import complete_social_login
+# from allauth.socialaccount.models import SocialAccount, SocialApp, SocialLogin
+# from allauth.socialaccount.views import signup
 
 # A Generic test-class to ensure that manage.py testing is working and finds a file
 # Self:Note, tests must start with keyword test_name or they won't work
@@ -37,6 +42,13 @@ class FirstTest(TestCase):
         self.assertTrue("Hello" == "Hello")
         self.assertTrue("world" == "world")
         self.assertFalse(False) # yes, I actually just wrote this.
+
+class EventsTest(TestCase):
+    def test_create_event(self):
+        testevent = Event(event_title="New Event",pub_date=timezone.now())
+        testevent.save()
+        self.assertTrue(Event.objects.exists())
+
 
 
 ########### OUTDATED TEST CASES ##############
