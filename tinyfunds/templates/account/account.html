@@ -7,7 +7,7 @@
 {# Load CSS and JavaScript #}
 {% bootstrap_css %}
 {% bootstrap_javascript jquery='full' %}
-<!-- {% load socialaccount %}
+<!-- {% load socialaccount %} -->
 {% load static %} -->
 
 {# Display django.contrib.messages as Bootstrap alerts #}
@@ -53,14 +53,24 @@
     {% if user.is_authenticated %}
 
     <div id="user_info">
-        <h4>Welcome, {{ user.username }}!</h4>
+        <h4>Welcome, {{ user.name }}!</h4>
         <br><br>
         Your email: {{ user.email}}
         <br>
         You are person #{{ user.id }} to register!
+        <br>
+        Your bio:
+        {{ user.bio }}
+        <br>
     </div>
     <form action="{% url 'account_logout' %}" method="get">
         <button id="logout_button" class="btn-danger" action="submit">Logout</button>
+    </form>
+    <form action="{% url 'user' user.id %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="name" id="name" placeholder="Enter your name here..."><br><br>
+        <textarea type="text" rows="3" cols="5" name="bio" id="bio" placeholder="Enter your bio here..."></textarea><br>
+        <input type="submit" id="comment-button" class="btn" value="Update">
     </form>
 
     {% else %}
