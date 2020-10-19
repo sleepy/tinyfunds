@@ -1,0 +1,97 @@
+<!doctype html>
+
+{# Load the tag library #}
+{% load bootstrap4 %}
+{% load static %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+
+{% bootstrap_messages %}
+
+{# Display a form #}
+
+
+<link rel="stylesheet" href="{% static 'tinyfunds/style.css' %}">
+<link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">
+
+
+    <!-- <nav class="navbar navbar-expand-lg transparent navbar-inverse">
+      <div class="d-flex w-50 order-0">
+          <a class="navbar-brand" href="#"></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+      </div>
+      <div class="navbar-collapse collapse justify-content-center order-2" id="collapsingNavbar">
+          <ul class="navbar-nav">
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'home' %}">
+                      <font size="+5">
+                        <font color=rgba(0,0,0,0.4)>Explore</font>
+                      </font>
+                  </a>
+              </li>
+              <li class="navbar-text">
+                  <strong>
+                      <font size="+5">Tiny Funds</font>
+                  </strong>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'account' %}">
+                      <font size="+5">Account</font>
+                  </a>
+              </li>
+          </ul>
+      </div>
+      <span class="navbar-text small text-truncate mt-1 w-50 text-right order-1 order-md-last">CS 3240</span>
+  </nav> -->
+
+  <!--Navbar-->
+<nav class="navbar navbar-expand-lg">
+
+    <!-- Navbar brand -->
+    <a class="navbar-brand" href="#"><font size="+5"><strong>TinyFunds</strong></font></a>
+  
+    <!-- Collapse button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTF"
+      aria-controls="navbarTF" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarTF">
+  
+        {% block navbar %}
+      <!-- Links -->
+      <ul class="navbar-nav mr-auto justify-content-center">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'home' %}"><strong>Home</strong>></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"><strong>Explore</strong></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"><strong>Post</strong>></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'account' %}"><strong>Account</strong></a>
+          </li>
+      </ul>
+      {% endblock navbar %}
+      <!-- Links -->
+  
+      <form class="form-inline nav-search">
+        <div class="md-form my-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search..." aria-label="Search">
+        </div>
+      </form>
+    </div>
+    <!-- Collapsible content -->
+  
+  </nav>
+  <!--/.Navbar-->
+  {% block content %}{% endblock content %}
