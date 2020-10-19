@@ -33,4 +33,5 @@ def user(request, pk):
         user.save()
     return render(request, 'account/account.html', {
         'user': user,
+        'privileged': False,
     })

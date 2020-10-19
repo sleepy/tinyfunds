@@ -20,10 +20,14 @@ class UserManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         return user
+
     def create_superuser(self, email, password, **extra_fields):
         user = self._create_user(email, password, True, True, **extra_fields)
         user.save(using=self._db)
         return user
+
+    def __str__(self):
+        return "gamerg8"
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=254, unique=True)
@@ -44,3 +48,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_absolute_url(self):
         return "/users/%i/" % (self.pk)
+
+    def __str__(self):
+        return self.email

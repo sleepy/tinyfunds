@@ -7,7 +7,7 @@
 {# Load CSS and JavaScript #}
 {% bootstrap_css %}
 {% bootstrap_javascript jquery='full' %}
-<!-- {% load socialaccount %} -->
+<!-- {% load socialaccount %}
 {% load static %} -->
 
 {# Display django.contrib.messages as Bootstrap alerts #}
@@ -50,16 +50,15 @@
 </nav>
 
 <body>
-    {% if user.is_authenticated %}
-
     <div id="user_info">
-        {% if user.name != None %}
+    {% if privileged == False or privileged == None and user.is_authenticated %}
+        {% if user.name != None and user.name != "" %}
         <h4>Welcome, {{ user.name }}!</h4>
         {% else %}
         <h4>Welcome!</h4>
         {% endif %}
         <br><br>
-        Your email: {{ user.email}}
+        Your email: {{ user.email }}
         <br>
         You are person #{{ user.id }} to register!
         <br>
@@ -69,9 +68,8 @@
         Your image:
         <img src="{{ user.pfp }}">
     </div>
-    <form action="{% url 'account_logout' %}" method="get">
-        <button id="logout_button" class="btn-danger" action="submit">Logout</button>
-    </form>
+    {% endif %}
+    {% if privileged == None and user.is_authenticated %}
     <form action="{% url 'user' user.id %}" method="post">
         {% csrf_token %}
         <input type="text" name="name" id="name" placeholder="Enter your name here..."><br><br>
@@ -79,8 +77,12 @@
         <textarea type="text" rows="3" cols="5" name="bio" id="bio" placeholder="Enter your bio here..."></textarea><br>
         <input type="submit" id="comment-button" class="btn" value="Update">
     </form>
-
+    <form action="{% url 'account_logout' %}" method="get">
+        <button id="logout_button" class="btn-danger" action="submit">Logout</button>
+    </form>
     {% else %}
+    {% if privileged == None and not user.is_authenticated %}
     <a class="page-scroll btn btn-xl" id="oauth-button" href="{% provider_login_url 'google' %}"></a>
+    {% endif %}
     {% endif %}
 </body>

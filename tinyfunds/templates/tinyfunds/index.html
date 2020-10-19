@@ -41,7 +41,11 @@
                   </strong>
               </li>
               <li class="nav-item">
+                  {% if user != None %} 
                   <a class="nav-link" href="{% url 'account' %}">
+                  {% else %}
+                  <a class="nav-link" href="{% url 'account' %}">
+                  {% endif %}
                       <font size="+5">Account</font>
                   </a>
               </li>
@@ -54,14 +58,19 @@
 
     <body>
       <div class="col-md-12 text-center">
-        {% if comments_list %}
+        {% if user_list %}
         <ul class="list-group list-group-flush">
-          {% for c in comments_list %}
+          {% for user in user_list %}
           <br>
-          <li class="list-group-item" {{c.cname}}<br>{{c.cbody}}<br></li>
+          <li class="list-group-item"> 
+              <a class="nav-link" href="{% url 'user' user.id %}">
+                  <font size="+5">{{user.name}}</font>
+              </a>
+              <br>
+              {{user.bio}}
+              <br>
+          </li>
           {%endfor%}
-        </ul>
-        {%else%}
         <p>Nothing posted yet.</p>
         {%endif%}
       </div>
