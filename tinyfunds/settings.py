@@ -12,9 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
-if '/app' in os.environ['HOME']:
-    import django_heroku
-    django_heroku.settings(locals())
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -158,3 +156,6 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 AUTH_USER_MODEL = 'users.User'
+
+if '/app' in os.environ['HOME']:
+    django_heroku.settings(locals())
