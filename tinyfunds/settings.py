@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'tinyfunds',
+    'tinyfunds.users',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -134,6 +135,11 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+
 SITE_ID=1
 LOGIN_REDIRECT_URL = '/'
 
@@ -148,3 +154,5 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+
+AUTH_USER_MODEL = 'users.User'
