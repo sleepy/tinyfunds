@@ -1,19 +1,76 @@
+html {
+    background: url(/static/tinyfunds/images/bkg.png) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
 body {
+    background:#fff;
+    margin: 0;
+    padding: 0;
+    overflow:hidden;
     text-align: center !important;
     align-content: center !important;
     justify-content: center !important;
-    margin-top: 40px !important;
+    margin:0;
+    margin-top: 0px !important;
     margin-left: auto;
     margin-right: auto;
     content:url('images/oauth.png')
             url('images/oauth2.png');
 }
-h2 {
+
+html, body {
+    height: 100%;
 }
+
+img.bg {
+    /* Set rules to fill background */
+    min-height: 100%;
+    min-width: 1024px;
+
+    /* Set up proportionate scaling */
+    width: 100%;
+    height: auto;
+
+    /* Set up positioning */
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+
 h1 {
-    color: green !important;
+    margin:0px;
+    color: white !important;
 }
-p {
+
+.nav-link {
+    color: rgba(229,81,74) !important;
+    padding: 0px;
+    }
+
+.navbar-brand {
+    background: url("images/logo.png") center / cover no-repeat;
+    width: 50px;
+    height: 50px;
+  }
+
+.navbar-text{
+    color:rgba(229,81,74) !important;
+    width: 350px;
+}
+.navbar.transparent.navbar-inverse .navbar-inner {
+    color: white !important;
+    border-width: 0px;
+    -webkit-box-shadow: 0px 0px;
+    box-shadow: 0px 0px;
+    background-color: rgba(0,0,0,0.0);
+    background-image: -webkit-gradient(linear, 50.00% 0.00%, 50.00% 100.00%, color-stop( 0% , rgba(0,0,0,0.00)),color-stop( 100% , rgba(0,0,0,0.00)));
+    background-image: -webkit-linear-gradient(270deg,rgba(0,0,0,0.00) 0%,rgba(0,0,0,0.00) 100%);
+    background-image: linear-gradient(180deg,rgba(0,0,0,0.00) 0%,rgba(0,0,0,0.00) 100%);
 }
 
 #oauth-button {
