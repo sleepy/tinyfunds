@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
 
+from .users import views as user_views
 from . import views
 
 urlpatterns = [
@@ -24,4 +25,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('account/', TemplateView.as_view(template_name="account/account.html"), name='account'),
+    path('user/<int:pk>/', user_views.user, name='user'),
 ]
