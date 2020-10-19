@@ -55,6 +55,16 @@ class UserModelTest(TestCase):
         self.assertTrue(newsuper in User.objects.filter(is_superuser=True))
         self.assertFalse(basicuser in User.objects.filter(is_superuser=True))
 
+        
+
+    def test_join_time(self):
+        newsuper = User(email="super@super.com",name="superman",bio="moderator for site",is_staff=True,is_superuser=True)
+        newsuper.save() # save superuser to SQL database
+
+        #creting a basic user without superuser permissions
+        basicuser = User(email="basic@email.com",name="normalman",bio="basic site user") # default values should not be a super user
+        basicuser.save()
+
         #Testing field creation timing
-        self.assertTrue(newsuper.date_joined < timezone.now()) 
-        self.assertTrue(newsuper.date_joined < basicuser.date_joined)
+        self.assertTrue(newsuper.date_joined < timezone.now()) #Time should exist
+        self.assertTrue(newsuper.date_joined < basicuser.date_joined) #superuser should have been created before the basic user
