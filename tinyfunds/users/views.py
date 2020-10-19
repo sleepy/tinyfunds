@@ -21,9 +21,9 @@ class AccountView(generic.DetailView):
 def user(request, pk):
     user = get_object_or_404(User, id=pk)
     if (request.method == "POST"):
-        new_name = request.POST['name']
-        new_bio = request.POST['bio']
-        new_pfp = request.POST['pfp']
+        new_name = request.POST['name'].strip()
+        new_bio = request.POST['bio'].strip()
+        new_pfp = request.POST['pfp'].strip()
         if new_name != "":
             user.name = new_name
         if new_bio != "":
