@@ -1,5 +1,5 @@
 <!doctype html>
-
+{% extends 'base.html' %}
 {# Load the tag library #}
 {% load bootstrap4 %}
 {% load static %}
@@ -12,59 +12,43 @@
 {% bootstrap_messages %}
 
 {# Display a form #}
-<link rel="stylesheet" href="{% static 'tinyfunds/style.css' %}">
+
+{% block title %}Tiny Funds{% endblock title %}
+
+
+{% block navbar %}
+<ul class="navbar-nav mr-auto justify-content-center">
+  <li class="nav-item">
+    <a class="nav-link active" href="{% url 'home' %}">Home</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Explore</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Post</a>
+  </li>
+  <li class="nav-item">
+      <a class="nav-link" href="{% url 'account' %}">Account</a>
+    </li>
+</ul>
+{% endblock navbar %}
+{% block content %}  
 <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">
-
-<body id="page-body">
-  <img class="bg" src="/static/tinyfunds/images/bkg.png">
-  <div class="wrapper">
-
-    <nav class="navbar navbar-expand-lg transparent navbar-inverse">
-      <div class="d-flex w-50 order-0">
-          <a class="navbar-brand" href="#"></a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
-              <span class="navbar-toggler-icon"></span>
-          </button>
-      </div>
-      <div class="navbar-collapse collapse justify-content-center order-2" id="collapsingNavbar">
-          <ul class="navbar-nav">
-              <li class="nav-item">
-                  <a class="nav-link" href="{% url 'home' %}">
-                      <font size="+5">
-                        <font color=rgba(0,0,0,0.4)>Explore</font>
-                      </font>
-                  </a>
-              </li>
-              <li class="navbar-text">
-                  <strong>
-                      <font size="+5">Tiny Funds</font>
-                  </strong>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="{% url 'account' %}">
-                      <font size="+5">Account</font>
-                  </a>
-              </li>
-          </ul>
-      </div>
-      <span class="navbar-text small text-truncate mt-1 w-50 text-right order-1 order-md-last">CS 3240</span>
-  </nav>
-
-    <title>Tiny Funds</title>
-
-    <body>
-      <div class="col-md-12 text-center">
-        {% if comments_list %}
-        <ul class="list-group list-group-flush">
-          {% for c in comments_list %}
-          <br>
-          <li class="list-groiup-item" <b>{{c.cname}}</b></b><br>{{c.cbody}}<br></li>
-          {%endfor%}
-        </ul>
-        {%else%}
-        <p>Nothing posted yet.</p>
-        {%endif%}
-      </div>
-    </body>
+<link rel="stylesheet" href="{% static 'tinyfunds/style.css' %}">
+<body>
+  <div class="col-md-12 text-center">
+    {% if comments_list %}
+    <ul class="list-group list-group-flush">
+      {% for c in comments_list %}
+      <br>
+      <li class="list-groiup-item" <b>{{c.cname}}</b></b><br>{{c.cbody}}<br></li>
+      {%endfor%}
+    </ul>
+    {%else%}
+    <p>Nothing posted yet.</p>
+    {%endif%}
   </div>
-</body>
+</body> 
+
+{% endblock content %}
+

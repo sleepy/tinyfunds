@@ -1,13 +1,6 @@
-html {
-    background: url(/static/tinyfunds/images/bkg.png) no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-}
-
 body {
-    background:#fff;
+    background:#f1f6f9;
+    color: #14274e !important;
     margin: 0;
     padding: 0;
     overflow:hidden;
@@ -22,55 +15,79 @@ body {
             url('images/oauth2.png');
 }
 
-html, body {
+
+
+html {
+    background: #f1f6f9;
     height: 100%;
 }
 
-img.bg {
-    /* Set rules to fill background */
-    min-height: 100%;
-    min-width: 1024px;
-
-    /* Set up proportionate scaling */
-    width: 100%;
-    height: auto;
-
-    /* Set up positioning */
-    position: fixed;
-    top: 0;
-    left: 0;
-}
-
-
 h1 {
     margin:0px;
-    color: white !important;
+    color: 14274e !important;
 }
 
 .nav-link {
-    color: rgba(229,81,74) !important;
+    color: #9ba4b4 ;
     padding: 0px;
+    text-decoration-color: aqua;
     }
 
+nav {
+    background: #f1f6f9;
+}
+
+.nav-link.active {
+    color:#14274e;
+}
+.nav-item {
+    color: white;
+}
+
 .navbar-brand {
-    background: url("images/logo.png") center / cover no-repeat;
-    width: 50px;
-    height: 50px;
-  }
+    color: #394867;
+}
 
 .navbar-text{
-    color:rgba(229,81,74) !important;
+    color:#394867 !important;
     width: 350px;
 }
-.navbar.transparent.navbar-inverse .navbar-inner {
-    color: white !important;
-    border-width: 0px;
-    -webkit-box-shadow: 0px 0px;
-    box-shadow: 0px 0px;
-    background-color: rgba(0,0,0,0.0);
-    background-image: -webkit-gradient(linear, 50.00% 0.00%, 50.00% 100.00%, color-stop( 0% , rgba(0,0,0,0.00)),color-stop( 100% , rgba(0,0,0,0.00)));
-    background-image: -webkit-linear-gradient(270deg,rgba(0,0,0,0.00) 0%,rgba(0,0,0,0.00) 100%);
-    background-image: linear-gradient(180deg,rgba(0,0,0,0.00) 0%,rgba(0,0,0,0.00) 100%);
+
+.navbar-nav.mr-auto.justify-content-center {
+    float: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.form-inline.nav-search {
+    float: right;
+    border: 0;
+    background: #f1f6f9;
+    color: #394867;
+    position: absolute;
+    top: 50%;
+    left: 90%;
+    transform: translate(-50%, -50%);
+}
+
+.form-control {
+    border: 0;
+}
+
+
+
+.form-control.mr-sm-2 {
+    background-color: #f1f6f9;
+    color:#394867;
+    border-color: #9ba4b4;
+    border-radius: 0;
+    border-bottom-width: 2px;
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom-style: solid;
 }
 
 #oauth-button {
