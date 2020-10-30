@@ -19,14 +19,14 @@
   <li class="nav-item">
     <a class="nav-link" href="{% url 'home' %}"><strong>Home</strong></a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link" href="{% url 'explore' %}"><strong>Explore</strong></a>
+  <li class="nav-item active">
+    <a class="nav-link active" href="{% url 'explore' %}"><strong>Explore</strong></a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="#"><strong>Post</strong></a>
   </li>
-  <li class="nav-item active">
-    <a class="nav-link active" href="{% url 'account' %}"><strong>Account</strong></a>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'account' %}"><strong>Account</strong></a>
   </li>
 </ul>
 {% endblock navbar %}
@@ -39,34 +39,25 @@
   <div class="row">
     <div class="col-sm-1">
     </div>
-    <div class="col-sm-3">
+    <div class="col-sm-2">
       <br>
-      {% if privileged == False or privileged == None and user.is_authenticated %}
-      {% if user.name != None and user.name != "" %}
-      <h4>{{ user.name }}</h4>
-      {% else %}
-      <h4>Welcome!</h4>
-      {% endif %}
+      <h4>{{ event.title }}</h4>
       <br>
-      <div class="pfpic"><img src="{{ user.pfp }}"></div>
-      {% endif %}
+      <div class="pfpic"><img src="{{ event.pic }}"></div>
       <br>
-      <form action="{% url 'editAccount' %}">
-        <input class="btn" type="submit" value="Edit Account" />
-    </form>
     </div>
-    <div class="col-sm-7">
+    <div class="col-sm-8">
       <br>
-      <h4>Bio</h4>
+      <h4>Event Description</h4>
       <p>
-        {{ user.bio }}
+        {{ event.info }}
       </p>
       <br><br>
       <h4>Info</h4>
       <p> 
-        Email: {{user.email }} 
+        Organizer: {{event.org_name }} 
         <br>
-        Date Joined: {{user.date_joined}}
+        Date: {{event.event_date}}
       </p>
     </div>
     <div class="col-sm-1">
@@ -74,8 +65,4 @@
   </div>
 </div>
 
-<body>
-  <div id="user_info">
-
-</body>
 {% endblock content %}
