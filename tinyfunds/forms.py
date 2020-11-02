@@ -7,5 +7,4 @@ class DateForm(forms.Form):
 class CreateEventForm(forms.ModelForm):
     class Meta:
         model = Event
-        fields = ['title', 'org_name', 'event_date', 'description']
-        
+        fields = ['title', 'org_name', 'event_date', 'description', 'pic']
