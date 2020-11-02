@@ -45,7 +45,7 @@
         {% if event.title != None and event.title != "" %}
         <br>
         <li class="list-group-item"> 
-            <a class="nav-link" href="{% url 'user' user.id %}">
+            <a class="nav-link" href="{% url 'event' event.id %}">
                 <font size="+5">{{event.title}}</font>
             </a>
             <br>
