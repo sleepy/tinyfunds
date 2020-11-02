@@ -32,6 +32,7 @@
 {% endblock navbar %}
 {% block content %}
 
+
 <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">
 <link rel="stylesheet" href="{% static 'account/style.css' %}">
 
@@ -64,5 +65,34 @@
     </div>
   </div>
 </div>
+
+{% ifequal event.owner_id user.id %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-1">
+    </div>
+    <div class="col-sm-1">
+    </div>
+    <div class="col-sm-8">
+      <br>
+      <form action="{% url 'edit_event' event.id %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="title" id="title" placeholder="Event Title..."><br><br>
+        <input type="text" name="org_name" id="org_name" placeholder="Organization Name..."><br><br>
+        <input type="text" name="event_date" id="event_date" placeholder="MM/DD/YYYY"><br><br>
+        <input type="text" name="pic" id="pic" placeholder="Enter your image url here..."><br><br>
+        <textarea type="text" rows="4" cols="30" name="info" id="description"
+            placeholder="Enter event description here..."></textarea><br>
+        
+          <input type="submit" id="comment-button" class="btn" value="Post">
+    </form>
+    </div>
+    <div class="col-sm-1">
+    </div>
+    <div class="col-sm-1">
+    </div>
+  </div>
+</div>
+{% endifequal %}
 
 {% endblock content %}

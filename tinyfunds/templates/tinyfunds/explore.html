@@ -35,11 +35,14 @@
 {% block content %}  
 <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">
 <link rel="stylesheet" href="{% static 'tinyfunds/style.css' %}">
+
 <body>
+    {% if user.id %}
     <div class="col-md-12 text-center">
         <form action="{% url 'create_event' %}">
             <input class="btn" type="submit" value="Post Event" />
         </form>
+    {% endif %}
     <ul class="list-group list-group-flush">
         {% for event in event_list %}
         {% if event.title != None and event.title != "" %}

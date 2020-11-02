@@ -61,14 +61,13 @@ class CreateEventView(CreateView):
 
 
 def event(request, pk):
-    template = 'tinyfunds/create_event.html'
-    event = get_object_or_404(Event, idnum=pk)
+    event = get_object_or_404(Event, id=pk)
 
     if (request.method == "POST"):
         new_title = request.POST['title'].strip()
         new_org_name = request.POST['org_name'].strip()
-        new_event_pic = request.POST['event_pic'].strip()
-        new_description = request.POST['description'].strip()
+        new_pic = request.POST['pic'].strip()
+        new_description = request.POST['info'].strip()
         new_event_date = request.POST['event_date'].strip()
         if new_title != "":
             event.title = new_title
@@ -76,9 +75,7 @@ def event(request, pk):
             event.description = new_description
         if new_org_name != "":
             event.org_name = new_org_name
-        if new_event_pic != "":
-            event.event_pic = new_event_pic
+        if new_pic != "":
+            event.pic = new_pic
         event.save()
-    return render(request, 'tinyfunds/event.html', {
-        'event': event,
-    })
+    return HttpResponseRedirect(reverse('event', args=[pk]))
