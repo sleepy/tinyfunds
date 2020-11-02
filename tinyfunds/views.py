@@ -4,10 +4,12 @@ from django.template import loader
 from .models import Event
 from .users.models import User
 from django.http import Http404
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import generic
+from django.views.generic.edit import CreateView
 from django.utils import timezone
 from django.shortcuts import render
+from .forms import CreateEventForm
 # from .forms import CommentsForm
 
 class HomeView(generic.ListView):
@@ -24,8 +26,9 @@ class ExploreView(generic.ListView):
     def get_queryset(self):
         return Event.objects.all()
 
+
 class EventView(generic.DetailView):
-    template_name = 'account/event.html'
+    template_name = 'tinyfunds/event.html'
     
     def get_queryset(self):
         """
@@ -33,8 +36,34 @@ class EventView(generic.DetailView):
         """
         return Event.objects
 
+class CreateEventView(CreateView):
+
+    template_name = 'tinyfunds/create_event.html'
+    form_class = CreateEventForm 
+
+
+    def get(self, request, *args, **kwargs):
+        context = {'form': CreateEventForm()}
+        return render(request, 'tinyfunds/create_event.html', context=context)
+    
+    def post(self, request, *args, **kwargs):
+        form = CreateEventForm(request.POST)
+        if form.is_valid():
+            event = form.save()
+            event.save()
+            return HttpResponseRedirect(reverse('event', args=[event.id]))
+        
+        return render(request, 'tinyfunds/create_event.html', {
+                'form':form,
+            })
+
+
+
+
 def event(request, pk):
+    template = 'tinyfunds/create_event.html'
     event = get_object_or_404(Event, idnum=pk)
+
     if (request.method == "POST"):
         new_title = request.POST['title'].strip()
         new_org_name = request.POST['org_name'].strip()
@@ -50,6 +79,6 @@ def event(request, pk):
         if new_event_pic != "":
             event.event_pic = new_event_pic
         event.save()
-    return render(request, 'tinyfunds/explore.html', {
+    return render(request, 'tinyfunds/event.html', {
         'event': event,
     })

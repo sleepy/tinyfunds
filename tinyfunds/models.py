@@ -3,13 +3,12 @@ import datetime
 from django.utils import timezone
 
 class Event(models.Model):
-    idnum = models.PositiveIntegerField(primary_key=True)
     title = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published')
+    pub_date = models.DateTimeField(auto_now_add=True)
     org_name = models.CharField(max_length=254, null=True, blank=True)
     description = models.CharField(max_length=254, null=True, blank=True)
     pic = models.CharField(max_length=1024, null=False, blank=False, default="https://avatars2.githubusercontent.com/u/3195011?s=460&u=f421eadccb78b212d516b6b38cab7f2de97522e4&v=4")
-    event_date = models.DateTimeField(auto_now_add=True)
+    event_date = models.DateTimeField(auto_now_add=False)
 
     def get_absolute_url(self):
         return "/events/%i/" % (self.pk)
