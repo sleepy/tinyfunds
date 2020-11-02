@@ -47,33 +47,33 @@ class EventsTest(TestCase):
     def test_create_event(self):
         self.assertFalse(Event.objects.exists()) # No objects currently exist
 
-        testevent = Event(event_title="New Event",pub_date=timezone.now())
+        testevent = Event(title="New Event",pub_date=timezone.now())
         testevent.save()
         self.assertTrue(Event.objects.exists()) # Event was created
 
     def test_event_publish_date(self):
-        old_event = Event(event_title="Old Event",pub_date=timezone.now()-datetime.timedelta(days=30))
+        old_event = Event(title="Old Event",pub_date=timezone.now()-datetime.timedelta(days=30))
         old_event.save() # save to SQL
 
-        self.assertTrue(Event.objects.filter(event_title="Old Event").exists()) #Event Exists
+        self.assertTrue(Event.objects.filter(title="Old Event").exists()) #Event Exists
         self.assertTrue(Event.objects.filter(pub_date__lte=timezone.now()).exists()) # Event is before or on today
         self.assertFalse(Event.objects.filter(pub_date__gte=timezone.now()).exists()) # Event is not on or before today
 
     def test_event_relative_publish_dates(self):
-        old_event = Event(event_title="Old Event",pub_date=timezone.now()-datetime.timedelta(days=30))
+        old_event = Event(title="Old Event",pub_date=timezone.now()-datetime.timedelta(days=30))
         old_event.save() # save to SQL
 
-        new_event = Event(event_title="New Event",pub_date=timezone.now()+datetime.timedelta(days=30))
+        new_event = Event(title="New Event",pub_date=timezone.now()+datetime.timedelta(days=30))
         new_event.save() # save to SQL
 
-        self.assertTrue(Event.objects.filter(event_title="Old Event").exists()) #Old Event Exists
-        self.assertTrue(Event.objects.filter(event_title="New Event").exists()) #New Event Exists
+        self.assertTrue(Event.objects.filter(title="Old Event").exists()) #Old Event Exists
+        self.assertTrue(Event.objects.filter(title="New Event").exists()) #New Event Exists
         
         # Manual Check
         self.assertTrue(old_event.pub_date < new_event.pub_date)
 
         #Database Check
-        self.assertTrue(Event.objects.filter(event_title="Old Event")[0].pub_date < Event.objects.filter(event_title="New Event")[0].pub_date)
+        self.assertTrue(Event.objects.filter(title="Old Event")[0].pub_date < Event.objects.filter(title="New Event")[0].pub_date)
 
 
 
