@@ -21,7 +21,14 @@ from django.urls import reverse
 from django.utils import timezone
 
 #Model Imports
-from .models import Event
+from django.apps import apps
+from .models import Event  # From Tinyfunds models
+User = apps.get_model('users','User') #Get User class from theu sers app
+
+#Django Testing Imports
+from django.test import Client
+from django.test.utils import setup_test_environment
+
 
 # #AllAuth install at tinyfunds proj: env/bin/...ajango-allauth/allauth/.../socialaccount/tests.py
 # from allauth.account import app_settings as account_settings
@@ -74,6 +81,61 @@ class EventsTest(TestCase):
 
         #Database Check
         self.assertTrue(Event.objects.filter(title="Old Event")[0].pub_date < Event.objects.filter(title="New Event")[0].pub_date)
+
+class VisitViewsTest(TestCase):
+    def test_home_view(self):
+        #setup_test_environment() #Prepares test envrionment with views
+        client = Client()        # Dummy Client for testing exploring pages
+        response = client.get(reverse('home'))
+        statcode = response.status_code
+        self.assertTrue(statcode == 200)  # Code 200 Means homepage loads okay!
+
+    def test_explore_view(self):
+        client = Client()        # Dummy Client for testing exploring pages
+        response = client.get(reverse('explore'))
+        statcode = response.status_code
+        self.assertTrue(statcode == 200)  # Code 200 Means explore index loads okay!
+
+    def test_account_view(self):
+        client = Client()        # Dummy Client for testing exploring pages
+        response = client.get(reverse('account'))
+        statcode = response.status_code
+        self.assertTrue(statcode == 200)  # Code 200 Means accounts page loads okay!
+
+    def test_account_edit_view(self):
+        client = Client()        # Dummy Client for testing exploring pages
+        response = client.get(reverse('editAccount'))
+        statcode = response.status_code
+        self.assertTrue(statcode == 200)  # Code 200 Means account edit page loads okay!
+
+    def test_create_event_view(self):
+        client = Client()        # Dummy Client for testing exploring pages
+        response = client.get(reverse('create_event'))
+        statcode = response.status_code
+        self.assertTrue(statcode == 200)  # Code 200 Means event creation page loads okay!
+
+    def test_user_page_view(self):
+        client = Client()        # Dummy Client for testing exploring pages
+        # Create some dummy User #
+        newuser = User(email="newuseremail@email.com", name="newuser's_name",bio="New User's Bio. I like Kittens.", is_staff=False, last_login=timezone.now())
+        newuser.save()
+        ############################
+        response = client.get(reverse('user', kwargs={'pk' : 1})) # First User's id.
+        statcode = response.status_code
+        self.assertTrue(statcode == 200)  # Code 200 Means user pages load okay!
+
+    def test_event_page_view(self):
+        client = Client()        # Dummy Client for testing exploring pages
+        # Create some dummy Users #
+        newuser = User(email="newuseremail@email.com", name="newuser's_name",bio="New User's Bio. I like Kittens.", is_staff=False, last_login=timezone.now())
+        newuser.save()
+        # Create a dummy Event #
+        testevent = Event(title="New Event",pub_date=timezone.now())
+        testevent.save()
+        ####################
+        response = client.get(reverse('event', kwargs={'pk' : 1})) # First Event key.
+        statcode = response.status_code
+        self.assertTrue(statcode == 200)  # Code 200 Means event pages load okay!
 
 
 
