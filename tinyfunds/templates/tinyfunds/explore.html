@@ -19,10 +19,10 @@
 {% block navbar %}
 <ul class="navbar-nav mr-auto justify-content-center">
   <li class="nav-item">
-    <a class="nav-link active" href="{% url 'home' %}"><strong>Home</strong></a>
+    <a class="nav-link" href="{% url 'home' %}"><strong>Home</strong></a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="{% url 'explore' %}"><strong>Explore</strong></a>
+    <a class="nav-link active" href="{% url 'explore' %}"><strong>Explore</strong></a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="#"><strong>Post</strong></a>
@@ -37,16 +37,19 @@
 <link rel="stylesheet" href="{% static 'tinyfunds/style.css' %}">
 <body>
     <div class="col-md-12 text-center">
+        <form action="{% url 'create_event' %}">
+            <input class="btn" type="submit" value="Post Event" />
+        </form>
     <ul class="list-group list-group-flush">
-        {% for user in user_list %}
-        {% if user.name != None and user.name != "" %}
+        {% for event in event_list %}
+        {% if event.title != None and event.title != "" %}
         <br>
         <li class="list-group-item"> 
             <a class="nav-link" href="{% url 'user' user.id %}">
-                <font size="+5">{{user.name}}</font>
+                <font size="+5">{{event.title}}</font>
             </a>
             <br>
-            {{user.bio}}
+            {{event.description}}
             <br>
         </li>
         {% endif %}
@@ -55,4 +58,3 @@
   </div>
 </body> 
 {% endblock content %}
-

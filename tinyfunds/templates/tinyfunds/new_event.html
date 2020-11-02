@@ -19,14 +19,14 @@
   <li class="nav-item">
     <a class="nav-link" href="{% url 'home' %}"><strong>Home</strong></a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link" href="{% url 'explore' %}"><strong>Explore</strong></a>
+  <li class="nav-item active">
+    <a class="nav-link active" href="{% url 'explore' %}"><strong>Explore</strong></a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="#"><strong>Post</strong></a>
   </li>
-  <li class="nav-item active">
-    <a class="nav-link active" href="{% url 'account' %}"><strong>Account</strong></a>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'account' %}"><strong>Account</strong></a>
   </li>
 </ul>
 {% endblock navbar %}
@@ -39,43 +39,26 @@
   <div class="row">
     <div class="col-sm-1">
     </div>
-    <div class="col-sm-3">
+    <div class="col-sm-1">
+    </div>
+    <div class="col-sm-8">
       <br>
-      {% if privileged == False or privileged == None and user.is_authenticated %}
-      {% if user.name != None and user.name != "" %}
-      <h4>{{ user.name }}</h4>
-      {% else %}
-      <h4>Welcome!</h4>
-      {% endif %}
-      <br>
-      <div class="pfpic"><img src="{{ user.pfp }}"></div>
-      {% endif %}
-      <br>
-      <form action="{% url 'editAccount' %}">
-        <input class="btn" type="submit" value="Edit Account" />
+      <form action="{% url 'event' %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="title" id="title" placeholder="Event Title..."><br><br>
+        <input type="text" name="org_name" id="org_name" placeholder="Organization Name..."><br><br>
+        <input type="text" name="event_date" id="event_date" placeholder="Event Date..."><br><br>
+        <textarea type="text" rows="4" cols="30" name="info" id="description"
+            placeholder="Enter event description here..."></textarea><br>
+        
+          <input type="submit" id="comment-button" class="btn" value="Post">
     </form>
     </div>
-    <div class="col-sm-7">
-      <br>
-      <h4>Bio</h4>
-      <p>
-        {{ user.bio }}
-      </p>
-      <br><br>
-      <h4>Info</h4>
-      <p> 
-        Email: {{user.email }} 
-        <br>
-        Date Joined: {{user.date_joined}}
-      </p>
+    <div class="col-sm-1">
     </div>
     <div class="col-sm-1">
     </div>
   </div>
 </div>
 
-<body>
-  <div id="user_info">
-
-</body>
 {% endblock content %}
