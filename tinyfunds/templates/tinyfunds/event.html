@@ -62,6 +62,9 @@
         <br>
         Location: {{event.address}}
       </p>
+        {% if user.id %}
+        <a href="{% url 'donate_event' event.id user.id %}">Donate to {{ event.title }}!</a>
+        {% endif %}
         {% ifequal event.owner_id user.id %}
         <button class=btn" onclick="toggleEdit()">Edit Event</button>
         <script>

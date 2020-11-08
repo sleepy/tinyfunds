@@ -1,0 +1,49 @@
+<!doctype html>
+{% extends 'base.html' %}
+{# Load the tag library #}
+{% load bootstrap4 %}
+{% load static %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+<!-- {% load socialaccount %}
+{% load static %} -->
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{# Display a form #}
+{% block navbar %}
+<ul class="navbar-nav mr-auto justify-content-center">
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'home' %}"><strong>Home</strong></a>
+  </li>
+  <li class="nav-item active">
+    <a class="nav-link active" href="{% url 'explore' %}"><strong>Explore</strong></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#"><strong>Post</strong></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'account' %}"><strong>Account</strong></a>
+  </li>
+</ul>
+{% endblock navbar %}
+{% block content %}
+
+
+<link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">
+<link rel="stylesheet" href="{% static 'account/style.css' %}">
+
+
+<h1>Donate to {{ event.title }}</h1>
+<br><br>
+{% ifequal user.id paying_user.id %}
+{{ form.render }}
+{% else %}
+<h4>Something has gone wrong...</h4>
+<a href=" {% url 'event' event.id %} ">Take me back to {{ event.title }}</a>
+{% endifequal %}
+
+{% endblock content %}
