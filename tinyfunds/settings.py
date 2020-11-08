@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'bootstrap4',
+    'paypal.standard.ipn',
 ]
 
 MIDDLEWARE = [
@@ -156,6 +157,7 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 AUTH_USER_MODEL = 'users.User'
+PAYPAL_TEST = True
 
 if '/app' in os.environ['HOME']:
     django_heroku.settings(locals())

@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls import url
 from django.views.generic import TemplateView
 
 from .users import views as user_views
@@ -31,4 +32,6 @@ urlpatterns = [
     path('user/<int:pk>/', user_views.user, name='user'),
     path('event/<int:pk>/', views.EventView.as_view(), name='event'),
     path('event/edit/<int:pk>/', views.event, name='edit_event'),
+    path('event/donate/<int:pk>/<int:user_id>', views.donate, name='donate_event'),
+    url(r'^paypal/', include('paypal.standard.ipn.urls')),
 ]

@@ -1,3 +1,5 @@
+import random
+
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
@@ -10,7 +12,7 @@ from django.views.generic.edit import CreateView
 from django.utils import timezone
 from django.shortcuts import render
 from .forms import CreateEventForm
-# from .forms import CommentsForm
+from paypal.standard.forms import PayPalPaymentsForm
 
 class HomeView(generic.ListView):
     template_name = 'tinyfunds/index.html'
@@ -59,8 +61,6 @@ class CreateEventView(CreateView):
             })
 
 
-
-
 def event(request, pk):
     event = get_object_or_404(Event, id=pk)
 
@@ -83,3 +83,26 @@ def event(request, pk):
             event.address = new_address
         event.save()
     return HttpResponseRedirect(reverse('event', args=[pk]))
+
+def donate(request, pk, user_id):
+    event = get_object_or_404(Event, id=pk)
+    user = get_object_or_404(User, id=user_id)
+    paypal_dict = {
+        "business": user.email,
+        "amount": "10000000.00",
+        "item_name": "donation for {}".format(event.title),
+        "invoice": "invoice{}".format(random.randint(1000000000,9999999999)),
+        "notify_url": request.build_absolute_uri(reverse('paypal-ipn')),
+        "return": request.build_absolute_uri(reverse('event', args=[pk])),
+        "cancel_return": request.build_absolute_uri(reverse('event', args=[pk])),
+    }
+
+    # Create the instance.
+    form = PayPalPaymentsForm(initial=paypal_dict)
+    context = {
+                "form": form,
+                "event": event,
+                "paying_user": user,
+            }
+    return render(request, "tinyfunds/payment.html", context)
+
