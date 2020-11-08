@@ -70,6 +70,7 @@ def event(request, pk):
         new_pic = request.POST['pic'].strip()
         new_description = request.POST['description'].strip()
         new_event_date = request.POST['event_date'].strip()
+        new_address = request.POST['address'].strip()
         if new_title != "":
             event.title = new_title
         if new_description != "":
@@ -78,5 +79,7 @@ def event(request, pk):
             event.org_name = new_org_name
         if new_pic != "":
             event.pic = new_pic
+        if new_address != "":
+            event.address = new_address
         event.save()
     return HttpResponseRedirect(reverse('event', args=[pk]))
