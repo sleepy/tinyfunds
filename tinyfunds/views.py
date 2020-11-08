@@ -55,6 +55,7 @@ class CreateEventView(CreateView):
         
         return render(request, 'tinyfunds/create_event.html', {
                 'form':form,
+                'invalid':True,
             })
 
 
@@ -67,7 +68,7 @@ def event(request, pk):
         new_title = request.POST['title'].strip()
         new_org_name = request.POST['org_name'].strip()
         new_pic = request.POST['pic'].strip()
-        new_description = request.POST['info'].strip()
+        new_description = request.POST['description'].strip()
         new_event_date = request.POST['event_date'].strip()
         if new_title != "":
             event.title = new_title

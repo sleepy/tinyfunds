@@ -1,4 +1,4 @@
-<!--tinyfunds/templates/tinyfunds/create_evente.html-->
+<!--tinyfunds/templates/tinyfunds/create_event.html-->
 <!doctype html>
 {% extends 'base.html' %}
 {# Load the tag library #}
@@ -51,10 +51,10 @@
         <input type="text" name="event_date" id="event_date" placeholder="MM/DD/YYYY"><br><br>
         <input type="text" name="pic" id="pic" placeholder="Enter your image url here..."><br><br>
         <input type="hidden" name="owner_id" id="owner_id" value="{{ user.id }}"><br><br>
-        <textarea type="text" rows="4" cols="30" name="info" id="description"
+        <textarea type="text" rows="4" cols="30" name="description" id="description"
             placeholder="Enter event description here..."></textarea><br>
         
-          <input type="submit" id="comment-button" class="btn" value="Post">
+          <input type="submit" class="btn" value="Post">
     </form>
     </div>
     <div class="col-sm-1">
@@ -63,5 +63,12 @@
     </div>
   </div>
 </div>
+<div style="margin-top: 20px;">
+  {% if invalid %}
+  <b style="color: red;">
+    One or more fields contains incomplete or invalid data
+  </b>
+</div>
+{% endif %}
 
 {% endblock content %}
