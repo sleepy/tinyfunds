@@ -10,6 +10,7 @@ class Event(models.Model):
     pic = models.CharField(max_length=1024, null=False, blank=False, default="https://avatars2.githubusercontent.com/u/3195011?s=460&u=f421eadccb78b212d516b6b38cab7f2de97522e4&v=4")
     event_date = models.DateTimeField(auto_now_add=False, null=True)
     owner_id = models.IntegerField(null=False, default=1)
+    location = models.CharField(max_length=254, null=True, blank=True)
 
     def get_absolute_url(self):
         return "/events/%i/" % (self.pk)
