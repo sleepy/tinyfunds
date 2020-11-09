@@ -11,6 +11,18 @@ class Event(models.Model):
     event_date = models.DateTimeField(auto_now_add=False, null=True)
     owner_id = models.IntegerField(null=False, default=1)
     address = models.CharField(max_length=1024, null=True) 
+    money_goal = models.DecimalField(max_digits=8, decimal_places=2, null=False, default=0)
+    money_received = models.DecimalField(max_digits=8, decimal_places=2, null=False, default=0)
+
+    def add_money(self, amount):
+        self.money_received+=amount
+
+    def money_remaining(self):
+        return self.money_goal-self.money_received
+
+    def surplus(self):
+        return (self.money_goal < self.money_received)
+    surplus.boolean = True
 
     def get_absolute_url(self):
         return "/events/%i/" % (self.pk)

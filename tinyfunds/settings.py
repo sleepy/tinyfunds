@@ -157,6 +157,9 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 AUTH_USER_MODEL = 'users.User'
+
+PAYPAL_RECEIVER_EMAIL = 'sb-p5rrv3690224@business.example.com'
+PAYPAL_RECIEVER_PASSWORD = 'QTWWLFE4M86FMXZJ'
 PAYPAL_TEST = True
 
 if '/app' in os.environ['HOME']:
