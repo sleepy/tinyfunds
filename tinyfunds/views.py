@@ -104,10 +104,14 @@ def confirm(request, pk):
     if (request.method == "POST"):
         p_id = Decimal(request.POST['p_id'].strip())
         p = get_object_or_404(Pledge, id=p_id)
+        u_id = Decimal(request.POST['u_id'].strip())
+        u = get_object_or_404(User, id=u_id)
         p.confirm()
         event.add_money(p.payment_amount)
+        u.add_money(p.payment_amount)
         p.save()
         event.save()
+        u.save()
     return HttpResponseRedirect(reverse('event', args=[pk]))
 
 def donate(request, pk, user_id):

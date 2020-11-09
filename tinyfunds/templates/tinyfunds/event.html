@@ -156,6 +156,7 @@
                 <form action="{% url 'confirm' event.id %}" method="post">
                   {% csrf_token %}
                   <input type="hidden" name="p_id" value="{{ pledge.id }}">
+                  <input type="hidden" name="u_id" value="{{ pledge.payer_id }}">
                   <input type="submit" class="btn" value="Confirm">
                 </form>
                 {% endif %}
