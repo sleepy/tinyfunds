@@ -5,6 +5,7 @@ from .models import UserManager, User  #from users directory, overloaded user te
 # Time mangement
 from django.utils import timezone
 import datetime
+import pdb
 
 
 """Basic test case to test our testing procedures"""
@@ -68,3 +69,133 @@ class UserModelTest(TestCase):
         #Testing field creation timing
         self.assertTrue(newsuper.date_joined < timezone.now()) #Time should exist
         self.assertTrue(newsuper.date_joined < basicuser.date_joined) #superuser should have been created before the basic user
+    
+    def test_abs_url(self):
+        basicuser = User(email="basic@email.com",name="normalman",bio="basic site user")
+        basicuser.save()
+        print(basicuser.get_absolute_url())
+        self.assertTrue(basicuser.get_absolute_url() == "/users/1/")
+
+        basicuser_2 = User(email="basic_1@email.com",name="normal",bio="basic site user second")
+        basicuser_2.save()
+        self.assertTrue(basicuser_2.get_absolute_url() == "/users/2/")
+    
+    def test_add_money_normal(self):
+        basicuser = User(email="basic@email.com",name="normalman",bio="basic site user")
+        basicuser.save()
+
+        basicuser.add_money(100)
+        self.assertTrue(basicuser.total_donated == 100)
+    
+    def test_add_money_negative(self):
+        basicuser = User(email="basic@email.com",name="normalman",bio="basic site user")
+        basicuser.save()
+
+        basicuser.add_money(-1)
+        self.assertTrue(basicuser.total_donated == 0)
+    
+    def test_get_level_one(self):
+        basicuser = User(email="basic@email.com",name="normalman",bio="basic site user")
+        basicuser.save()
+
+        basicuser.add_money(5)
+
+        self.assertTrue(basicuser.get_level() == 1)
+    
+    def test_get_level_two(self):
+        basicuser = User(email="basic@email.com",name="normalman",bio="basic site user")
+        basicuser.save()
+
+        basicuser.add_money(10)
+
+        self.assertTrue(basicuser.get_level() == 2)
+
+    
+    def test_get_level_three(self):
+        basicuser = User(email="basic@email.com",name="normalman",bio="basic site user")
+        basicuser.save()
+
+        basicuser.add_money(20)
+
+        self.assertTrue(basicuser.get_level() == 3)
+    
+    def test_get_level_four(self):
+        basicuser = User(email="basic@email.com",name="normalman",bio="basic site user")
+        basicuser.save()
+
+        basicuser.add_money(30)
+
+        self.assertTrue(basicuser.get_level() == 4)
+    
+    def test_get_level_color_one(self):
+        basicuser = User(email="basic@email.com",name="normalman",bio="basic site user")
+        basicuser.save()
+
+        self.assertTrue(basicuser.get_level_color() == "")
+
+    def test_get_level_color_two_to_four(self):
+        basicuser = User(email="basic@email.com",name="normalman",bio="basic site user")
+        basicuser.save()
+
+        basicuser.add_money(20)
+
+        self.assertTrue(basicuser.get_level_color() == "9,150,9")
+    
+    def test_get_level_color_two_to_four(self):
+        basicuser = User(email="basic@email.com",name="normalman",bio="basic site user")
+        basicuser.save()
+
+        basicuser.add_money(20)
+
+        self.assertTrue(basicuser.get_level_color() == "9,150,9") 
+
+    def test_get_level_color_five_to_nine(self):
+        basicuser = User(email="basic@email.com",name="normalman",bio="basic site user")
+        basicuser.save()
+        
+        basicuser.add_money(50)
+        
+        self.assertTrue(basicuser.get_level_color() == "24,150,24")
+    
+    def test_get_level_color_above_ten(self):
+        basicuser = User(email="basic@email.com",name="normalman",bio="basic site user")
+        basicuser.save()
+        
+        basicuser.add_money(100)
+        
+        self.assertTrue(basicuser.get_level_color() == "88,150,155")
+    
+    
+    
+
+
+
+
+    
+
+    
+    
+    
+
+
+
+
+
+    
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+    
