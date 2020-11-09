@@ -21,14 +21,14 @@ class HomeView(generic.ListView):
     content_object_name = 'user_list' 
 
     def get_queryset(self):
-        return User.objects.all()
+        return User.objects.all().order_by("-date_joined")
 
 class ExploreView(generic.ListView):
     template_name = 'tinyfunds/explore.html'
     content_object_name = 'event_list' 
 
     def get_queryset(self):
-        return Event.objects.all()
+        return Event.objects.all().order_by("-pub_date")
 
 
 class EventView(generic.DetailView):
