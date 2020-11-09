@@ -68,3 +68,5 @@ class UserModelTest(TestCase):
         #Testing field creation timing
         self.assertTrue(newsuper.date_joined < timezone.now()) #Time should exist
         self.assertTrue(newsuper.date_joined < basicuser.date_joined) #superuser should have been created before the basic user
+
+        # test comment
