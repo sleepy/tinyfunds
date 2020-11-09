@@ -7,6 +7,7 @@ import json
 import random
 import warnings
 from urllib.parse import parse_qs, urlparse
+from decimal import Decimal
 
 #Django Imports
 from django.conf import settings
@@ -22,8 +23,8 @@ from django.utils import timezone
 
 #Model Imports
 from django.apps import apps
-from .models import Event  # From Tinyfunds models
-User = apps.get_model('users','User') #Get User class from theu sers app
+from .models import Event, Pledge  # From Tinyfunds models
+User = apps.get_model('users','User') #Get User class from the users app
 
 #Django Testing Imports
 from django.test import Client
@@ -50,6 +51,8 @@ class FirstTest(TestCase):
         self.assertTrue("world" == "world")
         self.assertFalse(False) # yes, I actually just wrote this.
 
+#Comprehensive Testing for Events Model
+#Tests Event creation, sorting, and all functions
 class EventsTest(TestCase):
     def test_create_event(self):
         self.assertFalse(Event.objects.exists()) # No objects currently exist
@@ -81,6 +84,79 @@ class EventsTest(TestCase):
 
         #Database Check
         self.assertTrue(Event.objects.filter(title="Old Event")[0].pub_date < Event.objects.filter(title="New Event")[0].pub_date)
+
+    def test_money_mathself(self):
+        cheap_event = Event(title="I need 5 bucks",org_name="Slenderman",money_goal=5.00)
+        cheap_event.save() #A test Event with a set money goal
+
+        self.assertTrue(cheap_event.money_received == 0) # Make sure the event was prepped properly
+        self.assertTrue(cheap_event.money_remaining() == 5.00)
+        
+        #Check that is also works in database:
+        database_cheap_event = Event.objects.filter(title="I need 5 bucks")[0]
+        self.assertTrue(database_cheap_event.money_received == 0 and database_cheap_event.money_remaining() == 5.00)
+
+        database_cheap_event.add_money(Decimal('2.70')) # Simulating a pledge to test the add
+        self.assertAlmostEqual(database_cheap_event.money_received, Decimal('2.70'))
+        self.assertAlmostEqual(database_cheap_event.money_remaining(), Decimal('2.30'))
+        
+    def test_money_surplus(self):
+        cheap_event = Event(title="I need 5 bucks",org_name="Slenderman",money_goal=5.00)
+        cheap_event.save() #A test Event with a set money goal
+        database_cheap_event = Event.objects.filter(title="I need 5 bucks")[0]
+        database_cheap_event.add_money(Decimal('2.70')) # Simulating a pledge
+
+        self.assertFalse(database_cheap_event.surplus()) # there is no surplus yet
+        database_cheap_event.add_money(Decimal('3.50')) # add more money
+        self.assertTrue(database_cheap_event.surplus()) # There should now be a surplus of 1.20
+        
+        #double check the right surplus of 1.20
+        self.assertAlmostEqual(database_cheap_event.money_remaining(), Decimal('-1.20'))
+
+    def test_ordered_pledges(self):
+        #Basic Event Setup
+        cheap_event = Event(title="I need 5 bucks", org_name="Slenderman", money_goal=5.00)
+        cheap_event.save() #A test Event with a set money goal
+        database_cheap_event = Event.objects.filter(title="I need 5 bucks")[0]
+
+        self.assertAlmostEqual(database_cheap_event.money_remaining(), Decimal('5'))
+        
+        #Pledge Setups
+        poor_pledge = Pledge(event=database_cheap_event, payment_text='small', payment_amount=2) #2 dollars
+        poor_pledge.confirm() #assume user confirms it
+        poor_pledge.save()
+        database_cheap_event.pledge_set.add(poor_pledge)
+        database_cheap_event.add_money(poor_pledge.payment_amount) # Once confirmed, add value of pledge to the event total
+        self.assertAlmostEqual(database_cheap_event.money_remaining(), Decimal('3'))
+
+
+
+
+class PledgeModelTest(TestCase):
+    def test_create_pledge(self):
+        blandevent = Event(title="Blank Test Event",pub_date=timezone.now()) #Blank event for testing pledge connections
+        blandevent.save()
+        
+        self.assertFalse(Pledge.objects.exists())
+        newpledge = Pledge(event=blandevent, payment_text='a donation', payment_amount=5.65, confirmed=False) #blank test pledge
+        newpledge.save()
+
+        self.assertTrue(Pledge.objects.exists()) # The event exists
+        self.assertTrue(Pledge.objects.all()[0].id == newpledge.id) #Newpledge is the only pledge created (no duplicates)
+
+    def test_confirm_pledge(self):
+        blandevent = Event(title="Blank Test Event",pub_date=timezone.now()) #Blank event for testing pledge connections
+        blandevent.save()
+        
+        newpledge = Pledge(event=blandevent,payment_text='a donation',payment_amount=5.65,confirmed=False) #blank test pledge
+        newpledge.save()
+
+        self.assertFalse(Pledge.objects.filter(event=blandevent)[0].confirmed)  #Newpledge is not yet confirmed
+        newpledge.confirm() # Confirm the event as if visiting confirm view /event/pledge/{pk}/confirm
+        newpledge.save()
+        self.assertTrue(Pledge.objects.filter(event=blandevent)[0].confirmed) #Event is now confirmed by organizer
+        
+
 
 class VisitViewsTest(TestCase):
     def test_home_view(self):
