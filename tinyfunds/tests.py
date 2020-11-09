@@ -26,6 +26,11 @@ from django.apps import apps
 from .models import Event, Pledge  # From Tinyfunds models
 User = apps.get_model('users','User') #Get User class from the users app
 
+#Views imports
+from .users import views as user_views
+from . import views
+from .views import *
+
 #Django Testing Imports
 from django.test import Client
 from django.test.utils import setup_test_environment
@@ -113,7 +118,7 @@ class EventsTest(TestCase):
         #double check the right surplus of 1.20
         self.assertAlmostEqual(database_cheap_event.money_remaining(), Decimal('-1.20'))
 
-    def test_ordered_pledges(self):
+    def test_ordered_pledges_and_pledge_add(self):
         #Basic Event Setup
         cheap_event = Event(title="I need 5 bucks", org_name="Slenderman", money_goal=5.00)
         cheap_event.save() #A test Event with a set money goal
@@ -121,7 +126,7 @@ class EventsTest(TestCase):
 
         self.assertAlmostEqual(database_cheap_event.money_remaining(), Decimal('5'))
         
-        #Pledge Setups
+        #Pledge Setups & Testing
         poor_pledge = Pledge(event=database_cheap_event, payment_text='small', payment_amount=2) #2 dollars
         poor_pledge.confirm() #assume user confirms it
         poor_pledge.save()
@@ -129,7 +134,32 @@ class EventsTest(TestCase):
         database_cheap_event.add_money(poor_pledge.payment_amount) # Once confirmed, add value of pledge to the event total
         self.assertAlmostEqual(database_cheap_event.money_remaining(), Decimal('3'))
 
+        rich_pledge = Pledge(event=database_cheap_event, payment_text='big', payment_amount=10) #10 dollars
+        rich_pledge.confirm()
+        rich_pledge.save() # Save the rich pledge
+        database_cheap_event.pledge_set.add(rich_pledge)
+        database_cheap_event.add_money(rich_pledge.payment_amount)
 
+        #Pledge Order testing
+        self.assertTrue(database_cheap_event.ordered_pledges().count() == 2) # 2 pledges in the set
+        self.assertTrue(rich_pledge == database_cheap_event.ordered_pledges()[0]) # rich pledge is the most recent pledge (-date)
+        self.assertTrue(poor_pledge == database_cheap_event.ordered_pledges()[1]) # poor pledge is the oldest pledge
+
+    def test_goal_met(self):
+        goalevent = Event(title="10.40 dollar goal", org_name="moneylenders", money_goal=10.40)
+        goalevent.save() #A test Event with a set money goal
+        database_goalevent = Event.objects.filter(title="10.40 dollar goal")[0]
+        
+        #confirm proper setup:
+        self.assertAlmostEqual(database_goalevent.money_remaining(), Decimal('10.40'))
+        self.assertFalse(database_goalevent.met())
+
+        #confirm if goal is met or exceeded
+        database_goalevent.add_money(Decimal('10.40'))
+        self.assertTrue(database_goalevent.met())
+
+        database_goalevent.add_money(Decimal('20.00'))
+        self.assertTrue(database_goalevent.met()) # should still be true even above the goal.
 
 
 class PledgeModelTest(TestCase):
@@ -157,8 +187,13 @@ class PledgeModelTest(TestCase):
         self.assertTrue(Pledge.objects.filter(event=blandevent)[0].confirmed) #Event is now confirmed by organizer
         
 
-
 class VisitViewsTest(TestCase):
+    def setUp(self):
+        #Setup_Client for specific logins
+        self.factory = RequestFactory()
+        self.user = User.objects._create_user(
+             email='cooluser@email.com', password='top_secret',is_staff=True,is_superuser=True)
+
     def test_home_view(self):
         #setup_test_environment() #Prepares test envrionment with views
         client = Client()        # Dummy Client for testing exploring pages
@@ -212,6 +247,20 @@ class VisitViewsTest(TestCase):
         response = client.get(reverse('event', kwargs={'pk' : 1})) # First Event key.
         statcode = response.status_code
         self.assertTrue(statcode == 200)  # Code 200 Means event pages load okay!
+
+    def test_edit_event_page_view(self):
+        # Create a dummy Event #
+        testevent = Event(title="New Event",pub_date=timezone.now())
+        testevent.owner_id = self.user.id  # Force user to be the specific user
+        testevent.save()
+        ##################
+        request = self.factory.get(reverse('edit_event', kwargs={'pk' : 1})) #edit the one and only event request url
+        request.user = self.user  # The specific user should be able toaccess the event edit page
+        
+        response = event(request, 1)   # server's response
+        expected_url = reverse('event', kwargs={'pk' : 1})
+        #self.assertRedirects(response, expected_url, status_code=302, target_status_code=200, msg_prefix='', fetch_redirect_response=True)
+        # should redirect, optional fecth commant and target status code loads the next wepage
 
 
 

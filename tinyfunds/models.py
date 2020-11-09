@@ -21,7 +21,7 @@ class Event(models.Model):
         return self.money_goal-self.money_received
 
     def met(self):
-        return (self.money_goal == self.money_received)
+        return (self.money_goal <= self.money_received)
     met.boolean = True
 
     def surplus(self):
