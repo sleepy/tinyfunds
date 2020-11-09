@@ -22,14 +22,14 @@ class HomeView(generic.ListView):
     content_object_name = 'user_list' 
 
     def get_queryset(self):
-        return User.objects.all()
+        return User.objects.all().order_by("-date_joined")
 
 class ExploreView(generic.ListView):
     template_name = 'tinyfunds/explore.html'
     content_object_name = 'event_list' 
 
     def get_queryset(self):
-        return Event.objects.all()
+        return Event.objects.all().order_by("-pub_date")
 
 
 class EventView(generic.DetailView):
@@ -98,10 +98,23 @@ def pledge(request, pk):
         p = Pledge(event=event, payer_id=user_id, payment_text=payment_text, payment_amount=payment_amount)
         p.save()
         event.pledge_set.add(p)
-        event.add_money(payment_amount)
         event.save()
     return HttpResponseRedirect(reverse('event', args=[pk]))
 
+def confirm(request, pk):
+    event = get_object_or_404(Event, id=pk)
+    if (request.method == "POST"):
+        p_id = Decimal(request.POST['p_id'].strip())
+        p = get_object_or_404(Pledge, id=p_id)
+        u_id = Decimal(request.POST['u_id'].strip())
+        u = get_object_or_404(User, id=u_id)
+        p.confirm()
+        event.add_money(p.payment_amount)
+        u.add_money(p.payment_amount)
+        p.save()
+        event.save()
+        u.save()
+    return HttpResponseRedirect(reverse('event', args=[pk]))
 
 def donate(request, pk, user_id):
     event = get_object_or_404(Event, id=pk)

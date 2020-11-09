@@ -57,9 +57,8 @@
       <form action="{% url 'editAccount' %}">
         <input class="btn" type="submit" value="Edit Account" />
     </form>
-    {% endif %}
-  </div>
-    <div class="col-sm-7">
+    </div>
+    <div class="col-sm-7" id="user-box" style="border-color: rgb({{ user.get_level_color }})">
       <br>
       <h4>Bio</h4>
       <p>
@@ -71,6 +70,10 @@
         Email: {{user.email }} 
         <br>
         Date Joined: {{user.date_joined}}
+        <br>
+        Total Donated: {{user.total_donated}}
+        <br>
+        <p id="level" style="font-size: 18;color: rgb({{ user.get_level_color }})"> Level: {{user.get_level}}</p>
       </p>
     </div>
     <div class="col-sm-1">

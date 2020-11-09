@@ -39,6 +39,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     last_login = models.DateTimeField(null=True, blank=True)
     date_joined = models.DateTimeField(auto_now_add=True)
+    total_donated = models.DecimalField(max_digits=8, decimal_places=2, null=False, default=0)
 
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
@@ -48,6 +49,23 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_absolute_url(self):
         return "/users/%i/" % (self.pk)
+
+    def add_money(self, amount):
+        self.total_donated+=amount
+
+    def get_level(self):
+        return int((self.total_donated/10) + 1)
+
+    def get_level_color(self):
+        level = self.get_level()
+        if (level > 10):
+            return "{},150,{}".format((level*8)%200, (level*5+100)%200)
+        elif (level > 5):
+            return "{},150,{}".format((level*4)%50, (level*4)%50)
+        elif (level == 1):
+            return ""
+        else:
+            return "{},150,{}".format((level*3)%20, (level*3)%20)
 
     def __str__(self):
         return self.email

@@ -81,6 +81,19 @@ nav {
     background: #f1f6f9;
 }
 
+#level {
+    height: auto;
+    text-color: black;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    top: 25%;
+}
+
+#user-box {
+    border-width: 5px;
+}
+
 .nav-link.active {
     color:#14274e;
 }
