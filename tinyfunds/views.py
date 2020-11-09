@@ -96,10 +96,19 @@ def pledge(request, pk):
         p = Pledge(event=event, payer_id=user_id, payment_text=payment_text, payment_amount=payment_amount)
         p.save()
         event.pledge_set.add(p)
-        event.add_money(payment_amount)
         event.save()
     return HttpResponseRedirect(reverse('event', args=[pk]))
 
+def confirm(request, pk):
+    event = get_object_or_404(Event, id=pk)
+    if (request.method == "POST"):
+        p_id = Decimal(request.POST['p_id'].strip())
+        p = get_object_or_404(Pledge, id=p_id)
+        p.confirm()
+        event.add_money(p.payment_amount)
+        p.save()
+        event.save()
+    return HttpResponseRedirect(reverse('event', args=[pk]))
 
 def donate(request, pk, user_id):
     event = get_object_or_404(Event, id=pk)
