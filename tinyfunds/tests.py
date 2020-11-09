@@ -363,23 +363,29 @@ class VisitViewsTest(TestCase):
         request = self.factory.get(reverse('edit_event', kwargs={'pk' : 1})) #edit the one and only event request url
         request.user = self.user  # The specific user should be able toaccess the event edit page
         
-        response = event(request, 1)   # server's response
+        response = event(request, testevent.id)   # server's response, should
+        response.client = Client() # Create a client to attach to the reponse access the server response
+        self.assertTrue(testevent.id == 1) #verify event id i.d matches pk of 1 for test
         expected_url = reverse('event', kwargs={'pk' : 1})
-        #self.assertRedirects(response, expected_url, status_code=302) #, target_status_code=200, msg_prefix='', fetch_redirect_response=True)
+        self.assertRedirects(response, expected_url, status_code=302, target_status_code=200, msg_prefix='', fetch_redirect_response=True)
         # should redirect, optional fecth commant and target status code loads the next wepage
 
     def test_confirm_pledge_page_view(self):
-        client = Client()        # Dummy Client for testing exploring pages
-        #request = self.factory.get(reverse('comfirm', kwargs={'pk' : 1})) #edit the one and only event request url
-        #request.user = self.user  # The specific user should be able toaccess the event edit page
-        # Dummy Event creation #
+        # Create a dummy Event #
         testevent = Event(title="New Event",pub_date=timezone.now())
         testevent.owner_id = self.user.id  # Force user to be the specific user
         testevent.save()
+        
+        #Process a request based on self default user
+        request = self.factory.get(reverse('confirm', kwargs={'pk' : 1})) #edit the one and only event request url
+        request.user = self.user  # The specific user should be able toaccess the event edit page
 
-        #response = confirm(request, 1)   # server's response
-        #expected_url = reverse('event', kwargs={'pk' : 1})
-        #self.assertRedirects(response, expected_url, status_code=302) #, target_status_code=200, msg_prefix='', fetch_redirect_response=True)
+        #Get response and attach access Client class
+        response = confirm(request, 1)   # server's response
+        response.client = Client() #Attach client to the reponse for test access
+
+        expected_url = reverse('event', kwargs={'pk' : 1}) #the redirected url
+        self.assertRedirects(response, expected_url, status_code=302, target_status_code=200, msg_prefix='', fetch_redirect_response=True)
         # should redirect, optional fecth commant and target status code loads the next wepage
 
 
