@@ -25,3 +25,9 @@ class Event(models.Model):
     was_published_recently.boolean = True
     was_published_recently.short_description = 'Published recently?'
 
+class Pledge(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    payer_id = models.IntegerField(null=False, default=1)
+    payment_text = models.CharField(max_length = 1024)
+    payment_amount = models.DecimalField(max_digits=8, decimal_places=2)
+    date = models.DateTimeField(auto_now_add=True)

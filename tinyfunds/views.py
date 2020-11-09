@@ -1,9 +1,10 @@
 import random
+from decimal import Decimal
 
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
-from .models import Event
+from .models import Event, Pledge
 from .users.models import User
 from django.http import Http404
 from django.urls import reverse, reverse_lazy
@@ -11,6 +12,7 @@ from django.views import generic
 from django.views.generic.edit import CreateView
 from django.utils import timezone
 from django.shortcuts import render
+from django.conf import settings
 from .forms import CreateEventForm
 from paypal.standard.forms import PayPalPaymentsForm
 
@@ -84,16 +86,29 @@ def event(request, pk):
         event.save()
     return HttpResponseRedirect(reverse('event', args=[pk]))
 
+def pledge(request, pk):
+    event = get_object_or_404(Event, id=pk)
+    if (request.method == "POST"):
+        user_id = request.POST['user_id'].strip()
+        payment_amount = Decimal(request.POST['amount'].strip())
+        payment_text = request.POST['text'].strip()
+        p = Pledge(event=event, payer_id=user_id, payment_text=payment_text, payment_amount=payment_amount)
+        p.save()
+        event.pledge_set.add(p)
+    return HttpResponseRedirect(reverse('event', args=[pk]))
+
+
 def donate(request, pk, user_id):
     event = get_object_or_404(Event, id=pk)
     user = get_object_or_404(User, id=user_id)
     paypal_dict = {
-        "business": user.email,
+        "business": settings.PAYPAL_RECEIVER_EMAIL,
         "amount": "10000000.00",
         "item_name": "donation for {}".format(event.title),
-        "invoice": "invoice{}".format(random.randint(1000000000,9999999999)),
+        "invoice": "invoice{}".format(random.randint(10,99)),
+        "currency_code": "USD",
         "notify_url": request.build_absolute_uri(reverse('paypal-ipn')),
-        "return": request.build_absolute_uri(reverse('event', args=[pk])),
+        "return_url": request.build_absolute_uri(reverse('event', args=[pk])),
         "cancel_return": request.build_absolute_uri(reverse('event', args=[pk])),
     }
 
