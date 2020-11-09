@@ -105,6 +105,57 @@ class EventsTest(TestCase):
         self.assertAlmostEqual(database_cheap_event.money_received, Decimal('2.70'))
         self.assertAlmostEqual(database_cheap_event.money_remaining(), Decimal('2.30'))
         
+
+    def test_money_mathself_big(self):
+        cheap_event = Event(title="I need 5000 bucks",org_name="Slenderman",money_goal=5000.00)
+        cheap_event.save() #A test Event with a set money goal
+
+        self.assertTrue(cheap_event.money_received == 0) # Make sure the event was prepped properly
+        self.assertTrue(cheap_event.money_remaining() == 5000.00)
+        
+        #Check that is also works in database:
+        database_cheap_event = Event.objects.filter(title="I need 5000 bucks")[0]
+        self.assertTrue(database_cheap_event.money_received == 0 and database_cheap_event.money_remaining() == 5000.00)
+
+        database_cheap_event.add_money(Decimal('2000')) # Simulating a pledge to test the add of a big donation
+        self.assertAlmostEqual(database_cheap_event.money_received, Decimal('2000'))
+        self.assertAlmostEqual(database_cheap_event.money_remaining(), Decimal('3000'))
+
+
+    def test_money_mathself_3(self):
+        cheap_event = Event(title="I need 20 bucks",org_name="Slenderman",money_goal=20.00)
+        cheap_event.save() #A test Event with a set money goal
+
+        self.assertTrue(cheap_event.money_received == 0) # Make sure the event was prepped properly
+        self.assertTrue(cheap_event.money_remaining() == 20.00)
+        
+        #Check that is also works in database:
+        database_cheap_event = Event.objects.filter(title="I need 20 bucks")[0]
+        self.assertTrue(database_cheap_event.money_received == 0 and database_cheap_event.money_remaining() == 20.00)
+
+        database_cheap_event.add_money(Decimal('1.254')) # Simulating a pledge to test the add of micro-donations less than 1 cent
+        self.assertAlmostEqual(database_cheap_event.money_received, Decimal('1.254'))
+        database_cheap_event.add_money(Decimal('1.111')) 
+        self.assertAlmostEqual(database_cheap_event.money_received, Decimal('2.365'))
+        
+        
+    def test_money_math_micro(self):
+        cheap_event = Event(title="I need 20 bucks",org_name="Slenderman",money_goal=20.00)
+        cheap_event.save() #A test Event with a set money goal
+
+        self.assertTrue(cheap_event.money_received == 0) # Make sure the event was prepped properly
+        self.assertTrue(cheap_event.money_remaining() == 20.00)
+        
+        #Check that is also works in database:
+        database_cheap_event = Event.objects.filter(title="I need 20 bucks")[0]
+        self.assertTrue(database_cheap_event.money_received == 0 and database_cheap_event.money_remaining() == 20.00)
+
+        database_cheap_event.add_money(Decimal('1.111111')) # Simulating a pledge to test the add of micro-donations less than 1 cent
+        self.assertAlmostEqual(database_cheap_event.money_received, Decimal('1.111111'))
+        database_cheap_event.add_money(Decimal('1.111111')) 
+        self.assertAlmostEqual(database_cheap_event.money_received, Decimal('2.222222'))
+
+
     def test_money_surplus(self):
         cheap_event = Event(title="I need 5 bucks",org_name="Slenderman",money_goal=5.00)
         cheap_event.save() #A test Event with a set money goal
@@ -117,6 +168,23 @@ class EventsTest(TestCase):
         
         #double check the right surplus of 1.20
         self.assertAlmostEqual(database_cheap_event.money_remaining(), Decimal('-1.20'))
+
+    def test_no_money_surplus(self):
+        cheap_event = Event(title="I need 5 bucks",org_name="Slenderman",money_goal=5.00)
+        cheap_event.save() #A test Event with a set money goal
+        database_cheap_event = Event.objects.filter(title="I need 5 bucks")[0]
+        database_cheap_event.add_money(Decimal('2.70')) # Simulating a pledge
+
+        self.assertFalse(database_cheap_event.surplus()) # there is no surplus yet
+        database_cheap_event.add_money(Decimal('.25')) # add more money a few times
+        database_cheap_event.add_money(Decimal('.25')) 
+        database_cheap_event.add_money(Decimal('.25')) 
+        database_cheap_event.add_money(Decimal('.25')) 
+        database_cheap_event.add_money(Decimal('.25')) 
+        self.assertFalse(database_cheap_event.surplus()) #there should still be no surplus
+
+
+
 
     def test_ordered_pledges_and_pledge_add(self):
         #Basic Event Setup
@@ -160,6 +228,44 @@ class EventsTest(TestCase):
 
         database_goalevent.add_money(Decimal('20.00'))
         self.assertTrue(database_goalevent.met()) # should still be true even above the goal.
+
+    def test_goal_not_met_double(self):
+        goalevent = Event(title="10.40 dollar goal", org_name="moneylenders", money_goal=10.40)
+        goalevent.save() #A test Event with a set money goal
+        database_goalevent = Event.objects.filter(title="10.40 dollar goal")[0]
+        
+        #confirm proper setup:
+        self.assertAlmostEqual(database_goalevent.money_remaining(), Decimal('10.40'))
+        self.assertFalse(database_goalevent.met())
+
+        #confirm if goal is not met or met
+        database_goalevent.add_money(Decimal('5.40'))
+        self.assertFalse(database_goalevent.met())
+
+        database_goalevent.add_money(Decimal('5.00'))
+        self.assertTrue(database_goalevent.met()) # should now be true after multiple adds
+
+    def test_goal_met_many(self):
+        goalevent = Event(title="10.40 dollar goal", org_name="moneylenders", money_goal=10.40)
+        goalevent.save() #A test Event with a set money goal
+        database_goalevent = Event.objects.filter(title="10.40 dollar goal")[0]
+        
+        #confirm proper setup:
+        self.assertAlmostEqual(database_goalevent.money_remaining(), Decimal('10.40'))
+        self.assertFalse(database_goalevent.met())
+
+        #confirm if goal is not met after many small donations
+        database_goalevent.add_money(Decimal('0.40'))
+        database_goalevent.add_money(Decimal('0.40'))
+        database_goalevent.add_money(Decimal('0.40'))
+        database_goalevent.add_money(Decimal('0.40'))
+        database_goalevent.add_money(Decimal('0.40'))
+        database_goalevent.add_money(Decimal('0.40'))
+        database_goalevent.add_money(Decimal('0.40'))
+        self.assertFalse(database_goalevent.met()) #should not be met yet
+
+        database_goalevent.add_money(Decimal('12.00'))
+        self.assertTrue(database_goalevent.met()) # should now be true after a big enough donation
 
 
 class PledgeModelTest(TestCase):
@@ -259,8 +365,26 @@ class VisitViewsTest(TestCase):
         
         response = event(request, 1)   # server's response
         expected_url = reverse('event', kwargs={'pk' : 1})
-        #self.assertRedirects(response, expected_url, status_code=302, target_status_code=200, msg_prefix='', fetch_redirect_response=True)
+        #self.assertRedirects(response, expected_url, status_code=302) #, target_status_code=200, msg_prefix='', fetch_redirect_response=True)
         # should redirect, optional fecth commant and target status code loads the next wepage
+
+    def test_confirm_pledge_page_view(self):
+        client = Client()        # Dummy Client for testing exploring pages
+        #request = self.factory.get(reverse('comfirm', kwargs={'pk' : 1})) #edit the one and only event request url
+        #request.user = self.user  # The specific user should be able toaccess the event edit page
+        # Dummy Event creation #
+        testevent = Event(title="New Event",pub_date=timezone.now())
+        testevent.owner_id = self.user.id  # Force user to be the specific user
+        testevent.save()
+
+        #response = confirm(request, 1)   # server's response
+        #expected_url = reverse('event', kwargs={'pk' : 1})
+        #self.assertRedirects(response, expected_url, status_code=302) #, target_status_code=200, msg_prefix='', fetch_redirect_response=True)
+        # should redirect, optional fecth commant and target status code loads the next wepage
+
+
+
+
 
 
 
