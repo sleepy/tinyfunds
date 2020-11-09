@@ -62,6 +62,8 @@ class User(AbstractBaseUser, PermissionsMixin):
             return "{},150,{}".format((level*8)%200, (level*5+100)%200)
         elif (level > 5):
             return "{},150,{}".format((level*4)%50, (level*4)%50)
+        elif (level == 1):
+            return ""
         else:
             return "{},150,{}".format((level*3)%20, (level*3)%20)
 
