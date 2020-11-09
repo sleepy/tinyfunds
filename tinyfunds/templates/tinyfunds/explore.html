@@ -37,27 +37,35 @@
 <link rel="stylesheet" href="{% static 'tinyfunds/style.css' %}">
 
 <body>
-    {% if user.id %}
-    <div class="col-md-12 text-center">
-        <form action="{% url 'create_event' %}">
-            <input class="btn" type="submit" value="Post Event" />
-        </form>
-    {% endif %}
-    <ul class="list-group list-group-flush">
-        {% for event in event_list %}
-        {% if event.title != None and event.title != "" %}
-        <br>
-        <li class="list-group-item"> 
-            <a class="nav-link" href="{% url 'event' event.id %}">
-                <font size="+5">{{event.title}}</font>
-            </a>
-            <br>
-            {{event.description}}
-            <br>
-        </li>
-        {% endif %}
-        {%endfor%}
-    </ul>
-  </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-2">
+            </div>
+            <div class="col-sm-8 text-center">
+                {% if user.id %}
+                <form action="{% url 'create_event' %}">
+                    <input class="btn" type="submit" value="Post Event" />
+                </form>
+                {% endif %}
+                <ul class="list-group list-group-flush" style="margin-top:12px; height: calc(100vh - 150px); overflow-y: auto;">
+                    {% for event in event_list %}
+                    {% if event.title != None and event.title != "" %}
+                    <br>
+                    <li class="list-group-item"> 
+                        <a class="nav-link" href="{% url 'event' event.id %}">
+                            <font size="+5">{{event.title}}</font>
+                        </a>
+                        <br>
+                        {{event.description}}
+                        <br>
+                    </li>
+                    {% endif %}
+                    {%endfor%}
+                    <br>
+                </ul>
+            </div>
+            <div class="col-sm-2"></div>
+        </div>
+    </div>
 </body> 
 {% endblock content %}

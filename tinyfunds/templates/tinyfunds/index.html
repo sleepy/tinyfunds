@@ -36,23 +36,30 @@
 <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">
 <link rel="stylesheet" href="{% static 'tinyfunds/style.css' %}">
 <body>
-    <div class="col-md-12 text-center">
-    <ul class="list-group list-group-flush">
-        {% for user in user_list %}
-        {% if user.name != None and user.name != "" %}
-        <br>
-        <li class="list-group-item"> 
-            <a class="nav-link" href="{% url 'user' user.id %}">
-                <font size="+5">{{user.name}}</font>
-            </a>
-            <br>
-            {{user.bio}}
-            <br>
-        </li>
-        {% endif %}
-        {%endfor%}
-    </ul>
-  </div>
+    <div class="row">
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-8 text-center">
+            <ul class="list-group list-group-flush" style="margin-top:12px; height: calc(100vh - 110px); overflow-y: auto;">
+                {% for user in user_list %}
+                {% if user.name != None and user.name != "" %}
+                <br>
+                <li class="list-group-item"> 
+                    <a class="nav-link" href="{% url 'user' user.id %}">
+                        <font size="+5">{{user.name}}</font>
+                    </a>
+                    <br>
+                    {{user.bio}}
+                    <br>
+                </li>
+                {% endif %}
+                {%endfor%}
+                <br>
+            </ul>
+        </div>
+        <div class="col-md-2">
+        </div>
+    </div>
 </body> 
 {% endblock content %}
 
