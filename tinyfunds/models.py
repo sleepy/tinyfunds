@@ -1,5 +1,7 @@
 from django.db import models
+from django_google_maps import fields as map_fields
 import datetime
+from places.fields import PlacesField
 from django.utils import timezone
 
 class Event(models.Model):
@@ -10,7 +12,7 @@ class Event(models.Model):
     pic = models.CharField(max_length=1024, null=False, blank=False, default="https://avatars2.githubusercontent.com/u/3195011?s=460&u=f421eadccb78b212d516b6b38cab7f2de97522e4&v=4")
     event_date = models.DateTimeField(auto_now_add=False, null=True)
     owner_id = models.IntegerField(null=False, default=1)
-    address = models.CharField(max_length=1024, null=True) 
+    address = PlacesField(blank=True)
     money_goal = models.DecimalField(max_digits=8, decimal_places=2, null=False, default=0)
     money_received = models.DecimalField(max_digits=8, decimal_places=2, null=False, default=0)
 

@@ -6,6 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from .models import Event, Pledge
 from .users.models import User
+from .models import Event
 from django.http import Http404
 from django.urls import reverse, reverse_lazy
 from django.views import generic
@@ -44,6 +45,7 @@ class CreateEventView(CreateView):
 
     template_name = 'tinyfunds/create_event.html'
     form_class = CreateEventForm 
+    model = Event
 
 
     def get(self, request, *args, **kwargs):
