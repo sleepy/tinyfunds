@@ -20,9 +20,16 @@ class Event(models.Model):
     def money_remaining(self):
         return self.money_goal-self.money_received
 
+    def met(self):
+        return (self.money_goal == self.money_received)
+    met.boolean = True
+
     def surplus(self):
         return (self.money_goal < self.money_received)
     surplus.boolean = True
+
+    def ordered_pledges(self):
+        return self.pledge_set.order_by('-date')
 
     def get_absolute_url(self):
         return "/events/%i/" % (self.pk)
@@ -43,3 +50,7 @@ class Pledge(models.Model):
     payment_text = models.CharField(max_length = 1024)
     payment_amount = models.DecimalField(max_digits=8, decimal_places=2)
     date = models.DateTimeField(auto_now_add=True)
+    confirmed = models.BooleanField(null=False, default=False)
+
+    def confirm(self):
+        self.confirmed = True

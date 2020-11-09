@@ -62,12 +62,15 @@
         <br>
         Location: {{event.address}}
         <br>
-        <h2> Goal: {{event.money_goal}} </h2>
+        <h2> Goal: ${{event.money_goal}} </h2>
         <br>
-        <h2> Received: {{event.money_received}} </h2>
+        <h2> Received: ${{event.money_received}} </h2>
         <br>
-        {% if event.surplus %}
+        {% if event.met %}
         <h3> Goal met! </h3>
+        {% endif %}
+        {% if event.surplus %}
+        <h3> Goal surpassed! </h3>
         {% endif %}
       </p>
         {% if user.id %}
@@ -136,13 +139,27 @@
         </div>
         {% endif %}
         <ul id="pledges" class="list-group list-group-flush" style="margin-top:12px; height: calc(100vh - 188px); overflow-y: auto;">
-            {% for pledge in event.pledge_set.all %}
+            {% for pledge in event.ordered_pledges %}
             <li class="list-group-item"> 
-                <h1> ${{ pledge.payment_amount }} </h1>
+                {% if pledge.confirmed %}
+                <h1 style="color: green"> 
+                {% else %}
+                <h1> 
+                {% endif %}
+                    ${{ pledge.payment_amount }} </h1>
                 <br>
                 {{ pledge.payment_text }}
                 <br><br>
                 <a href="{% url 'user' pledge.payer_id %}">Pledger</a>
+                {% ifequal event.owner_id user.id %}
+                {% if not pledge.confirmed %}
+                <form action="{% url 'confirm' event.id %}" method="post">
+                  {% csrf_token %}
+                  <input type="hidden" name="p_id" value="{{ pledge.id }}">
+                  <input type="submit" class="btn" value="Confirm">
+                </form>
+                {% endif %}
+                {% endifequal %}
             </li>
             <br>
             {%endfor%}
