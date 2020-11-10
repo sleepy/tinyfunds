@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'paypal.standard.ipn',
     'django_google_maps',
     'places',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -161,7 +162,7 @@ SOCIALACCOUNT_PROVIDERS = {
 
 GOOGLE_MAPS_API_KEY = 'AIzaSyDRqV7DSUAEVsjemptCRDqWfLtIOpCSRxA'
 PLACES_MAPS_API_KEY='AIzaSyDRqV7DSUAEVsjemptCRDqWfLtIOpCSRxA'
-PLACES_MAP_WIDGET_HEIGHT=480
+PLACES_MAP_WIDGET_HEIGHT=360
 PLACES_MAP_OPTIONS='{"center": { "lat": 38.971584, "lng": -95.235072 }, "zoom": 10}'
 PLACES_MARKER_OPTIONS='{"draggable": true}'
 

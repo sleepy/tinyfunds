@@ -3,7 +3,8 @@ body {
     color: #14274e !important;
     margin: 0;
     padding: 0;
-    overflow:hidden;
+    overflow-y:scroll;
+    overflow-x: hidden;
     text-align: center !important;
     align-content: center !important;
     justify-content: center !important;
@@ -18,3 +19,24 @@ html {
     height: 100%;
 }
 
+
+/* .col-sm-4 {
+    background-color: #ffffff;
+    width: 10%;
+    border-width:20px;
+    border-top-style: solid;
+    border-right-style: solid;
+    border-left-style: solid;
+    border-bottom-style: solid;
+    border-radius: 30px;
+    height: 500px;
+    border-color: #f1f6f9;
+} */
+
+.col-md-10.left-justified {
+    text-align: left;
+}
+
+h3 {
+    text-align: center;
+}

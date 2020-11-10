@@ -11,6 +11,8 @@
 <!-- {% load socialaccount %}
 {% load static %} -->
 
+{% load crispy_forms_tags %}
+
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
 
@@ -33,25 +35,94 @@
 {% endblock navbar %}
 {% block content %}
 
-<link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">
 <link rel="stylesheet" href="{% static 'tinyfunds/create_event_style.css' %}">
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 
-<body>
-  <div class="container">
-    <div class="card" style="margin-top:12px; height: calc(100vh - 110px); overflow-y: auto;">
-      <div class="card-body">
-        <h1 class="text-center">New Event</h1>
-        <br>
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Post">
-        <br>
-        {{ form.media }}
-        <br>
+<form action="{% url 'create_event' %}" method="post">
+  {% csrf_token %}
+  <br>
+  <h1> <strong>New Event</strong> </h1>
+  <br>
+
+  <div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6">
+
+      <div class="container">
+
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                {{ form.title | as_crispy_field}}
+              </div>
+              <div class="col-md-6">
+                {{ form.org_name | as_crispy_field}}
+              </div>
+            </div>
+            <br><br>
+            <div class="row">
+              <div class="col-md-6">
+                {{ form.money_goal | as_crispy_field}}
+              </div>
+              <div class="col-md-6">
+                {{ form.pic | as_crispy_field}}
+              </div>
+            </div>
+            <br><br>
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-10">
+                <p>Event Description</p>
+                <textarea type="text" rows="4" cols="30" name="description" id="description"></textarea>
+              </div>
+              <div class="col-md-1"></div>
+            </div>
+            <br><br>
+            <h3>Event Date</h3>
+            <br>
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-10">
+                <div style="overflow:hidden;">
+                  <div class="form-group">
+                    <div id="datetimepicker13"></div>
+                  </div>
+                  <script type="text/javascript">
+                    $(function () {
+                      $('#datetimepicker13').datetimepicker({
+                        inline: true,
+                        sideBySide: true
+                      });
+                    });
+                  </script>
+                </div>
+              </div>
+              <div class="col-md-1"></div>
+            </div>
+            <br><br>
+            <h3>Address</h3>
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-10 left-justified">
+                {{ form.address }}
+                {{ form.media }}
+              </div>
+              <div class="col-md-1"></div>
+            </div>
+            <br>
+            <input type="hidden" name="owner_id" id="owner_id" value="{{ user.id }}"><br><br>
+            <button type="submit" class="btn btn-primary">Post</button>
+          </div>
+        </div>
       </div>
     </div>
+    <div class="col-lg-3"></div>
   </div>
-</body>
+
+</form>
 
 
 

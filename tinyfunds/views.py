@@ -44,8 +44,7 @@ class EventView(generic.DetailView):
 class CreateEventView(CreateView):
 
     template_name = 'tinyfunds/create_event.html'
-    form_class = CreateEventForm 
-    model = Event
+    form_class = CreateEventForm
 
 
     def get(self, request, *args, **kwargs):
