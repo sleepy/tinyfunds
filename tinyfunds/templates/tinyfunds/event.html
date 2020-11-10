@@ -62,16 +62,6 @@
         <br>
         Location: {{event.address}}
         <br>
-        <h2> Goal: ${{event.money_goal}} </h2>
-        <br>
-        <h2> Received: ${{event.money_received}} </h2>
-        <br>
-        {% if event.met %}
-        <h3> Goal met! </h3>
-        {% endif %}
-        {% if event.surplus %}
-        <h3> Goal surpassed! </h3>
-        {% endif %}
       </p>
         {% if user.id %}
         <!-- <a href="{% url 'donate_event' event.id user.id %}">Donate to {{ event.title }}!</a> -->
@@ -99,8 +89,21 @@
                 {{ form.media }}
             </form>
           </div>
+          <p>
         </div>
         {% endifequal %}
+        <p>
+            <h2> Goal: ${{event.money_goal}} </h2>
+            <br>
+            <h2> Received: ${{event.money_received}} </h2>
+            <br>
+            {% if event.met %}
+            <h3> Goal met! </h3>
+            {% endif %}
+            {% if event.surplus %}
+            <h3> Goal surpassed! </h3>
+            {% endif %}
+        </p>
     </div>
     <div class="col-sm-2">
         <br>
