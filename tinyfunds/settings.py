@@ -167,7 +167,8 @@ if '/app' in os.environ['HOME']:
     ALLOWED_HOSTS = ["tinyfunds.herokuapp.com"]
     CSRF_COOKIE_SECURE = True
     SESSION_COOKIE_SECURE = True
-    SECURE_HSTS_SECONDS = 3600
+    SECURE_HSTS_SECONDS = 15768000
+    SECURE_HSTS_PRELOAD = True
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_SSL_HOST = "tinyfunds.herokuapp.com"
     SECURE_SSL_REDIRECT = True
