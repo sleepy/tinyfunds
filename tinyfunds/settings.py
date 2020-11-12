@@ -163,7 +163,6 @@ PAYPAL_RECIEVER_PASSWORD = 'QTWWLFE4M86FMXZJ'
 PAYPAL_TEST = True
 
 if '/app' in os.environ['HOME']:
-    django_heroku.settings(locals())
     DEBUG = False
     ALLOWED_HOSTS = ["tinyfunds.herokuapp.com"]
     CSRF_COOKIE_SECURE = True
@@ -172,3 +171,4 @@ if '/app' in os.environ['HOME']:
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_SSL_HOST = "tinyfunds.herokuapp.com"
     SECURE_SSL_REDIRECT = True
+    django_heroku.settings(locals())
