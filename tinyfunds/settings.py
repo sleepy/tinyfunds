@@ -162,6 +162,8 @@ PAYPAL_RECEIVER_EMAIL = 'sb-p5rrv3690224@business.example.com'
 PAYPAL_RECIEVER_PASSWORD = 'QTWWLFE4M86FMXZJ'
 PAYPAL_TEST = True
 
+
+
 if '/app' in os.environ['HOME']:
     DEBUG = False
     ALLOWED_HOSTS = ["tinyfunds.herokuapp.com"]
