@@ -100,6 +100,18 @@ def pledge(request, pk):
         event.save()
     return HttpResponseRedirect(reverse('event', args=[pk]))
 
+def pledge_hours(request, pk):
+    event = get_object_or_404(Event, id=pk)
+    if (request.method == "POST"):
+        user_id = request.POST['user_id'].strip()
+        hours_amount = Decimal(request.POST['amount'].strip())
+        payment_text = request.POST['text'].strip()
+        p = Pledge(event=event, payer_id=user_id, payment_text=payment_text, hours_amount=hours_amount)
+        p.save()
+        event.pledge_set.add(p)
+        event.save()
+    return HttpResponseRedirect(reverse('event', args=[pk]))
+
 def checkout(request, pk):
     event = get_object_or_404(Event, id=pk)
     context = {'event': event}
@@ -113,8 +125,12 @@ def confirm(request, pk):
         u_id = Decimal(request.POST['u_id'].strip())
         u = get_object_or_404(User, id=u_id)
         p.confirm()
-        event.add_money(p.payment_amount)
-        u.add_money(p.payment_amount)
+        if (p.payment_amount != None):
+            event.add_money(p.payment_amount)
+            u.add_money(p.payment_amount)
+        else:
+            event.add_hours(p.hours_amount)
+            u.add_hours(p.hours_amount)
         p.save()
         event.save()
         u.save()

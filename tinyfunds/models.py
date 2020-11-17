@@ -27,9 +27,13 @@ class Event(models.Model):
     address = PlacesField(verbose_name="Event Address", blank=True)
     money_goal = models.DecimalField(verbose_name="Donation Goal", max_digits=8, decimal_places=2, null=False, default=0)
     money_received = models.DecimalField(max_digits=8, decimal_places=2, null=False, default=0)
+    hours_received = models.DecimalField(max_digits=8, decimal_places=2, null=False, default=0)
 
     def add_money(self, amount):
         self.money_received += amount
+
+    def add_hours(self, amount):
+        self.hours_received += amount
 
     def money_remaining(self):
         return self.money_goal-self.money_received
@@ -62,7 +66,8 @@ class Pledge(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     payer_id = models.IntegerField(null=False, default=1)
     payment_text = models.CharField(max_length = 1024)
-    payment_amount = models.DecimalField(max_digits=8, decimal_places=2)
+    payment_amount = models.DecimalField(max_digits=8, decimal_places=2, null=True)
+    hours_amount = models.DecimalField(max_digits=8, decimal_places=2, null=True)
     date = models.DateTimeField(auto_now_add=True)
     confirmed = models.BooleanField(null=False, default=False)
 
