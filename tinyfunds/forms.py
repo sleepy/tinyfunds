@@ -11,6 +11,7 @@ class CreateEventForm(forms.ModelForm):
         widgets = {
             'date': DateTimePicker(
             options={
+                'inLine': True,
                 'useCurrent': True,
                 'collapse': False,
                 'sideBySide': True,

@@ -60,31 +60,21 @@
         }
       </script>
       <div id="map"></div>
-    </div>
-
-    <div class="col-sm-4">
       <br>
-      <h4>Event Description</h4>
+      
+    </div>
+    <div class="col-sm-4">
+      <div class="pfpic"><img src="{{ event.pic }}"></div>
+      <br>
       <p>
         {{ event.description }}
       </p>
-      <br>
-      <h4>Info</h4>
       <p>
         Organizer: {{event.org_name }}
         <br>
         Date: {{event.date}}
         <br>
-      <h2> Goal: ${{event.money_goal}} </h2>
-      <br>
-      <h2> Received: ${{event.money_received}} </h2>
-      <br>
-      {% if event.met %}
-      <h3> Goal met! </h3>
-      {% endif %}
-      {% if event.surplus %}
-      <h3> Goal surpassed! </h3>
-      {% endif %}
+        <br>
       </p>
       {% ifequal event.owner_id user.id %}
       <button class=btn" onclick="toggleEdit()">Edit Event</button>
@@ -130,18 +120,6 @@
             <p>
           </div>
           {% endifequal %}
-          <p>
-          <h2> Goal: ${{event.money_goal}} </h2>
-          <br>
-          <h2> Received: ${{event.money_received}} </h2>
-          <br>
-          {% if event.met %}
-          <h3> Goal met! </h3>
-          {% endif %}
-          {% if event.surplus %}
-          <h3> Goal surpassed! </h3>
-          {% endif %}
-          </p>
         </div>
         <div class="col-sm-2">
           <br>
@@ -175,8 +153,17 @@
       </div>
     </div>
     <div class="col-sm-3">
-      <div class="pfpic"><img src="{{ event.pic }}"></div>
       <br>
+      <h3> Goal: ${{event.money_goal}} </h3>
+      <br>
+      <h3> Received: ${{event.money_received}} </h3>
+      <br>
+      {% if event.met %}
+      <h3> Goal met! </h3>
+      {% endif %}
+      {% if event.surplus %}
+      <h3> Goal surpassed! </h3>
+      {% endif %}
       {% if user.id %}
       <button class=btn" onclick="togglePledge()">Pledge a donation!</button>
       <script>
