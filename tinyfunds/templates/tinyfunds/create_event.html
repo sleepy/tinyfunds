@@ -40,15 +40,30 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 
+  {% if form.errors %}
+	<!-- Error messaging -->
+	<div id="errors">
+		<div class="inner">
+			<p>There were some errors in the information you entered. Please correct the following:</p>
+			{{ form.non_field_errors }}
+			<ul>
+				{% for field in form %}
+					{% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+	<!-- /Error messaging -->
+{% endif %}
   <div style="margin-top: 20px;">
     {% if invalid %}
     <b style="color: red;">
-      One or more fields contains incomplete or invalid data. You must be logged in to post an event.
+      You must be logged in to post an event.
     </b>
   </div>
   {% endif %}
   </div>
-  
+
 <form action="{% url 'create_event' %}" method="post">
   {% csrf_token %}
   <br>
@@ -95,19 +110,7 @@
             <div class="row">
               <div class="col-md-1"></div>
               <div class="col-md-10">
-                <div style="overflow:hidden;">
-                  <div class="form-group">
-                    <div id="datetimepicker13"></div>
-                  </div>
-                  <script type="text/javascript">
-                    $(function () {
-                      $('#datetimepicker13').datetimepicker({
-                        inline: true,
-                        sideBySide: true
-                      });
-                    });
-                  </script>
-                </div>
+                {{ form.date}}
               </div>
               <div class="col-md-1"></div>
             </div>
