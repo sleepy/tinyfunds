@@ -104,6 +104,70 @@
       </script>
       <div id="editEvent" style='display: none'>
         <div class="row">
+        Location: {{event.address}}
+        <br>
+      </p>
+        {% if user.id %}
+        <!-- <a href="{% url 'donate_event' event.id user.id %}">Donate to {{ event.title }}!</a> -->
+        {% endif %}
+        {% ifequal event.owner_id user.id %}
+        <button class=btn" onclick="toggleEdit()">Edit Event</button>
+        <br><br>
+        <script>
+            function toggleEdit() {
+                var x = document.getElementById("editEvent");
+                if (x.style.display === "none") {
+                    x.style.display = "inline-flex";
+                } else {
+                    x.style.display = "none";
+                }
+            }
+        </script>
+        <div id="editEvent" style='display: none'>
+          <div class="row">
+            <br>
+            <form action="{% url 'edit_event' event.id %}" method="post">
+              {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Save">
+                {{ form.media }}
+            </form>
+          </div>
+          <p>
+        </div>
+        {% endifequal %}
+        <p>
+            <h2> Goal: ${{event.money_goal}} </h2>
+            <br>
+            <h2> Received: ${{event.money_received}} </h2>
+            <br>
+            {% if event.met %}
+            <h3> Goal met! </h3>
+            {% endif %}
+            {% if event.surplus %}
+            <h3> Goal surpassed! </h3>
+            {% endif %}
+        </p>
+    </div>
+    <div class="col-sm-2">
+        <br>
+        {% if user.id %}
+        <button class=btn" onclick="togglePledge()">Pledge a donation!</button>
+        <script>
+            function togglePledge() {
+                var x = document.getElementById("pledge");
+                var pledges = document.getElementById("pledges");
+                if (x.style.display === "none") {
+                    x.style.display = "inline-flex";
+                    pledges.style.height = "calc(100vh - 381px)";
+                } else {
+                    x.style.display = "none";
+                    pledges.style.height = "calc(100vh - 188px)";
+                }
+            }
+        </script>
+        <br><br>
+        <div id="pledge" style="display:none">
           <br>
           <form action="{% url 'edit_event' event.id %}" method="post">
             {% csrf_token %}

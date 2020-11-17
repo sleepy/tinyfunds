@@ -51,7 +51,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         return "/users/%i/" % (self.pk)
 
     def add_money(self, amount):
-        self.total_donated+=amount
+        if amount > 0:
+            self.total_donated+=amount
 
     def get_level(self):
         return int((self.total_donated/10) + 1)
