@@ -3,6 +3,8 @@ from django_google_maps import fields as map_fields
 import datetime
 from places.fields import PlacesField
 from django.utils import timezone
+from tempus_dominus.widgets import DatePicker, TimePicker, DateTimePicker
+
 
 class Event(models.Model):
     title = models.CharField(verbose_name="Event Name",max_length=200)
@@ -10,7 +12,17 @@ class Event(models.Model):
     org_name = models.CharField(verbose_name="Organization Name",max_length=254, null=True, blank=True)
     description = models.CharField(verbose_name="Event Description", max_length=4096, null=True, blank=True)
     pic = models.CharField(verbose_name="Event Picture", max_length=1024, null=False, blank=False, default="https://avatars2.githubusercontent.com/u/3195011?s=460&u=f421eadccb78b212d516b6b38cab7f2de97522e4&v=4")
-    date = models.DateTimeField(verbose_name="Event Date", auto_now_add=False, null=True)
+    # date = models.DateTimeField(
+    #     widget=DateTimePicker(
+    #         options={
+    #             'useCurrent': True,
+    #             'collapse': False,
+    #         },
+    #         attrs={
+    #             'append': 'fa fa-calendar',
+    #             'icon_toggle': True,
+    #         }
+    #     ),)
     owner_id = models.IntegerField(null=False, default=1)
     address = PlacesField(verbose_name="Event Address", blank=True)
     money_goal = models.DecimalField(verbose_name="Donation Goal", max_digits=8, decimal_places=2, null=False, default=0)
