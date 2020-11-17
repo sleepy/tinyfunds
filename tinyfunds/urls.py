@@ -34,6 +34,8 @@ urlpatterns = [
     path('event/edit/<int:pk>/', views.event, name='edit_event'),
     path('event/pledge/<int:pk>/', views.pledge, name='pledge'),
     path('event/pledge/<int:pk>/confirm/', views.confirm, name='confirm'),
+    path('event/confirm_paypal/', views.confirm_paypal, name='confirm_paypal'),
     path('event/donate/<int:pk>/<int:user_id>', views.donate, name='donate_event'),
-    url(r'^paypal/', include('paypal.standard.ipn.urls')),
+    path('checkout/<int:pk>', views.checkout, name="checkout"),
+    #url(r'^paypal/', include('paypal.standard.ipn.urls')),
 ]

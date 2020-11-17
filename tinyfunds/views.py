@@ -100,6 +100,11 @@ def pledge(request, pk):
         event.save()
     return HttpResponseRedirect(reverse('event', args=[pk]))
 
+def checkout(request, pk):
+    event = get_object_or_404(Event, id=pk)
+    context = {'event': event}
+    return render(request, 'tinyfunds/donate.html', context)
+
 def confirm(request, pk):
     event = get_object_or_404(Event, id=pk)
     if (request.method == "POST"):
@@ -114,6 +119,18 @@ def confirm(request, pk):
         event.save()
         u.save()
     return HttpResponseRedirect(reverse('event', args=[pk]))
+
+
+def confirm_paypal(request):
+    if (request.method == "POST"):
+        u_id = Decimal(request.POST['u_id'].strip())
+        u = get_object_or_404(User, pk=u_id)
+        event = get_object_or_404(Event, pk=request.POST['dono_id'].strip())
+        event.add_money(Decimal(request.POST['dono_amount']))
+        u.add_money(Decimal(request.POST['dono_amount']))
+        event.save()
+        u.save()
+    return HttpResponseRedirect(reverse('event', args=[request.POST['dono_id']]))
 
 def donate(request, pk, user_id):
     event = get_object_or_404(Event, id=pk)

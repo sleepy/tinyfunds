@@ -30,6 +30,7 @@ class UserManager(BaseUserManager):
         return "gamerg8"
 
 class User(AbstractBaseUser, PermissionsMixin):
+
     email = models.EmailField(max_length=254, unique=True)
     name = models.CharField(max_length=254, null=True, blank=True)
     bio = models.CharField(max_length=254, null=True, blank=True)
@@ -49,7 +50,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_absolute_url(self):
         return "/users/%i/" % (self.pk)
-
+        
     def add_money(self, amount):
         if amount > 0:
             self.total_donated+=amount
