@@ -41,6 +41,9 @@
     </div>
     <div class="col-sm-3">
       <br>
+      {% if privileged == None and not user.is_authenticated %}
+            <a class="page-scroll btn btn-xl" id="oauth-button" href="{% provider_login_url 'google' %}"></a>
+      {% endif %}
       {% if privileged == False or privileged == None and user.is_authenticated %}
       {% if user.name != None and user.name != "" %}
       <h4>{{ user.name }}</h4>
@@ -51,9 +54,11 @@
       <div class="pfpic"><img src="{{ user.pfp }}"></div>
       {% endif %}
       <br>
+      {% if user.is_authenticated %}
       <form action="{% url 'editAccount' %}">
         <input class="btn" type="submit" value="Edit Account" />
-    </form>
+      </form>
+      {% endif %}
     </div>
     <div class="col-sm-7" id="user-box" style="border-color: rgb({{ user.get_level_color }})">
       <br>

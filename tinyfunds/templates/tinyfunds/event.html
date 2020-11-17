@@ -23,7 +23,7 @@
     <a class="nav-link active" href="{% url 'explore' %}"><strong>Explore</strong></a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#"><strong>Post</strong></a>
+    <a class="nav-link" href="{% url 'create_event' %}"><strong>Post</strong></a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="{% url 'account' %}"><strong>Account</strong></a>
@@ -34,70 +34,76 @@
 
 
 <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">
-<link rel="stylesheet" href="{% static 'account/style.css' %}">
+<link rel="stylesheet" href="{% static 'tinyfunds/event_style.css' %}">
 
+<h4><strong>
+    <font size='+3'>{{ event.title }}</font>
+  </strong></h4>
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-1">
     </div>
     <div class="col-sm-3">
+      </p>
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+      <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRqV7DSUAEVsjemptCRDqWfLtIOpCSRxA&callback=initMap&libraries=&v=weekly"
+        defer></script>
+      <script>
+        let map;
+
+        function initMap() {
+          map = new google.maps.Map(document.getElementById("map"), {
+            center: { lat: parseFloat("{{event.address.latitude}}"), lng: parseFloat("{{event.address.longitude}}") },
+            zoom: 8,
+          });
+        }
+      </script>
+      <div id="map"></div>
       <br>
-      <h4>{{ event.title }}</h4>
-      <br>
-      <div class="pfpic"><img src="{{ event.pic }}"></div>
-      <br>
+      
     </div>
     <div class="col-sm-4">
+      <div class="pfpic"><img src="{{ event.pic }}"></div>
       <br>
-      <h4>Event Description</h4>
       <p>
         {{ event.description }}
       </p>
-      <br><br>
-      <h4>Info</h4>
-      <p> 
-        Organizer: {{event.org_name }} 
+      <p>
+        Organizer: {{event.org_name }}
         <br>
-        Date: {{event.event_date}}
+        Date: {{event.date}}
         <br>
-        Location: {{event.address}}
         <br>
       </p>
-        {% if user.id %}
-        <!-- <a href="{% url 'donate_event' event.id user.id %}">Donate to {{ event.title }}!</a> -->
-        {% endif %}
-        {% ifequal event.owner_id user.id %}
-        <button class=btn" onclick="toggleEdit()">Edit Event</button>
-        <br><br>
-        <script>
-            function toggleEdit() {
-                var x = document.getElementById("editEvent");
-                if (x.style.display === "none") {
-                    x.style.display = "inline-flex";
-                } else {
-                    x.style.display = "none";
-                }
-            }
-        </script>
-        <div id="editEvent" style='display: none'>
-          <div class="row">
-            <br>
-            <form action="{% url 'edit_event' event.id %}" method="post">
-              {% csrf_token %}
-              <input type="text" name="title" id="title" placeholder="Event Title..."><br><br>
-              <input type="text" name="org_name" id="org_name" placeholder="Organization Name..."><br><br>
-              <input type="text" name="event_date" id="event_date" placeholder="MM/DD/YYYY"><br><br>
-              <input type="text" name="address" id="address" placeholder="Enter the address here..."><br><br>
-              <input type="text" name="pic" id="pic" placeholder="Enter your image url here..."><br><br>
-            <input type="number" name="goal" id="goal" min="0" step=".01" placeholder="Enter goal here..."><br><br>
-              <textarea type="text" rows="4" cols="30" name="description" id="description"
-                  placeholder="Enter event description here..."></textarea><br>
-              <input type="submit" class="btn" value="Post">
-            </form>
-          </div>
-          <p>
+      {% ifequal event.owner_id user.id %}
+      <button onclick="toggleEdit()">Edit Event</button>
+      <br><br>
+      <script>
+        function toggleEdit() {
+          var x = document.getElementById("editEvent");
+          if (x.style.display === "none") {
+            x.style.display = "inline-flex";
+          } else {
+            x.style.display = "none";
+          }
+        }
+      </script>
+      <div id="editEvent" style='display: none'>
+        <div class="row">
+          <br>
+          <form action="{% url 'edit_event' event.id %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Save">
+            {{ form.media }}
+          </form>
         </div>
-        {% endifequal %}
+        <p>
+      </div>
+      {% endifequal %}
+      </div>
+    <div class="col-sm-3">
         <p>
             <h2> Goal: ${{event.money_goal}} </h2>
             <br>
@@ -111,10 +117,7 @@
             <h2> Hours committed: {{event.hours_received}}</h2>
             <br>
         </p>
-    </div>
-    <div class="col-sm-2">
-        <br>
-        {% if user.id %}
+      {% if user.id %}
         <script>
             function togglePledge(type) {
                 var hours = document.getElementById("pledge_hours");
@@ -142,30 +145,33 @@
                 }
             }
         </script>
+        <button onclick="location.href={% url 'checkout' event.pk  %}">Donate</button>
+        <br>
         <button onclick="togglePledge('money')">Pledge a donation!</button>
-        <br><br>
+        <br>
         <button onclick="togglePledge('hours')">Pledge hours!</button>
-        <br><br>
-      <form action="{% url 'pledge_hours' event.id %}" method="post" id="pledge_hours" style="display:none">
-        {% csrf_token %}
-        <input type="hidden" name="user_id" value="{{ user.id }}">
-        <input type="number" required name="amount" id="amount" min="0" step=".01" placeholder="Amount" style="width: 150px;"><br><br>
-        <textarea type="text" rows="4" cols="20" name="text" id="description"
-            placeholder="Enter pledge text..."></textarea><br>
-          <input type="submit" class="btn" value="Pledge!">
-          <br>
+        <br>
+        <form action="{% url 'pledge_hours' event.id %}" method="post" id="pledge_hours" style="display:none">
+            {% csrf_token %}
+            <input type="hidden" name="user_id" value="{{ user.id }}">
+            <input type="number" required name="amount" id="amount" min="0" step=".01" placeholder="Amount" style="width: 150px;"><br><br>
+            <textarea type="text" rows="4" cols="20" name="text" id="description"
+                 placeholder="Enter pledge text..."></textarea><br>
+             <input type="submit" class="btn" value="Pledge!">
+             <br>
         </form>
-      <form action="{% url 'pledge' event.id %}" method="post" id="pledge_money" style="display:none;">
-        {% csrf_token %}
-        <input type="hidden" name="user_id" value="{{ user.id }}">
-        <input type="number" required name="amount" id="amount" min="0" step=".01" placeholder="Number of hours..." style="width: 150px;"><br><br>
-        <textarea type="text" rows="4" cols="20" name="text" id="description"
-            placeholder="Enter pledge text..."></textarea><br>
-          <input type="submit" class="btn" value="Pledge!">
-          <br>
+        <form action="{% url 'pledge' event.id %}" method="post" id="pledge_money" style="display:none;">
+            {% csrf_token %}
+            <input type="hidden" name="user_id" value="{{ user.id }}">
+            <input type="number" required name="amount" id="amount" min="0" step=".01" placeholder="Number of hours..." style="width: 150px;"><br><br>
+            <textarea type="text" rows="4" cols="20" name="text" id="description"
+                     placeholder="Enter pledge text..."></textarea><br>
+             <input type="submit" class="btn" value="Pledge!"><br>
         </form>
-        <a href="{% url 'checkout' event.pk  %}" type="button" class="btn btn-light-blue btn-md" >Donate</a>
         {% endif %}
+
+
+
         <ul id="pledges" class="list-group list-group-flush" style="margin-top:12px; height: calc(100vh - 295px); overflow-y: auto;">
             {% for pledge in event.ordered_pledges %}
             <li class="list-group-item"> 
@@ -194,12 +200,10 @@
                 {% endif %}
                 {% endifequal %}
             </li>
-            <br>
-            {%endfor%}
-        </ul>
-    </div>
+        <br>
+        {%endfor%}
+      </ul>
     <div class="col-sm-1">
     </div>
   </div>
-</div>
-{% endblock content %}
+  {% endblock content %}
