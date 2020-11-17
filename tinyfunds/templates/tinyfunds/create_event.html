@@ -40,6 +40,15 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 
+  <div style="margin-top: 20px;">
+    {% if invalid %}
+    <b style="color: red;">
+      One or more fields contains incomplete or invalid data. You must be logged in to post an event.
+    </b>
+  </div>
+  {% endif %}
+  </div>
+  
 <form action="{% url 'create_event' %}" method="post">
   {% csrf_token %}
   <br>
@@ -124,15 +133,5 @@
 
 </form>
 
-
-
-<div style="margin-top: 20px;">
-  {% if invalid %}
-  <b style="color: red;">
-    One or more fields contains incomplete or invalid data
-  </b>
-</div>
-{% endif %}
-</div>
 
 {% endblock content %}

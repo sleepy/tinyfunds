@@ -44,8 +44,6 @@
     <div class="col-sm-1">
     </div>
     <div class="col-sm-3">
-      <br>
-      <h4>Location</h4>
       </p>
       <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
       <script
@@ -175,70 +173,69 @@
         </div>
         {% endif %}
       </div>
-      <div class="col-sm-3">
-        <br>
-        <div class="pfpic"><img src="{{ event.pic }}"></div>
-        <br>
-        {% if user.id %}
-        <button class=btn" onclick="togglePledge()">Pledge a donation!</button>
-        <script>
-          function togglePledge() {
-            var x = document.getElementById("pledge");
-            var pledges = document.getElementById("pledges");
-            if (x.style.display === "none") {
-              x.style.display = "inline-flex";
-              pledges.style.height = "calc(100vh - 381px)";
-            } else {
-              x.style.display = "none";
-              pledges.style.height = "calc(100vh - 188px)";
-            }
+    </div>
+    <div class="col-sm-3">
+      <div class="pfpic"><img src="{{ event.pic }}"></div>
+      <br>
+      {% if user.id %}
+      <button class=btn" onclick="togglePledge()">Pledge a donation!</button>
+      <script>
+        function togglePledge() {
+          var x = document.getElementById("pledge");
+          var pledges = document.getElementById("pledges");
+          if (x.style.display === "none") {
+            x.style.display = "inline-flex";
+            pledges.style.height = "calc(100vh - 381px)";
+          } else {
+            x.style.display = "none";
+            pledges.style.height = "calc(100vh - 188px)";
           }
-        </script>
-        <br><br>
-        <div id="pledge" style="display:none">
-          <br>
-          <form action="{% url 'pledge' event.id %}" method="post">
-            {% csrf_token %}
-            <input type="hidden" name="user_id" value="{{ user.id }}">
-            <input type="number" required name="amount" id="amount" min="0" step=".01"
-              placeholder="Enter amount here..."><br><br>
-            <textarea type="text" rows="4" cols="30" name="text" id="description"
-              placeholder="Enter pledge text..."></textarea><br>
-            <input type="submit" class="btn" value="Pledge!">
-          </form>
-        </div>
-        {% endif %}
-        <ul id="pledges" class="list-group list-group-flush"
-          style="margin-top:12px; height: calc(100vh - 188px); overflow-y: auto;">
-          {% for pledge in event.ordered_pledges %}
-          <li class="list-group-item">
-            {% if pledge.confirmed %}
-            <h1 style="color: green">
-              {% else %}
-              <h1>
-                {% endif %}
-                ${{ pledge.payment_amount }} </h1>
-              <br>
-              {{ pledge.payment_text }}
-              <br><br>
-              <a href="{% url 'user' pledge.payer_id %}">Pledger</a>
-              {% ifequal event.owner_id user.id %}
-              {% if not pledge.confirmed %}
-              <form action="{% url 'confirm' event.id %}" method="post">
-                {% csrf_token %}
-                <input type="hidden" name="p_id" value="{{ pledge.id }}">
-                <input type="hidden" name="u_id" value="{{ pledge.payer_id }}">
-                <input type="submit" class="btn" value="Confirm">
-              </form>
+        }
+      </script>
+      <br><br>
+      <div id="pledge" style="display:none">
+        <br>
+        <form action="{% url 'pledge' event.id %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="user_id" value="{{ user.id }}">
+          <input type="number" required name="amount" id="amount" min="0" step=".01"
+            placeholder="Enter amount here..."><br><br>
+          <textarea type="text" rows="4" cols="30" name="text" id="description"
+            placeholder="Enter pledge text..."></textarea><br>
+          <input type="submit" class="btn" value="Pledge!">
+        </form>
+      </div>
+      {% endif %}
+      <ul id="pledges" class="list-group list-group-flush"
+        style="margin-top:12px; height: calc(100vh - 188px); overflow-y: auto;">
+        {% for pledge in event.ordered_pledges %}
+        <li class="list-group-item">
+          {% if pledge.confirmed %}
+          <h1 style="color: green">
+            {% else %}
+            <h1>
               {% endif %}
-              {% endifequal %}
-          </li>
-          <br>
-          {%endfor%}
-        </ul>
-      </div>
-      <div class="col-sm-1">
-      </div>
+              ${{ pledge.payment_amount }} </h1>
+            <br>
+            {{ pledge.payment_text }}
+            <br><br>
+            <a href="{% url 'user' pledge.payer_id %}">Pledger</a>
+            {% ifequal event.owner_id user.id %}
+            {% if not pledge.confirmed %}
+            <form action="{% url 'confirm' event.id %}" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="p_id" value="{{ pledge.id }}">
+              <input type="hidden" name="u_id" value="{{ pledge.payer_id }}">
+              <input type="submit" class="btn" value="Confirm">
+            </form>
+            {% endif %}
+            {% endifequal %}
+        </li>
+        <br>
+        {%endfor%}
+      </ul>
+    </div>
+    <div class="col-sm-1">
     </div>
   </div>
   {% endblock content %}
