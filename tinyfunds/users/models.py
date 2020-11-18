@@ -30,6 +30,7 @@ class UserManager(BaseUserManager):
         return "gamerg8"
 
 class User(AbstractBaseUser, PermissionsMixin):
+
     email = models.EmailField(max_length=254, unique=True)
     name = models.CharField(max_length=254, null=True, blank=True)
     bio = models.CharField(max_length=254, null=True, blank=True)
@@ -40,6 +41,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_login = models.DateTimeField(null=True, blank=True)
     date_joined = models.DateTimeField(auto_now_add=True)
     total_donated = models.DecimalField(max_digits=8, decimal_places=2, null=False, default=0)
+    total_hours_pledged = models.DecimalField(max_digits=8, decimal_places=2, null=False, default=0)
 
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
@@ -49,13 +51,17 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_absolute_url(self):
         return "/users/%i/" % (self.pk)
-
+        
     def add_money(self, amount):
         if amount > 0:
             self.total_donated+=amount
 
+    def add_hours(self, amount):
+        if amount > 0:
+            self.total_hours_pledged+=amount
+
     def get_level(self):
-        return int((self.total_donated/10) + 1)
+        return int((self.total_donated/10 + self.total_hours_pledged) + 1)
 
     def get_level_color(self):
         level = self.get_level()

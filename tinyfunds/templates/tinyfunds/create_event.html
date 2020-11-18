@@ -11,6 +11,8 @@
 <!-- {% load socialaccount %}
 {% load static %} -->
 
+{% load crispy_forms_tags %}
+
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
 
@@ -20,11 +22,11 @@
   <li class="nav-item">
     <a class="nav-link" href="{% url 'home' %}"><strong>Home</strong></a>
   </li>
-  <li class="nav-item active">
-    <a class="nav-link active" href="{% url 'explore' %}"><strong>Explore</strong></a>
-  </li>
   <li class="nav-item">
-    <a class="nav-link" href="#"><strong>Post</strong></a>
+    <a class="nav-link" href="{% url 'explore' %}"><strong>Explore</strong></a>
+  </li>
+  <li class="nav-item active">
+    <a class="nav-link active" href="#"><strong>Post</strong></a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="{% url 'account' %}"><strong>Account</strong></a>
@@ -33,44 +35,106 @@
 {% endblock navbar %}
 {% block content %}
 
-<link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">
-<link rel="stylesheet" href="{% static 'account/style.css' %}">
+<link rel="stylesheet" href="{% static 'tinyfunds/create_event_style.css' %}">
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-sm-1">
-    </div>
-    <div class="col-sm-1">
-    </div>
-    <div class="col-sm-8">
-      <br>
-      <form action="{% url 'create_event' %}" method="post">
-        {% csrf_token %}
-        <input type="text" name="title" id="title" placeholder="Event Title..."><br><br>
-        <input type="text" name="org_name" id="org_name" placeholder="Organization Name..."><br><br>
-        <input type="text" name="event_date" id="event_date" placeholder="MM/DD/YYYY"><br><br>
-        <input type="text" name="address" id="address" placeholder="Enter the address here..."><br><br>
-        <input type="text" name="pic" id="pic" placeholder="Enter your image url here..."><br><br>
-        <input type="number" name="money_goal" id="money_goal" min="0" step=".01" placeholder="Enter goal here..."><br><br>
-        <input type="hidden" name="owner_id" id="owner_id" value="{{ user.id }}"><br><br>
-        <textarea type="text" rows="4" cols="30" name="description" id="description"
-            placeholder="Enter event description here..."></textarea><br>
-        
-          <input type="submit" class="btn" value="Post">
-    </form>
-    </div>
-    <div class="col-sm-1">
-    </div>
-    <div class="col-sm-1">
-    </div>
-  </div>
-</div>
-<div style="margin-top: 20px;">
-  {% if invalid %}
-  <b style="color: red;">
-    One or more fields contains incomplete or invalid data
-  </b>
-</div>
+  {% if form.errors %}
+	<!-- Error messaging -->
+	<div id="errors">
+		<div class="inner">
+			<p>There were some errors in the information you entered. Please correct the following:</p>
+			{{ form.non_field_errors }}
+			<ul>
+				{% for field in form %}
+					{% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+	<!-- /Error messaging -->
 {% endif %}
+  <div style="margin-top: 20px;">
+    {% if invalid %}
+    <b style="color: red;">
+      You must be logged in to post an event.
+    </b>
+  </div>
+  {% endif %}
+  </div>
+
+<form action="{% url 'create_event' %}" method="post">
+  {% csrf_token %}
+  <br>
+  <h1> <strong>New Event</strong> </h1>
+  <br>
+
+  <div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6">
+
+      <div class="container">
+
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                {{ form.title | as_crispy_field}}
+              </div>
+              <div class="col-md-6">
+                {{ form.org_name | as_crispy_field}}
+              </div>
+            </div>
+            <br><br>
+            <div class="row">
+              <div class="col-md-6">
+                {{ form.money_goal | as_crispy_field}}
+              </div>
+              <div class="col-md-6">
+                {{ form.pic | as_crispy_field}}
+              </div>
+            </div>
+            <br><br>
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-10">
+                <p>Event Description</p>
+                <textarea type="text" rows="4" cols="30" name="description" id="description"></textarea>
+              </div>
+              <div class="col-md-1"></div>
+            </div>
+            <br><br>
+            <h3>Event Date</h3>
+            <br>
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-10">
+                {{ form.date}}
+              </div>
+              <div class="col-md-1"></div>
+            </div>
+            <br><br>
+            <h3>Address</h3>
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-10 left-justified">
+                {{ form.address }}
+                {{ form.media }}
+              </div>
+              <div class="col-md-1"></div>
+            </div>
+            <br>
+            <input type="hidden" name="owner_id" id="owner_id" value="{{ user.id }}"><br><br>
+            <button type="submit" class="btn btn-primary">Post</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3"></div>
+  </div>
+
+</form>
+
 
 {% endblock content %}

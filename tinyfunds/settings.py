@@ -47,7 +47,11 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'bootstrap4',
+    'tempus_dominus',
     'paypal.standard.ipn',
+    'django_google_maps',
+    'places',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -156,11 +160,19 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+GOOGLE_MAPS_API_KEY = 'AIzaSyDRqV7DSUAEVsjemptCRDqWfLtIOpCSRxA'
+PLACES_MAPS_API_KEY='AIzaSyDRqV7DSUAEVsjemptCRDqWfLtIOpCSRxA'
+PLACES_MAP_WIDGET_HEIGHT=360
+PLACES_MAP_OPTIONS='{"center": { "lat": 38.971584, "lng": -95.235072 }, "zoom": 10}'
+PLACES_MARKER_OPTIONS='{"draggable": true}'
+
 AUTH_USER_MODEL = 'users.User'
 
 PAYPAL_RECEIVER_EMAIL = 'sb-p5rrv3690224@business.example.com'
 PAYPAL_RECIEVER_PASSWORD = 'QTWWLFE4M86FMXZJ'
 PAYPAL_TEST = True
+
+
 
 if '/app' in os.environ['HOME']:
     DEBUG = False

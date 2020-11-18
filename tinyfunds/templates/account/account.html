@@ -23,7 +23,7 @@
     <a class="nav-link" href="{% url 'explore' %}"><strong>Explore</strong></a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#"><strong>Post</strong></a>
+    <a class="nav-link" href="{% url 'create_event' %}"><strong>Post</strong></a>
   </li>
   <li class="nav-item active">
     <a class="nav-link active" href="{% url 'account' %}"><strong>Account</strong></a>
@@ -41,6 +41,9 @@
     </div>
     <div class="col-sm-3">
       <br>
+      {% if privileged == None and not user.is_authenticated %}
+            <a class="page-scroll btn btn-xl" id="oauth-button" href="{% provider_login_url 'google' %}"></a>
+      {% endif %}
       {% if privileged == False or privileged == None and user.is_authenticated %}
       {% if user.name != None and user.name != "" %}
       <h4>{{ user.name }}</h4>
@@ -51,9 +54,11 @@
       <div class="pfpic"><img src="{{ user.pfp }}"></div>
       {% endif %}
       <br>
+      {% if user.is_authenticated %}
       <form action="{% url 'editAccount' %}">
         <input class="btn" type="submit" value="Edit Account" />
-    </form>
+      </form>
+      {% endif %}
     </div>
     <div class="col-sm-7" id="user-box" style="border-color: rgb({{ user.get_level_color }})">
       <br>
@@ -68,7 +73,9 @@
         <br>
         Date Joined: {{user.date_joined}}
         <br>
-        Total Donated: {{user.total_donated}}
+        Total Donated: ${{user.total_donated}}
+        <br>
+        Total Hours Volunteered: {{user.total_hours_pledged}}
         <br>
         <p id="level" style="font-size: 18;color: rgb({{ user.get_level_color }})"> Level: {{user.get_level}}</p>
       </p>

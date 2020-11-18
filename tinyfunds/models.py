@@ -1,21 +1,30 @@
 from django.db import models
+from django_google_maps import fields as map_fields
 import datetime
+from places.fields import PlacesField
+from django.utils import timezone
+from tempus_dominus.widgets import DatePicker, TimePicker, DateTimePicker
 from django.utils import timezone
 
+
 class Event(models.Model):
-    title = models.CharField(max_length=200)
+    title = models.CharField(verbose_name="Event Name",max_length=200)
     pub_date = models.DateTimeField(auto_now_add=True)
-    org_name = models.CharField(max_length=254, null=True, blank=True)
-    description = models.CharField(max_length=254, null=True, blank=True)
-    pic = models.CharField(max_length=1024, null=False, blank=False, default="https://avatars2.githubusercontent.com/u/3195011?s=460&u=f421eadccb78b212d516b6b38cab7f2de97522e4&v=4")
-    event_date = models.DateTimeField(auto_now_add=False, null=True)
+    org_name = models.CharField(verbose_name="Organization Name",max_length=254, null=True, blank=True)
+    description = models.CharField(verbose_name="Event Description", max_length=4096, null=True, blank=True)
+    pic = models.CharField(verbose_name="Event Picture", max_length=1024, null=False, blank=False, default="https://avatars2.githubusercontent.com/u/3195011?s=460&u=f421eadccb78b212d516b6b38cab7f2de97522e4&v=4")
+    date = models.DateTimeField()
     owner_id = models.IntegerField(null=False, default=1)
-    address = models.CharField(max_length=1024, null=True) 
-    money_goal = models.DecimalField(max_digits=8, decimal_places=2, null=False, default=0)
+    address = PlacesField(verbose_name="Event Address", blank=True)
+    money_goal = models.DecimalField(verbose_name="Donation Goal", max_digits=8, decimal_places=2, null=False, default=0)
     money_received = models.DecimalField(max_digits=8, decimal_places=2, null=False, default=0)
+    hours_received = models.DecimalField(max_digits=8, decimal_places=2, null=False, default=0)
 
     def add_money(self, amount):
         self.money_received += amount
+
+    def add_hours(self, amount):
+        self.hours_received += amount
 
     def money_remaining(self):
         return self.money_goal-self.money_received
@@ -48,7 +57,8 @@ class Pledge(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     payer_id = models.IntegerField(null=False, default=1)
     payment_text = models.CharField(max_length = 1024)
-    payment_amount = models.DecimalField(max_digits=8, decimal_places=2)
+    payment_amount = models.DecimalField(max_digits=8, decimal_places=2, null=True)
+    hours_amount = models.DecimalField(max_digits=8, decimal_places=2, null=True)
     date = models.DateTimeField(auto_now_add=True)
     confirmed = models.BooleanField(null=False, default=False)
 

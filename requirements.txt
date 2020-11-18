@@ -5,11 +5,15 @@ certifi==2020.6.20
 chardet==3.0.4
 defusedxml==0.6.0
 dj-database-url==0.5.0
+dj-places==4.0.0
 Django==3.1.1
 django-allauth==0.42.0
 django-bootstrap4==2.3.0
+django-crispy-forms==1.9.2
+django-google-maps==0.12.2
 django-heroku==0.3.1
 django-paypal==1.0.0
+django-tempus-dominus==5.1.2.13
 gunicorn==20.0.4
 idna==2.10
 isort==5.5.4

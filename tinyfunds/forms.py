@@ -1,10 +1,25 @@
 from django import forms
 from .models import Event
-
-class DateForm(forms.Form):
-    date = forms.DateTimeField(input_formats=['%d/%m/%Y %H:%M'])
-
+from datetime import datetime
+from tempus_dominus.widgets import DatePicker, TimePicker, DateTimePicker
+    
 class CreateEventForm(forms.ModelForm):
+
     class Meta:
         model = Event
-        fields = ['title', 'org_name', 'event_date', 'description', 'pic', 'owner_id', 'address', 'money_goal']
+        fields = ['title', 'org_name', 'description', 'pic', 'date', 'address', 'money_goal', 'owner_id', 'money_goal']
+        widgets = {
+            'date': DateTimePicker(
+            options={
+                'inLine': True,
+                'useCurrent': True,
+                'collapse': False,
+                'sideBySide': True,
+                'format': 'MM/DD/YYYY HH:mm',
+            },
+            attrs={
+                'append': 'fa fa-calendar',
+                'icon_toggle': True,
+            }
+        ),
+        }

@@ -32,8 +32,11 @@ urlpatterns = [
     path('user/<int:pk>/', user_views.user, name='user'),
     path('event/<int:pk>/', views.EventView.as_view(), name='event'),
     path('event/edit/<int:pk>/', views.event, name='edit_event'),
-    path('event/pledge/<int:pk>/', views.pledge, name='pledge'),
+    path('event/pledge/hours/<int:pk>/', views.pledge_hours, name='pledge_hours'),
+    path('event/pledge/donation/<int:pk>/', views.pledge, name='pledge'),
     path('event/pledge/<int:pk>/confirm/', views.confirm, name='confirm'),
+    path('event/confirm_paypal/', views.confirm_paypal, name='confirm_paypal'),
     path('event/donate/<int:pk>/<int:user_id>', views.donate, name='donate_event'),
-    url(r'^paypal/', include('paypal.standard.ipn.urls')),
+    path('checkout/<int:pk>', views.checkout, name="checkout"),
+    #url(r'^paypal/', include('paypal.standard.ipn.urls')),
 ]

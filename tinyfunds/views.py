@@ -6,6 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from .models import Event, Pledge
 from .users.models import User
+from .models import Event
 from django.http import Http404
 from django.urls import reverse, reverse_lazy
 from django.views import generic
@@ -43,7 +44,7 @@ class EventView(generic.DetailView):
 class CreateEventView(CreateView):
 
     template_name = 'tinyfunds/create_event.html'
-    form_class = CreateEventForm 
+    form_class = CreateEventForm
 
 
     def get(self, request, *args, **kwargs):
@@ -99,6 +100,23 @@ def pledge(request, pk):
         event.save()
     return HttpResponseRedirect(reverse('event', args=[pk]))
 
+def pledge_hours(request, pk):
+    event = get_object_or_404(Event, id=pk)
+    if (request.method == "POST"):
+        user_id = request.POST['user_id'].strip()
+        hours_amount = Decimal(request.POST['amount'].strip())
+        payment_text = request.POST['text'].strip()
+        p = Pledge(event=event, payer_id=user_id, payment_text=payment_text, hours_amount=hours_amount)
+        p.save()
+        event.pledge_set.add(p)
+        event.save()
+    return HttpResponseRedirect(reverse('event', args=[pk]))
+
+def checkout(request, pk):
+    event = get_object_or_404(Event, id=pk)
+    context = {'event': event}
+    return render(request, 'tinyfunds/donate.html', context)
+
 def confirm(request, pk):
     event = get_object_or_404(Event, id=pk)
     if (request.method == "POST"):
@@ -107,12 +125,37 @@ def confirm(request, pk):
         u_id = Decimal(request.POST['u_id'].strip())
         u = get_object_or_404(User, id=u_id)
         p.confirm()
-        event.add_money(p.payment_amount)
-        u.add_money(p.payment_amount)
+        if (p.payment_amount != None):
+            event.add_money(p.payment_amount)
+            u.add_money(p.payment_amount)
+        else:
+            event.add_hours(p.hours_amount)
+            u.add_hours(p.hours_amount)
         p.save()
         event.save()
         u.save()
     return HttpResponseRedirect(reverse('event', args=[pk]))
+
+def confirm_paypal(request):
+    if (request.method == "POST"):
+        user_id = Decimal(request.POST['u_id'].strip())
+        u = get_object_or_404(User, pk=user_id)
+        event = get_object_or_404(Event, pk=request.POST['dono_id'].strip())
+        payment_amount = Decimal(request.POST['dono_amount'])
+        payment_text = "Paypal donation!"
+        p = Pledge(event=event, payer_id=user_id, payment_text=payment_text, payment_amount=payment_amount)
+        p.confirm()
+        if (p.payment_amount != None):
+            event.add_money(p.payment_amount)
+            u.add_money(p.payment_amount)
+        else:
+            event.add_hours(p.hours_amount)
+            u.add_hours(p.hours_amount)
+        p.save()
+        u.save()
+        event.pledge_set.add(p)
+        event.save()
+    return HttpResponseRedirect(reverse('event', args=[request.POST['dono_id']]))
 
 def donate(request, pk, user_id):
     event = get_object_or_404(Event, id=pk)
