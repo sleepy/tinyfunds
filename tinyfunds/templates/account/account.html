@@ -73,7 +73,9 @@
         <br>
         Date Joined: {{user.date_joined}}
         <br>
-        Total Donated: {{user.total_donated}}
+        Total Donated: ${{user.total_donated}}
+        <br>
+        Total Hours Volunteered: {{user.total_hours_pledged}}
         <br>
         <p id="level" style="font-size: 18;color: rgb({{ user.get_level_color }})"> Level: {{user.get_level}}</p>
       </p>

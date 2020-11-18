@@ -62,12 +62,12 @@ class EventsTest(TestCase):
     def test_create_event(self):
         self.assertFalse(Event.objects.exists()) # No objects currently exist
 
-        testevent = Event(title="New Event",pub_date=timezone.now())
+        testevent = Event(title="New Event",pub_date=timezone.now(), date=timezone.now())
         testevent.save()
         self.assertTrue(Event.objects.exists()) # Event was created
 
     def test_event_publish_date(self):
-        old_event = Event(title="Old Event",pub_date=timezone.now()-datetime.timedelta(days=30))
+        old_event = Event(title="Old Event",pub_date=timezone.now()-datetime.timedelta(days=30), date=timezone.now())
         old_event.save() # save to SQL
 
         self.assertTrue(Event.objects.filter(title="Old Event").exists()) #Event Exists
@@ -75,10 +75,10 @@ class EventsTest(TestCase):
         self.assertFalse(Event.objects.filter(pub_date__gte=timezone.now()).exists()) # Event is not on or before today
 
     def test_event_relative_publish_dates(self):
-        old_event = Event(title="Old Event",pub_date=timezone.now()-datetime.timedelta(days=30))
+        old_event = Event(title="Old Event",pub_date=timezone.now()-datetime.timedelta(days=30), date=timezone.now())
         old_event.save() # save to SQL
 
-        new_event = Event(title="New Event",pub_date=timezone.now()+datetime.timedelta(days=30))
+        new_event = Event(title="New Event",pub_date=timezone.now()+datetime.timedelta(days=30), date=timezone.now())
         new_event.save() # save to SQL
 
         self.assertTrue(Event.objects.filter(title="Old Event").exists()) #Old Event Exists
@@ -91,7 +91,7 @@ class EventsTest(TestCase):
         self.assertTrue(Event.objects.filter(title="Old Event")[0].pub_date < Event.objects.filter(title="New Event")[0].pub_date)
 
     def test_money_mathself(self):
-        cheap_event = Event(title="I need 5 bucks",org_name="Slenderman",money_goal=5.00)
+        cheap_event = Event(title="I need 5 bucks",org_name="Slenderman",money_goal=5.00, date=timezone.now())
         cheap_event.save() #A test Event with a set money goal
 
         self.assertTrue(cheap_event.money_received == 0) # Make sure the event was prepped properly
@@ -107,7 +107,7 @@ class EventsTest(TestCase):
         
 
     def test_money_mathself_big(self):
-        cheap_event = Event(title="I need 5000 bucks",org_name="Slenderman",money_goal=5000.00)
+        cheap_event = Event(title="I need 5000 bucks",org_name="Slenderman",money_goal=5000.00, date=timezone.now())
         cheap_event.save() #A test Event with a set money goal
 
         self.assertTrue(cheap_event.money_received == 0) # Make sure the event was prepped properly
@@ -123,7 +123,7 @@ class EventsTest(TestCase):
 
 
     def test_money_mathself_3(self):
-        cheap_event = Event(title="I need 20 bucks",org_name="Slenderman",money_goal=20.00)
+        cheap_event = Event(title="I need 20 bucks",org_name="Slenderman",money_goal=20.00, date=timezone.now())
         cheap_event.save() #A test Event with a set money goal
 
         self.assertTrue(cheap_event.money_received == 0) # Make sure the event was prepped properly
@@ -140,7 +140,7 @@ class EventsTest(TestCase):
         
         
     def test_money_math_micro(self):
-        cheap_event = Event(title="I need 20 bucks",org_name="Slenderman",money_goal=20.00)
+        cheap_event = Event(title="I need 20 bucks",org_name="Slenderman",money_goal=20.00, date=timezone.now())
         cheap_event.save() #A test Event with a set money goal
 
         self.assertTrue(cheap_event.money_received == 0) # Make sure the event was prepped properly
@@ -157,7 +157,7 @@ class EventsTest(TestCase):
 
 
     def test_money_surplus(self):
-        cheap_event = Event(title="I need 5 bucks",org_name="Slenderman",money_goal=5.00)
+        cheap_event = Event(title="I need 5 bucks",org_name="Slenderman",money_goal=5.00, date=timezone.now())
         cheap_event.save() #A test Event with a set money goal
         database_cheap_event = Event.objects.filter(title="I need 5 bucks")[0]
         database_cheap_event.add_money(Decimal('2.70')) # Simulating a pledge
@@ -170,7 +170,7 @@ class EventsTest(TestCase):
         self.assertAlmostEqual(database_cheap_event.money_remaining(), Decimal('-1.20'))
 
     def test_no_money_surplus(self):
-        cheap_event = Event(title="I need 5 bucks",org_name="Slenderman",money_goal=5.00)
+        cheap_event = Event(title="I need 5 bucks",org_name="Slenderman",money_goal=5.00, date=timezone.now())
         cheap_event.save() #A test Event with a set money goal
         database_cheap_event = Event.objects.filter(title="I need 5 bucks")[0]
         database_cheap_event.add_money(Decimal('2.70')) # Simulating a pledge
@@ -188,7 +188,7 @@ class EventsTest(TestCase):
 
     def test_ordered_pledges_and_pledge_add(self):
         #Basic Event Setup
-        cheap_event = Event(title="I need 5 bucks", org_name="Slenderman", money_goal=5.00)
+        cheap_event = Event(title="I need 5 bucks", org_name="Slenderman", money_goal=5.00, date=timezone.now())
         cheap_event.save() #A test Event with a set money goal
         database_cheap_event = Event.objects.filter(title="I need 5 bucks")[0]
 
@@ -214,7 +214,7 @@ class EventsTest(TestCase):
         self.assertTrue(poor_pledge == database_cheap_event.ordered_pledges()[1]) # poor pledge is the oldest pledge
 
     def test_goal_met(self):
-        goalevent = Event(title="10.40 dollar goal", org_name="moneylenders", money_goal=10.40)
+        goalevent = Event(title="10.40 dollar goal", org_name="moneylenders", money_goal=10.40, date=timezone.now())
         goalevent.save() #A test Event with a set money goal
         database_goalevent = Event.objects.filter(title="10.40 dollar goal")[0]
         
@@ -230,7 +230,7 @@ class EventsTest(TestCase):
         self.assertTrue(database_goalevent.met()) # should still be true even above the goal.
 
     def test_goal_not_met_double(self):
-        goalevent = Event(title="10.40 dollar goal", org_name="moneylenders", money_goal=10.40)
+        goalevent = Event(title="10.40 dollar goal", org_name="moneylenders", money_goal=10.40, date=timezone.now())
         goalevent.save() #A test Event with a set money goal
         database_goalevent = Event.objects.filter(title="10.40 dollar goal")[0]
         
@@ -246,7 +246,7 @@ class EventsTest(TestCase):
         self.assertTrue(database_goalevent.met()) # should now be true after multiple adds
 
     def test_goal_met_many(self):
-        goalevent = Event(title="10.40 dollar goal", org_name="moneylenders", money_goal=10.40)
+        goalevent = Event(title="10.40 dollar goal", org_name="moneylenders", money_goal=10.40, date=timezone.now())
         goalevent.save() #A test Event with a set money goal
         database_goalevent = Event.objects.filter(title="10.40 dollar goal")[0]
         
@@ -270,7 +270,7 @@ class EventsTest(TestCase):
 
 class PledgeModelTest(TestCase):
     def test_create_pledge(self):
-        blandevent = Event(title="Blank Test Event",pub_date=timezone.now()) #Blank event for testing pledge connections
+        blandevent = Event(title="Blank Test Event",pub_date=timezone.now(), date=timezone.now()) #Blank event for testing pledge connections
         blandevent.save()
         
         self.assertFalse(Pledge.objects.exists())
@@ -281,7 +281,7 @@ class PledgeModelTest(TestCase):
         self.assertTrue(Pledge.objects.all()[0].id == newpledge.id) #Newpledge is the only pledge created (no duplicates)
 
     def test_confirm_pledge(self):
-        blandevent = Event(title="Blank Test Event",pub_date=timezone.now()) #Blank event for testing pledge connections
+        blandevent = Event(title="Blank Test Event",pub_date=timezone.now(), date=timezone.now()) #Blank event for testing pledge connections
         blandevent.save()
         
         newpledge = Pledge(event=blandevent,payment_text='a donation',payment_amount=5.65,confirmed=False) #blank test pledge
@@ -347,7 +347,7 @@ class VisitViewsTest(TestCase):
         newuser = User(email="newuseremail@email.com", name="newuser's_name",bio="New User's Bio. I like Kittens.", is_staff=False, last_login=timezone.now())
         newuser.save()
         # Create a dummy Event #
-        testevent = Event(title="New Event",pub_date=timezone.now())
+        testevent = Event(title="New Event",pub_date=timezone.now(), date=timezone.now())
         testevent.save()
         ####################
         response = client.get(reverse('event', kwargs={'pk' : 1})) # First Event key.
@@ -356,7 +356,7 @@ class VisitViewsTest(TestCase):
 
     def test_edit_event_page_view(self):
         # Create a dummy Event #
-        testevent = Event(title="New Event",pub_date=timezone.now())
+        testevent = Event(title="New Event",pub_date=timezone.now(), date=timezone.now())
         testevent.owner_id = self.user.id  # Force user to be the specific user
         testevent.save()
         ##################
@@ -372,7 +372,7 @@ class VisitViewsTest(TestCase):
 
     def test_confirm_pledge_page_view(self):
         # Create a dummy Event #
-        testevent = Event(title="New Event",pub_date=timezone.now())
+        testevent = Event(title="New Event",pub_date=timezone.now(), date=timezone.now())
         testevent.owner_id = self.user.id  # Force user to be the specific user
         testevent.save()
         
