@@ -37,6 +37,12 @@ class Event(models.Model):
         return (self.money_goal < self.money_received)
     surplus.boolean = True
 
+    def percentage(self):
+        if (self.met()):
+            return 100
+        else:
+            return int(self.money_received*100/self.money_goal)
+
     def ordered_pledges(self):
         return self.pledge_set.order_by('-date')
 
