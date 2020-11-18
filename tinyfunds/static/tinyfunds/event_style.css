@@ -10,6 +10,9 @@ img {
     height: 300px;
 }
 
+p {
+    text-align: center !important;
+}
 .col-sm-3 {
     background-color: #ffffff;
     width: 10%;
@@ -21,6 +24,7 @@ img {
     border-radius: 30px;
     height: 700px;
     border-color: #f1f6f9;
+    text-align: center !important;
 }
 .col-sm-4 {
     background-color: #ffffff;
@@ -33,10 +37,56 @@ img {
     border-radius: 30px;
     height: 700px;
     border-color: #f1f6f9;
+    text-align: center !important;
+}
+
+.col-sm-8 {
+    background-color: #ffffff;
+    width: 100%;
+    border-width:10px;
+    height: 200px;
+    border-top-style: solid;
+    border-right-style: solid;
+    border-left-style: solid;
+    border-bottom-style: solid;
+    border-radius: 10px;
+    border-color: #14274e !important;
+    border-color: #f1f6f9;
+    color: #C20114;
+    text-align: center !important;
+}
+
+.calendarDay {
+    font-size: 80px;
+    font-weight: 500;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+.calendarTime {
+    font-size: 40px;
+    font-weight: 200;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+.row.inline {
+    text-align: center !important;
+    display: grid;
+}
+.row.inline.shaded {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    background-color: #D2DADC !important;
+    text-align: center !important;
 }
 
 .btn {
     color: #9ba4b4;
+}
+
+p {
+    text-align: center !important;
 }
 
 
