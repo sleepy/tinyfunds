@@ -150,7 +150,7 @@
         <form action="{% url 'pledge_hours' event.id %}" method="post" id="pledge_hours" style="display:none">
             {% csrf_token %}
             <input type="hidden" name="user_id" value="{{ user.id }}">
-            <input type="number" required name="amount" id="amount" min="0" step=".01" placeholder="Amount" style="width: 150px;"><br><br>
+            <input type="number" required name="amount" id="amount" min="0" step=".01" placeholder="Number of hours..." style="width: 150px;"><br><br>
             <textarea type="text" rows="4" cols="20" name="text" id="description"
                  placeholder="Enter pledge text..."></textarea><br>
              <input type="submit" class="btn" value="Pledge!">
@@ -159,7 +159,7 @@
         <form action="{% url 'pledge' event.id %}" method="post" id="pledge_money" style="display:none;">
             {% csrf_token %}
             <input type="hidden" name="user_id" value="{{ user.id }}">
-            <input type="number" required name="amount" id="amount" min="0" step=".01" placeholder="Number of hours..." style="width: 150px;"><br><br>
+            <input type="number" required name="amount" id="amount" min="0" step=".01" placeholder="Amount" style="width: 150px;"><br><br>
             <textarea type="text" rows="4" cols="20" name="text" id="description"
                      placeholder="Enter pledge text..."></textarea><br>
              <input type="submit" class="btn" value="Pledge!"><br>
@@ -182,10 +182,10 @@
                     {{ pledge.hours_amount }} hr</h1>
                 {% endif %}
                 <br>
-                {% ifequal pledge.payment_text None %}
+                {% if pledge.payment_text %}
                 {{ pledge.payment_text }}
                 <br><br>
-                {% endifequal %}
+                {% endif %}
                 <a href="{% url 'user' pledge.payer_id %}">Pledger</a>
                 {% ifequal event.owner_id user.id %}
                 {% if not pledge.confirmed %}
