@@ -43,7 +43,7 @@
   <div class="row">
     <div class="col-sm-1">
     </div>
-    <div class="col-sm-3">
+    <div class="col-sm-3" style="height: fit-content">
       </p>
       <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
       <script
@@ -63,7 +63,7 @@
       <br>
       
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-4" style="height: fit-content">
       <div class="pfpic"><img src="{{ event.pic }}"></div>
       <br>
       <p>
@@ -98,12 +98,13 @@
             <input type="submit" value="Save">
             {{ form.media }}
           </form>
+          <br><br>
         </div>
         <p>
       </div>
       {% endifequal %}
       </div>
-    <div class="col-sm-3">
+    <div class="col-sm-3" style="height: fit-content">
         <p>
             <h2> Goal: ${{event.money_goal}} </h2>
             <br>
@@ -145,7 +146,7 @@
                 }
             }
         </script>
-        <button onclick="location.href={% url 'checkout' event.pk  %}">Donate</button>
+        <a href={% url 'checkout' event.pk  %}>Donate</a>
         <br>
         <button onclick="togglePledge('money')">Pledge a donation!</button>
         <br>
@@ -173,8 +174,10 @@
 
 
         <ul id="pledges" class="list-group list-group-flush" style="margin-top:12px; height: calc(100vh - 295px); overflow-y: auto;">
+            <br>
+            <br>
             {% for pledge in event.ordered_pledges %}
-            <li class="list-group-item"> 
+            <li class="list-group-item" style="border: 5px;"> 
                 {% if pledge.confirmed %}
                 <h1 style="color: green"> 
                 {% else %}
@@ -200,7 +203,7 @@
                 {% endif %}
                 {% endifequal %}
             </li>
-        <br>
+            <br>
         {%endfor%}
       </ul>
     <div class="col-sm-1">
