@@ -63,59 +63,54 @@
       <br>
       <hr>
       <br>
-      <div class="row">
-        <div class="col-sm-1"></div>
-        <div class="col-sm-10">
-            <div class="calendar">
-              <font size="+3">
-              <strong>
-                <div class="row inline shaded">
-                  {% if event.date.month == 1%}
-                  January
-                  {% elif event.date.month == 2%}
-                  February
-                  {% elif event.date.month == 3%}
-                  March
-                  {% elif event.date.month == 4%}
-                  April
-                  {% elif event.date.month == 5%}
-                  May
-                  {% elif event.date.month == 6%}
-                  June
-                  {% elif event.date.month == 7%}
-                  July
-                  {% elif event.date.month == 8%}
-                  August
-                  {% elif event.date.month == 9%}
-                  September
-                  {% elif event.date.month == 10%}
-                  October
-                  {% elif event.date.month == 11%}
-                  November
-                  {% elif event.date.month == 12%}
-                  December
-                  {% endif %}
-                </div>
-              </strong>
-              </font>
-              <div class="row inline">
-                  <div class="calendarDay">
-                    {{ event.date.day }}
-                  </div>
-                  <br>
-              </div>
+      <div class="row calendar">
+        <div class="calendarPage">
+          <font size="+3">
+          <strong>
+            <div class="row inline shaded calendarMonth">
+              {% if event.date.month == 1%}
+              January
+              {% elif event.date.month == 2%}
+              February
+              {% elif event.date.month == 3%}
+              March
+              {% elif event.date.month == 4%}
+              April
+              {% elif event.date.month == 5%}
+              May
+              {% elif event.date.month == 6%}
+              June
+              {% elif event.date.month == 7%}
+              July
+              {% elif event.date.month == 8%}
+              August
+              {% elif event.date.month == 9%}
+              September
+              {% elif event.date.month == 10%}
+              October
+              {% elif event.date.month == 11%}
+              November
+              {% elif event.date.month == 12%}
+              December
+              {% endif %}
             </div>
-              <div class="calendarTime">
-                {{ event.date.time }}
+          </strong>
+          </font>
+          <div class="row inline">
+              <div class="calendarDay">
+                {{ event.date.day }}
               </div>
-            </div>
-        <div class="col-sm-1"></div>
+          </div>
+        </div>
+          <div class="calendarTime">
+            {{ event.date.time }}
+          </div>
       </div>
       <br>
     </div>
     <div class="col-sm-4" style="height: fit-content">
       <div class="pfpic"><img src="{{ event.pic }}"></div>
-      <br>
+      <hr>
       <p>
         {{ event.description }}
       </p>
