@@ -49,10 +49,14 @@
                     <br>
                     <li class="list-group-item"> 
                         <a class="nav-link" href="{% url 'event' event.id %}">
-                            <font size="+5">{{event.title}}</font>
+                            <font size="+5">
+                                <p>{{event.title}}</p>
+                            </font>
                         </a>
                         <br>
-                        {{event.description}}
+                        <p>
+                            {{event.description}}
+                        </p>
                         <br>
                     </li>
                     {% endif %}

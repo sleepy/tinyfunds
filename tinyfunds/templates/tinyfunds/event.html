@@ -37,7 +37,9 @@
 <link rel="stylesheet" href="{% static 'tinyfunds/event_style.css' %}">
 
 <h4><strong>
-    <font size='+3'>{{ event.title }}</font>
+    <font size='+3'>
+        <p style="max-width: 80%; margin-left: auto; margin-right: auto; text-align: center;">{{ event.title }}</p>
+    </font>
   </strong></h4>
 <div class="container-fluid">
   <div class="row">
@@ -128,7 +130,7 @@
       <font style="font-weight: 150">
           <p>{{ event.percentage }}% of the way to their goal! ${{ event.remaining }} to go!</p>
       </font>
-      <font size="+1" style="font-weight:500">
+      <font size="+1" style="font-weight:500;">
         <p>
           {{ event.description }}
         </p>
@@ -188,7 +190,7 @@
       <form action="{% url 'pledge_hours' event.id %}" method="post" id="pledge_hours" style="display:none">
         {% csrf_token %}
         <input type="hidden" name="user_id" value="{{ user.id }}">
-        <input type="number" required name="amount" id="amount" min="0" step=".01" placeholder="Number of hours..."
+        <input type="number" required name="amount" id="amount" min="0" max="999999.99" step=".01" placeholder="Number of hours..."
           style="width: 150px;"><br><br>
         <textarea type="text" rows="4" cols="20" name="text" id="description"
           placeholder="Enter pledge text..."></textarea><br>
@@ -198,7 +200,7 @@
       <form action="{% url 'pledge' event.id %}" method="post" id="pledge_money" style="display:none;">
         {% csrf_token %}
         <input type="hidden" name="user_id" value="{{ user.id }}">
-        <input type="number" required name="amount" id="amount" min="0" step=".01" placeholder="Amount..."
+        <input type="number" required name="amount" id="amount" min="0" max="999999.99" step=".01" placeholder="Amount..."
           style="width: 150px;"><br><br>
         <textarea type="text" rows="4" cols="20" name="text" id="description"
           placeholder="Enter pledge text..."></textarea><br>

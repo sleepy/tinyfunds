@@ -21,10 +21,19 @@ class Event(models.Model):
     hours_received = models.DecimalField(max_digits=8, decimal_places=2, null=False, default=0)
 
     def add_money(self, amount):
-        self.money_received += amount
+        print(amount)
+        if amount > 0:
+            if (self.money_received + amount >= 999999.99):
+                self.money_received = 999999.99
+            else:
+                self.money_received+=amount
 
     def add_hours(self, amount):
-        self.hours_received += amount
+        if amount > 0:
+            if (self.hours_received + amount >= 999999.99):
+                self.hours_received = 999999.99
+            else:
+                self.hours_received+=amount
 
     def money_remaining(self):
         return self.money_goal-self.money_received

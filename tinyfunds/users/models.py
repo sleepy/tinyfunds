@@ -54,11 +54,17 @@ class User(AbstractBaseUser, PermissionsMixin):
         
     def add_money(self, amount):
         if amount > 0:
-            self.total_donated+=amount
+            if (self.total_donated + amount >= 999999.99):
+                self.total_donated = 999999.99
+            else:
+                self.total_donated+=amount
 
     def add_hours(self, amount):
         if amount > 0:
-            self.total_hours_pledged+=amount
+            if (self.total_hours_pledged + amount >= 999999.99):
+                self.total_hours_pledged = 999999.99
+            else:
+                self.total_hours_pledged+=amount
 
     def get_level(self):
         return int((self.total_donated/10 + self.total_hours_pledged) + 1)

@@ -54,10 +54,11 @@
       <div class="pfpic"><img src="{{ user.pfp }}"></div>
       {% endif %}
       <br>
-      {% if user.is_authenticated %}
+      {% if user.is_authenticated and privileged == None %}
       <form action="{% url 'editAccount' %}">
         <input class="btn" type="submit" value="Edit Account" />
       </form>
+      <br>
       {% endif %}
     </div>
     <div class="col-sm-7" id="user-box" style="border-color: rgb({{ user.get_level_color }})">
@@ -76,7 +77,7 @@
         Total Donated: ${{user.total_donated}}
         <br>
         Total Hours Volunteered: {{user.total_hours_pledged}}
-        <br>
+        <br><br><br>
         <p id="level" style="font-size: 18;color: rgb({{ user.get_level_color }})"> Level: {{user.get_level}}</p>
       </p>
     </div>

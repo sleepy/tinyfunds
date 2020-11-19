@@ -28,6 +28,9 @@ h1 {
     margin:0px;
     color: 14274e !important;
 }
+p {
+    word-break: break-word;
+}
 
 .btn {
     background-color: white;
