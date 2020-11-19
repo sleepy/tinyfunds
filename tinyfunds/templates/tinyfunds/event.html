@@ -157,31 +157,10 @@
       </font>
       <br>
       {% ifequal event.owner_id user.id %}
-      <button class="btn" onclick="toggleEdit()">Edit Event</button>
+      <form action="{% url 'edit_event' event.id %}">
+        <input type="submit" value="Edit Event" />
+    </form>
       <br><br>
-      <script>
-        function toggleEdit() {
-          var x = document.getElementById("editEvent");
-          if (x.style.display === "none") {
-            x.style.display = "inline-flex";
-          } else {
-            x.style.display = "none";
-          }
-        }
-      </script>
-      <div id="editEvent" style='display: none'>
-        <div class="row">
-          <br>
-          <form action="{% url 'edit_event' event.id %}" method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input class="btn" type="submit" value="Save">
-            {{ form.media }}
-          </form>
-          <br><br>
-        </div>
-        <p>
-      </div>
       {% endifequal %}
     </div>
 
@@ -265,7 +244,7 @@
               {% if pledge.payment_amount %}
               ${{ pledge.payment_amount }} </h1>
             {% else %}
-            {{ pledge.hours_amount }} hr</h1>
+            {{ pledge.hours_amount }} hrs</h1>
           {% endif %}
           <br>
           {% if pledge.payment_text %}
