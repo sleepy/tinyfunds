@@ -11,8 +11,35 @@ img {
 }
 
 p {
+    padding-top: 0px;
     text-align: center !important;
 }
+
+#myProgress {
+    border-width:5px;
+    border-top-style: solid;
+    border-right-style: solid;
+    border-left-style: solid;
+    border-bottom-style: solid;
+    border-radius: 10px;
+    border-color: #ffffff;
+    width: 100%;
+    background-color: #D2DADC;
+  }
+  
+#myBar {
+border-width:5px;
+border-top-style: solid;
+border-right-style: solid;
+border-left-style: solid;
+border-bottom-style: solid;
+border-radius: 5px;
+border-color: #0CCA4A;
+width: 1%;
+height: 30px;
+background-color: #0CCA4A;
+}
+
 .col-sm-3 {
     background-color: #ffffff;
     width: 10%;
@@ -24,6 +51,7 @@ p {
     border-radius: 30px;
     border-color: #f1f6f9;
     text-align: center !important;
+    height: fit-content;
 }
 .col-sm-4 {
     background-color: #ffffff;
@@ -37,6 +65,7 @@ p {
     height: 700px;
     border-color: #f1f6f9;
     text-align: center !important;
+    height: fit-content;
 }
 
 .col-sm-8 {
@@ -86,10 +115,6 @@ p {
     border-color: grey;
     border-width: 1px;
     margin-bottom: 10px;
-}
-
-p {
-    text-align: center !important;
 }
 
 
