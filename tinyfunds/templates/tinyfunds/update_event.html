@@ -64,10 +64,10 @@
   {% endif %}
   </div>
 
-<form action="{% url 'create_event' %}" method="post">
+<form action="{% url 'edit_event' event.id %}" method="post">
   {% csrf_token %}
   <br>
-  <h1> <strong>New Event</strong> </h1>
+  <h1> <strong>Edit Event</strong> </h1>
   <br>
 
   <div class="row">

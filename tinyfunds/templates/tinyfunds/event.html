@@ -140,9 +140,9 @@
       </font>
       <br>
       {% ifequal event.owner_id user.id %}
-      <form action="{% url 'edit_event' event.id %}">
-        <input type="submit" value="Edit Event" />
-    </form>
+      <a class="btn" href="{% url 'edit_event' event.id %}">Edit Event</a>
+      <br>
+      <a class="btn delete" href="{% url 'delete' event.id %}">Delete Event</a>
       <br><br>
       {% endifequal %}
     </div>

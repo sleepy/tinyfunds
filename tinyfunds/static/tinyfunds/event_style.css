@@ -140,7 +140,10 @@ background-color: #0CCA4A;
     border-width: 1px;
     margin-bottom: 10px;
 }
-
+.delete {
+    background-color: rgb(220, 20, 20);
+    color: white;
+}
 
 body {
     height: 100vh;

@@ -190,16 +190,22 @@ def donate(request, pk, user_id):
     return render(request, "tinyfunds/payment.html", context)
   
 def update_view(request, pk): 
-    context ={} 
-  
-    obj = get_object_or_404(Event, id = pk)
-
+    obj = get_object_or_404(Event, id=pk)
     form = CreateEventForm(request.POST or None, instance = obj) 
-  
-    if form.is_valid(): 
-        form.save() 
-        HttpResponseRedirect(reverse('event', args=[pk]))
-  
-    context["form"] = form 
-  
-    return render(request, "tinyfunds/update_event.html", context)
+    context = {
+        "form": form,
+        "event": obj,
+    }
+      
+    if (request.method == "POST"):
+        if form.is_valid(): 
+            form.save() 
+        return HttpResponseRedirect(reverse('event', args=[pk]))
+    else:
+        return render(request, "tinyfunds/update_event.html", context)
+
+def delete(request, pk):
+    obj = get_object_or_404(Event, id=pk)
+    obj.delete()
+    return HttpResponseRedirect(reverse('explore'))
+

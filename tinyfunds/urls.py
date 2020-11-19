@@ -17,7 +17,6 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import url
 from django.views.generic import TemplateView
-from .views import update_view
 from .users import views as user_views
 from . import views
 
@@ -31,7 +30,8 @@ urlpatterns = [
     path('user/<int:pk>/', user_views.user, name='user'),
     path('event/<int:pk>/', views.EventView.as_view(), name='event'),
     path('explore/new', views.CreateEventView.as_view(), name='create_event'),
-    path('event/edit/<int:pk>/', update_view, name='edit_event'),
+    path('event/edit/<int:pk>/', views.update_view, name='edit_event'),
+    path('event/delete/<int:pk>/', views.delete, name='delete'),
     path('event/pledge/hours/<int:pk>/', views.pledge_hours, name='pledge_hours'),
     path('event/pledge/donation/<int:pk>/', views.pledge, name='pledge'),
     path('event/pledge/<int:pk>/confirm/', views.confirm, name='confirm'),
