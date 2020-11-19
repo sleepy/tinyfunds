@@ -2,7 +2,7 @@ import random
 from decimal import Decimal
 
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.template import loader
 from .models import Event, Pledge
 from .users.models import User
@@ -10,7 +10,7 @@ from .models import Event
 from django.http import Http404
 from django.urls import reverse, reverse_lazy
 from django.views import generic
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.utils import timezone
 from django.shortcuts import render
 from django.conf import settings
@@ -51,18 +51,27 @@ class CreateEventView(CreateView):
         context = {'form': CreateEventForm()}
         return render(request, 'tinyfunds/create_event.html', context=context)
     
-    def post(self, request, *args, **kwargs):
-        form = CreateEventForm(request.POST)
-        if form.is_valid():
-            event = form.save()
-            event.save()
+
+    def post(self, request, id=None, template_name='tinyfunds/create_event.html'):
+        if id:
+            event = get_object_or_404(Event, pk=id)
+            if event.user != request.user:
+                return HttpResponseForbidden()
+        else:
+            event = Event()
+
+        form = CreateEventForm(request.POST or None, instance=event)
+        if request.POST and form.is_valid():
+            form.save()
+
+            # Save was successful, so redirect to another page
             return HttpResponseRedirect(reverse('event', args=[event.id]))
-        
+
         return render(request, 'tinyfunds/create_event.html', {
                 'form':form,
                 'invalid':True,
             })
-
+    
 
 def event(request, pk):
     event = get_object_or_404(Event, id=pk)
@@ -179,4 +188,24 @@ def donate(request, pk, user_id):
                 "paying_user": user,
             }
     return render(request, "tinyfunds/payment.html", context)
+  
+def update_view(request, pk): 
+    obj = get_object_or_404(Event, id=pk)
+    form = CreateEventForm(request.POST or None, instance = obj) 
+    context = {
+        "form": form,
+        "event": obj,
+    }
+      
+    if (request.method == "POST"):
+        if form.is_valid(): 
+            form.save() 
+        return HttpResponseRedirect(reverse('event', args=[pk]))
+    else:
+        return render(request, "tinyfunds/update_event.html", context)
+
+def delete(request, pk):
+    obj = get_object_or_404(Event, id=pk)
+    obj.delete()
+    return HttpResponseRedirect(reverse('explore'))
 
