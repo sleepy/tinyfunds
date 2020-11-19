@@ -114,6 +114,7 @@ background-color: #0CCA4A;
 
 .calendarTime {
     margin-top: 10px;
+    margin-bottom: 10px;
     font-size: 40px;
     font-weight: 200;
     padding-bottom: 0px;
@@ -258,94 +259,3 @@ nav {
     width: 120px;
     height:50px;
 }
-@-webkit-keyframes animate-stripes {
-   100% { background-position: -100px 0px; }
-}
-
-@keyframes animate-stripes {
-   100% { background-position: -100px 0px; }
-}
-#radial-progress-bar {
-    font-size: 24px;
-    margin: 0;
-}
-.rainbow {
-  -webkit-animation: rainbow 8s infinite;
-}
-@-webkit-keyframes rainbow{
-    0%{fill: orange;}
-    20%{fill: purple;}
-    40%{fill: red;}
-    60%{fill: green;}
-    80%{fill: blue;}
-    100%{fill: orange;}
-}
-
-/*
-    The following code was originally written by Damian Drygiel
-    on November 23, 2018.
-
-    It has been slightly adapted for use in our Django app.
-
-    You can access the original code here:
-    https://codepen.io/drygiel/pen/LXmPZz
-*/
-
-/*** RADIAL PROGRESS ***/
-/* Circumference = 2πr */
-/* π = 3.1415926535898 */
-/* r = 35 */
-svg.radial-progress {
-    height: auto;
-    max-width: 200px;
-    padding: 1em;
-    transform: rotate(-90deg);
-    width: 100%;
-}
-svg.radial-progress circle {
-    fill: rgba(0,0,0,0);
-    stroke: #fff;
-    stroke-dashoffset: 219.91148575129; /* Circumference */
-    stroke-width: 10;
-}
-svg.radial-progress circle.incomplete {
-    opacity: 0.25;
-}
-svg.radial-progress circle.complete {
-    stroke-dasharray: 219.91148575129; /* Circumference */
-}
-svg.radial-progress text {
-    fill: #666;
-    font: 400 1em/1 'Oswald', sans-serif;
-    font-size: 16px;
-    text-anchor: middle;
-}
-
-/*** COLORS ***/
-/* Primary */
-svg.radial-progress:nth-of-type(6n+1) circle {
-    stroke: #a2ed56;
-}
-
-/* Secondary */
-svg.radial-progress:nth-of-type(6n+2) circle {
-    stroke: #83e4e2;
-}
-
-/* Tertiary */
-svg.radial-progress:nth-of-type(6n+3) circle {
-    stroke: #fd6470;
-}
-
-/* Quaternary */
-svg.radial-progress:nth-of-type(6n+4) circle {
-    stroke: #fca858;
-}
-
-/* Quinary */
-svg.radial-progress:nth-of-type(6n+5) circle {
-    stroke: #fddc32;
-}
-/*
-    End of radial progress bar styling from Damian Drygiel
-*/
