@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import url
 from django.views.generic import TemplateView
-
+from .views import update_view
 from .users import views as user_views
 from . import views
 
@@ -28,10 +28,10 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('account/', TemplateView.as_view(template_name="account/account.html"), name='account'),
     path('account/edit', TemplateView.as_view(template_name="account/editAccount.html"), name='editAccount'),
-    path('explore/new', views.CreateEventView.as_view(), name='create_event'),
     path('user/<int:pk>/', user_views.user, name='user'),
     path('event/<int:pk>/', views.EventView.as_view(), name='event'),
-    path('event/edit/<int:pk>/', views.event, name='edit_event'),
+    path('explore/new', views.CreateEventView.as_view(), name='create_event'),
+    path('event/edit/<int:pk>/', update_view, name='edit_event'),
     path('event/pledge/hours/<int:pk>/', views.pledge_hours, name='pledge_hours'),
     path('event/pledge/donation/<int:pk>/', views.pledge, name='pledge'),
     path('event/pledge/<int:pk>/confirm/', views.confirm, name='confirm'),
