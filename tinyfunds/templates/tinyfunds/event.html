@@ -122,31 +122,7 @@
         <br>
       </p>
       {% ifequal event.owner_id user.id %}
-      <button class="btn" onclick="toggleEdit()">Edit Event</button>
-      <br><br>
-      <script>
-        function toggleEdit() {
-          var x = document.getElementById("editEvent");
-          if (x.style.display === "none") {
-            x.style.display = "inline-flex";
-          } else {
-            x.style.display = "none";
-          }
-        }
-      </script>
-      <div id="editEvent" style='display: none'>
-        <div class="row">
-          <br>
-          <form action="{% url 'edit_event' event.id %}" method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input class="btn" type="submit" value="Save">
-            {{ form.media }}
-          </form>
-          <br><br>
-        </div>
-        <p>
-      </div>
+      <a class="btn" href="{% url 'create_event' %} ">Edit Event</a>
       {% endifequal %}
       </div>
     <div class="col-sm-3" style="overflow:hidden; overflow-y: auto; height: fit-content; max-height: 85vh;">
