@@ -14,7 +14,8 @@ body {
     margin-left: auto;
     margin-right: auto;
     content:url('images/oauth.png')
-            url('images/oauth2.png');
+            url('images/oauth2.png')
+            url('images/tinyfunds.png');
 }
 
 
@@ -104,6 +105,10 @@ nav {
     border-bottom-style: solid;
 }
 
+#tf-pic {
+    width: 100%;
+    max-width: 25vw;
+}
 #oauth-button {
     width: 250px;
     height: 60px;
