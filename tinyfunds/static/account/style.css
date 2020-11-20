@@ -14,7 +14,7 @@ img {
     border-left-style: solid;
     border-bottom-style: solid;
     border-radius: 30px;
-    height: 500px;
+    height: fit-content;
     border-color: #f1f6f9;
 }
 .col-sm-7 {
@@ -26,7 +26,7 @@ img {
     border-left-style: solid;
     border-bottom-style: solid;
     border-radius: 30px;
-    height: 500px;
+    height: fit-content;
     border-color: #f1f6f9;
 }
 
@@ -80,6 +80,12 @@ h1 {
 
 nav {
     background: #f1f6f9;
+}
+p {
+    word-break: break-word;
+}
+a {
+    word-break: break-word;
 }
 
 #level {

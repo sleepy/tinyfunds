@@ -16,6 +16,7 @@ img {
 p {
     padding-top: 0px;
     text-align: center !important;
+    word-break: break-word;
 }
 
 #myProgress {

@@ -20,7 +20,10 @@
     <a class="nav-link" href="{% url 'home' %}"><strong>Home</strong></a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="{% url 'explore' %}"><strong>Explore</strong></a>
+    <a class="nav-link" href="{% url 'users' %}"><strong>Users</strong></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'explore' %}"><strong>Events</strong></a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="{% url 'create_event' %}"><strong>Post</strong></a>
@@ -37,51 +40,55 @@
 
 <div class="container-fluid">
   <div class="row">
+      {% if not user.is_authenticated %}
+      <div class="col-sm-12">
+        <a class="page-scroll btn btn-xl" id="oauth-button" href="{% provider_login_url 'google' %}"></a>
+      </div>
+    {% else %}
     <div class="col-sm-1">
     </div>
     <div class="col-sm-3">
       <br>
-      {% if privileged == None and not user.is_authenticated %}
-            <a class="page-scroll btn btn-xl" id="oauth-button" href="{% provider_login_url 'google' %}"></a>
-      {% endif %}
-      {% if privileged == False or privileged == None and user.is_authenticated %}
-      {% if user.name != None and user.name != "" %}
-      <h4>{{ user.name }}</h4>
-      {% else %}
-      <h4>Welcome!</h4>
-      {% endif %}
-      <br>
-      <div class="pfpic"><img src="{{ user.pfp }}"></div>
-      {% endif %}
-      <br>
-      {% if user.is_authenticated %}
-      <form action="{% url 'editAccount' %}">
-        <input class="btn" type="submit" value="Edit Account" />
-      </form>
-      {% endif %}
-    </div>
-    <div class="col-sm-7" id="user-box" style="border-color: rgb({{ user.get_level_color }})">
-      <br>
-      <h4>Bio</h4>
-      <p>
-        {{ user.bio }}
-      </p>
-      <br><br>
-      <h4>Info</h4>
-      <p> 
-        Email: {{user.email }} 
-        <br>
-        Date Joined: {{user.date_joined}}
-        <br>
-        Total Donated: ${{user.total_donated}}
-        <br>
-        Total Hours Volunteered: {{user.total_hours_pledged}}
-        <br>
-        <p id="level" style="font-size: 18;color: rgb({{ user.get_level_color }})"> Level: {{user.get_level}}</p>
-      </p>
+          {% if privileged == False or privileged == None and user.is_authenticated %}
+          {% if user.name != None and user.name != "" %}
+          <h4>{{ user.name }}</h4>
+          {% else %}
+          <h4>Welcome!</h4>
+          {% endif %}
+          <br>
+          <div class="pfpic"><img src="{{ user.pfp }}"></div>
+          {% endif %}
+          <br>
+          {% if user.is_authenticated and privileged == None %}
+          <form action="{% url 'editAccount' %}">
+            <input class="btn" type="submit" value="Edit Account" />
+          </form>
+          {% endif %}
+          <br>
+        </div>
+        <div class="col-sm-7" id="user-box" style="border-color: rgb({{ user.get_level_color }})">
+          <br>
+          <h4>Bio</h4>
+          <p>
+            {{ user.bio }}
+          </p>
+          <br><br>
+          <h4>Info</h4>
+          <p> 
+            Email: {{user.email }} 
+            <br>
+            Date Joined: {{user.date_joined}}
+            <br>
+            Total Donated: ${{user.total_donated}}
+            <br>
+            Total Hours Volunteered: {{user.total_hours_pledged}}
+            <br><br><br>
+            <p id="level" style="font-size: 18;color: rgb({{ user.get_level_color }})"> Level: {{user.get_level}}</p>
+          </p>
     </div>
     <div class="col-sm-1">
     </div>
+    {% endif %}
   </div>
 </div>
 
