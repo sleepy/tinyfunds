@@ -26,7 +26,7 @@
         <a class="nav-link" href="{% url 'explore' %}"><strong>Events</strong></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#"><strong>Post</strong></a>
+        <a class="nav-link" href="{% url 'create_event' %}"><strong>Post</strong></a>
     </li>
     <li class="nav-item active">
         <a class="nav-link active" href="{% url 'account' %}"><strong>Account</strong></a>
@@ -46,19 +46,14 @@
             {% if privileged == None and user.is_authenticated %}
             <form action="{% url 'user' user.id %}" method="post">
                 {% csrf_token %}
-                <input type="text" name="name" id="name" placeholder="Enter your name here..."><br><br>
-                <input type="text" name="pfp" id="pfp" placeholder="Enter your image url here..."><br><br>
-                <textarea type="text" rows="3" cols="25" name="bio" id="bio"
-                    placeholder="Enter your bio here..."></textarea><br>
-                <input type="submit" class="btn" value="Update">
+                <input type="text" name="name" id="name" value="{{ user.name }}"><br><br>
+                <input type="text" name="pfp" id="pfp" value="{{ user.pfp }}"><br><br>
+                <textarea type="text" rows="3" cols="25" name="bio" id="bio">{{ user.bio }}</textarea><br>
+                <input type="submit" id="update_button" class="btn-primary" value="Update">
             </form>
             <form action="{% url 'account_logout' %}" method="get">
                 <button id="logout_button" class="btn-danger" action="submit">Logout</button>
             </form>
-            {% else %}
-            {% if privileged == None and not user.is_authenticated %}
-            <a class="page-scroll btn btn-xl" id="oauth-button" href="{% provider_login_url 'google' %}"></a>
-            {% endif %}
             {% endif %}
         </div>
         <div class="col-sm-7">
