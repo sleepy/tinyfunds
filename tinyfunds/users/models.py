@@ -2,6 +2,21 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 from django.db import models
 from django.utils import timezone
 
+# /***************************************************************************************
+# *  REFERENCES
+# *  Title: Django : Custom User Model & Allauth for OAuth
+# *  Author: Sarthak Kumar
+# *  Date: 2019 April 1
+# *  Code version: n.d.
+# *  URL: https://medium.com/@ksarthak4ever/django-custom-user-model-allauth-for-oauth-20c84888c318
+# *  Software License: n.d.
+# *
+# *  Title: Django : Custom User Model & Allauth for OAuth
+# *
+# ***************************************************************************************/
+
+
+# The following User model code was adapted from Kumar's code listed in the above references
 class UserManager(BaseUserManager):
     def _create_user(self, email, password, is_staff, is_superuser, **extra_fields):
         if not email:
@@ -48,6 +63,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = []
 
     objects = UserManager()
+
+# End of Kumar's code
 
     def get_absolute_url(self):
         return "/users/%i/" % (self.pk)
