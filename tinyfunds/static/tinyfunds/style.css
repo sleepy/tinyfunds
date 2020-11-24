@@ -1,11 +1,11 @@
 body {
     height: 100vh;
-    overflow-y: scroll;
     background:#f1f6f9;
     color: #14274e !important;
     margin: 0;
     padding: 0;
     overflow:hidden;
+    overflow-y: scroll;
     text-align: center !important;
     align-content: center !important;
     justify-content: center !important;
@@ -157,7 +157,8 @@ footer {
     height: auto;
     text-color: black;
     text-align: center;
-    padding-bottom: 20px;
     position: relative;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
     bottom: 0;
 }
