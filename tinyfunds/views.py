@@ -216,3 +216,15 @@ def delete(request, pk):
     obj.delete()
     return HttpResponseRedirect(reverse('explore'))
 
+def categoryFilter(request):
+    if request.method == 'POST':
+        if(request.POST.get('state') == 'N/A' and request.POST.get('categories') == 'N/A'):
+            filteredDonations = Event.objects.all()
+        elif (request.POST.get('state') != 'N/A' and request.POST.get('categories') != 'N/A'):
+            filteredDonations = Event.objects.filter(state = request.POST.get('state'), category = request.POST.get('categories'))
+        elif (request.POST.get('state') == 'N/A' and request.POST.get('categories') != 'N/A'):
+            filteredDonations = Event.objects.filter(category = request.POST.get('categories'))
+        elif(request.POST.get('state') != 'N/A' and request.POST.get('categories') == 'N/A'):
+            filteredDonations = Event.objects.filter(state = request.POST.get('state'))
+        return render(request, 'donation/index.html', {'active_donation_list':filteredDonations})
+

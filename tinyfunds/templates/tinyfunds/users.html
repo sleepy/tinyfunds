@@ -47,14 +47,19 @@
                 {% for user in user_list %}
                 {% if user.name != None and user.name != "" %}
                 <br>
-                <li class="list-group-item"> 
+                <div class="row border-dark" style="background-color: white;">
+                  <div class = " border-dark" style="height: 100%; width: 33%"> 
+                    <img src="{{ user.pfp }}" class="rounded" style="height: 85px; width: 85px; margin-top: 13px; margin-left: -230px;"></img>
+                  </div> 
+                  <div class = " border-dark" style="height: 100%; width: 33%"> 
                     <a class="nav-link" href="{% url 'user' user.id %}">
                         <font size="+5">{{user.name}}</font>
                     </a>
-                    <br>
+                    <p>
                     {{user.bio}}
-                    <br>
-                </li>
+                    </p>
+                    </div> 
+                  </div>
                 {% endif %}
                 {%endfor%}
                 <br>

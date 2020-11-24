@@ -33,25 +33,20 @@
 </head>
 
 <body>
-    <div class="row justify-content-md-center" style="margin-top:20px; height: min-content">
+    <div class="row justify-content-md-center" style="margin-top:20px; height: min-content;">
         <div class="col-sm"></div>
         <div class="col-sm-3">
-            <div class='shadow bg-white card justify-content-start align-items-center'
-                style='width: 100%; height: min-content; background-color: #ECF0F1; border-color: #ECF0F1'>
+            <div class=' bg-white card justify-content-start align-items-center'
+                style='width: 120%; height: min-content; background-color: #ECF0F1; border-color:black;'>
                 <div class="d-flex justify-content-center align-items-center"
-                    style="flex-direction: column; width: 100%; background-color: #EBEDEF">
+                    style="flex-direction: column; width: 100%; background-color: white">
                     <div class="d-flex justify-content-center align-items-center" style="margin-top: 7">
-                        <p class="font-weight-lighter" style="font-size: 30">
+                        <p class="font-weight-bold" style="font-size: 30">
                             {{event.title}}
                         </p>
                     </div>
                 </div>
-                <div class="d-flex justify-content-center align-items-end"
-                    style="width: 80%; margin-bottom: 10; margin-top: 10">
-                    <span class=" badge badge-primary" style="font-size: 8; margin-right: 5">Org:
-                        {{event.org_name}}</span>
-                    <span class=" badge badge-danger" style="font-size: 8; margin-right: 5">Address: {{event.address}}</span>
-                </div>
+              
                 <div class="d-flex justify-content-center" style="flex-direction: column;">
                     {% if event.pic %}
                     <img src="{{event.pic}}" alt="Responsive image"
@@ -59,13 +54,11 @@
                         class="mt-2 card-img-top">
                     {% endif %}
                     <div class="d-flex justify-content-center" style="flex-direction: column; width: 250">
-                        <h6 class="card-text mt-3 mb-4 font-weight-normal" style="font-size: 12">
+                        <h6 class="card-text mt-3 mb-4 font-weight-lighter" style="font-size: 12">
                             {{event.description}}</h6>
                     </div>
-                </div>
-            </div>
-
-            <div class='card text-left shadow bg-white float-right'
+                
+                <div class='text-left bg-white float-right'
                 style='float: top; width: 100%; margin-top: 10; margin-bottom: 30; background-color: #ECF0F1; border-color: #ECF0F1; padding-left: 15; padding-top: 10'>
                 <div class="input-group mb-4" id='updatedDiv'
                     style="width: 100%; margin:auto; align-items: left; margin-left: -8">
@@ -73,23 +66,25 @@
                         style="display:flex; flex-direction: row; justify-content: left; margin-left: auto; margin-right: auto">
                         <div class="input-group-prepend"
                             style="margin-left: auto; margin-right: auto; border-color: none; border-top-left-radius: 0; border-bottom-left-radius: 0;">
-                            <div class="input-group-text"
-                                style="border-radius: 0; border-color: none; margin-right: -2; border-color: none;">$
-                            </div>
                         </div>
                         <input type="number" class="form-control" name="donationamount" id="donationamount"
                             placeholder="Amount" value="1" style="width: 166; border-radius: 0; ">
                         <div class="input-group-append">
-                            <span class="input-group-text" style="border-radius: 0">.00</span>
+                            <span class="input-group-text" style="border-radius: 0">USD</span>
                         </div>
                     </div>
                 </div>
                 <div id="paypal-button-container" style="margin-left:auto; margin-right: auto; margin-bottom: -5"></div>
+                </div>
+                
             </div>
-
-
+        </div>
         </div>
         <div class="col-sm"></div>
+        <div class="justify-content-center" style="width: 80%; margin-bottom: 10; margin-top: 10">
+            <span class=" badge badge-dark" style="font-size: 8; margin-right: 5">Org: {{event.org_name}} </span>
+            <span class=" badge badge-secondary" style="font-size: 8; margin-right: 5">Address: {{event.simple_address}}</span>
+        </div>
     </div>
     <!-- Set up a container element for the button -->
 
@@ -100,7 +95,22 @@
     <script>
         // Render the PayPal button into #paypal-button-container
         paypal.Buttons({
+            style: {
+                color:  'black',
+                layout: 'vertical',
+                shape:  'pill',
+                label:  'pay',
+                size: 'responsive',
+                shape: 'pill',
+                funding: 'allowed',
+                height: 40
+            },
 
+            funding: {
+                allowed: [paypal.FUNDING.CARD]
+            },
+
+            
             // Set up the transaction
             createOrder: function (data, actions) {
                 return actions.order.create({

@@ -63,6 +63,10 @@
           <form action="{% url 'editAccount' %}">
             <input class="btn" type="submit" value="Edit Account" />
           </form>
+          <br></br>
+          <form action="{% url 'account_logout' %}" method="get">
+            <button id="logout_button" class="btn-danger" action="submit">Logout</button>
+        </form>
           {% endif %}
           <br>
         </div>
@@ -75,8 +79,6 @@
           <br><br>
           <h4>Info</h4>
           <p> 
-            Email: {{user.email }} 
-            <br>
             Date Joined: {{user.date_joined}}
             <br>
             Total Donated: ${{user.total_donated}}
