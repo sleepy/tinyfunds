@@ -50,18 +50,57 @@ To edit an event, travel to that specific Event's page while logged in with the 
     Find the red "Delete Event" button at the bottom of your event page. Press this button, and confirm your intent to delete your event. If you decide to remove your event, it will be wiped from the database and removed from the event list.
 ---
 
-### <ins>Browsing Events</ins>
-To browse events, 
+### <ins>Site Exploration</ins> ###
+#### Browsing Events
+To browse events, travel using the Navbar to the "Events" tab. You will see a list of all active events, and can scroll up/down through them to browse through. If you see an event with a title and description that interested you, simply click on that event to be brought to that page. You can return to the events list by simply pressing the "event" navbar selection again, or using your browser's back button.
 
 
+#### Browsing Users
+To browse users, travel using the Navbar to the "Users" tab. You will see a list of all registered users, and can scroll up/down through them to browse through. To see more information about a user, simply click on that entry to be brought to their page. You can return to the users list by simply pressing the "user" navbar selection again, or using your browser's back button.
 
-### <ins>Browsing Users</ins>
+---
+### <ins>Donation Mechanics Guide/ins>
+>***Important Note:***
+>
+>Please use our testing paypal log-in information to prevent the transfer of real funds!
+- Username:
+    - acmrpersonal@gmail.com
+- Password:
+    - personalacmr123
 
+  
+   
+#### How to Donate Funds
+To Directly Donate Funds:
+1. Travel to an Event page to which you wish to contribute.
+2. On the right hand side, locate the donation goal widget.
+3. Press the "Donate button" to be redicted to the checkout page.
+4. Decide on a donation ammount, and select a payment option and complete the paypal donation process in the popup window.
+5. For testing purposes, please use the paypal account above to perform transfer of real funds.
+6. Funds will be added to the updated Event page after you are redirected back, as well as a donation feed entry. 
 
-### <ins>Donation Testing Guide</ins>
+#### How to Pledge Hours or Funds
+To Pledge Volunteer Hours or Funds:
+1. Travel to an Event page to which you wish to contribute.
+2. On the right hand side, locate the donation goal widget.
+3. Press either of the "Pledge a donation!" or "Pledge hours!" buttons.
+4. Decide on the amount of the relevant contribution metric.
+5. (optional) Include a note with more specifc information about your donation.
+6. After submtiting your pledge by pressing the "Pledge!" button, a new donation entry will appear in the event's feed.
+7. Reach out to the event organization to figure out a way to fullfill your pledge, be it hours or alternative funding.
+8. Fund Goals are totals are <ins>**NOT**</ins> updated until the pledge is confirmed recieved by the event organizer.
 
+#### How Organizations Recieve Pledged Hours or Funds.
+To Confirm Pledged Hours or Funds:
+1. Travel to the Event page that you are managing.
+2. On the right hand side, locate the donation goal widget.
+3. Find a pledge of either type that is unconfirmed. 
+4. Reach out/ coordinate with the user that pledged those funds to recieve those pledged resources.
+5. After you have recieved the donation, press the "Confirm!" button at the bottom of the donation entry to verify the pledge.
+6. The donation entry will gain green colored text, and your donation totals will be updated to reflect the confirmation.
 
-## <ins>Code Sources and Works Cited</ins>
+---
+### <ins>Code Sources and Works Cited</ins>
 /***************************************************************************************
 *  REFERENCES
 *  Title: <title of program/source code>
