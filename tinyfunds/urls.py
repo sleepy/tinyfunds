@@ -23,6 +23,8 @@ from . import views
 urlpatterns = [
     path('', views.HomeView.as_view(), name='home'),
     path('user/', views.UserView.as_view(), name='users'),
+    path('user/filterid=1', views.UserViewDonated.as_view(), name='users_don'),
+    path('user/filterid=2', views.UserViewVol.as_view(), name='users_vol'),
     path('explore/', views.ExploreView.as_view(), name = 'explore'),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),

@@ -38,6 +38,21 @@ class UserView(generic.ListView):
         return User.objects.all().order_by("-date_joined")
 
 
+class UserViewDonated(generic.ListView):
+    template_name = 'tinyfunds/users.html'
+    content_object_name = 'user_list' 
+
+    def get_queryset(self):
+        return User.objects.all().order_by("-total_donated")
+
+class UserViewVol(generic.ListView):
+    template_name = 'tinyfunds/users.html'
+    content_object_name = 'user_list' 
+
+    def get_queryset(self):
+        return User.objects.all().order_by("-total_hours_pledged")
+
+
 
 class EventView(generic.DetailView):
     template_name = 'tinyfunds/event.html'
