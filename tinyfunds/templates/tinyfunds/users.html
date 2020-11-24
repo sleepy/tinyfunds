@@ -43,9 +43,9 @@
 <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">
 <link rel="stylesheet" href="{% static 'tinyfunds/style.css' %}">
 
-<div class="dropdown">
+<div class="dropdown" style="margin-bottom: 10px;">
   <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: grey;">
-    Filter Users
+    Sort Users
   </button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
     <a class="dropdown-item" href="/user/filterid=1"> Filter Users by Donation Amount</a>
@@ -54,6 +54,7 @@
   </div>
 </div>
 
+<div style="max-height: 75%; overflow-x: hidden;">
 <body>
     <div class="row">
         <div class="col-md-2">
@@ -63,9 +64,9 @@
                 {% for user in user_list %}
                 {% if user.name != None and user.name != "" %}
                 <br>
-                <div class="row border-dark" style="background-color: white;">
+                <div class="row border-dark" style="background-color: white; width: 100%;">
                   <div class = " border-dark" style="height: 100%; width: 33%"> 
-                    <img src="{{ user.pfp }}" class="rounded" style="height: 85px; width: 85px; margin-top: 13px; margin-left: -230px;"></img>
+                    <img src="{{ user.pfp }}" class="rounded vertical-center" style="height: 85px; width: 85px; margin-left: 50px; margin-bottom: 65px; float: left; position: relative;"></img>
                   </div> 
                   <div class = " border-dark" style="height: 100%; width: 33%"> 
                     <a class="nav-link" href="{% url 'user' user.id %}">
@@ -75,12 +76,14 @@
                     {{user.bio}}
                     </p>
                   </div>
-                  <div class = " border-dark" style="height: 100%; width: 33%"> 
-                    <div class = "justify-content-center" style="margin-top: 20px;">
-                      <font size="+2"> Amount Donated: ${{user.total_donated}} </font>
-                    </div>
-                    <div class = "justify-content-center" >
-                      <font size="+2"> Total Hours Volunteered: {{user.total_hours_pledged}} hours </font>
+                  <div class = "border-dark" style="height: 100%; width: 30%; margin-left: 20px;"> 
+                      <div class= "vertical-center">
+                        <div class = "justify-content-center">
+                          <font size="+1"> Amount Donated: ${{user.total_donated}} </font>
+                        </div>
+                        <div class = "justify-content-center" >
+                          <font size="+1"> Total Hours Volunteered: {{user.total_hours_pledged}} hours </font>
+                        </div>
                     </div>
                   </div>
                 </div> 
@@ -93,5 +96,6 @@
         </div>
     </div>
 </body> 
+</div>
 {% endblock content %}
 

@@ -145,3 +145,19 @@ nav {
 ::-webkit-scrollbar-thumb{
     background:#aaa
 }
+.vertical-center {
+  margin: 0;
+  position: relative;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+footer {
+    width: 100%;
+    height: auto;
+    text-color: black;
+    text-align: center;
+    padding-bottom: 20px;
+    position: relative;
+    bottom: 0;
+}
