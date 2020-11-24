@@ -99,6 +99,7 @@ a {
 
 #user-box {
     border-width: 5px;
+    margin-top: 40px;
 }
 
 .nav-link.active {

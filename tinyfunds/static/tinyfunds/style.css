@@ -1,11 +1,11 @@
 body {
     height: 100vh;
-    overflow-y: scroll;
     background:#f1f6f9;
     color: #14274e !important;
     margin: 0;
     padding: 0;
     overflow:hidden;
+    overflow-y: scroll;
     text-align: center !important;
     align-content: center !important;
     justify-content: center !important;
@@ -144,4 +144,21 @@ nav {
 }
 ::-webkit-scrollbar-thumb{
     background:#aaa
+}
+.vertical-center {
+  margin: 0;
+  position: relative;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+footer {
+    width: 100%;
+    height: auto;
+    text-color: black;
+    text-align: center;
+    position: relative;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    bottom: 0;
 }

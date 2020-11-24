@@ -5,6 +5,7 @@ from places.fields import PlacesField
 from django.utils import timezone
 from tempus_dominus.widgets import DatePicker, TimePicker, DateTimePicker
 from django.utils import timezone
+import re
 
 
 class Event(models.Model):
@@ -19,6 +20,9 @@ class Event(models.Model):
     money_goal = models.DecimalField(verbose_name="Donation Goal", max_digits=8, decimal_places=2, null=False, default=0)
     money_received = models.DecimalField(max_digits=8, decimal_places=2, null=False, default=0)
     hours_received = models.DecimalField(max_digits=8, decimal_places=2, null=False, default=0)
+
+    def simple_address(self):
+        return ", ".join(str(self.address).split(", ")[:-2])\
 
     def add_money(self, amount):
         print(amount)

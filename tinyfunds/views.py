@@ -38,6 +38,21 @@ class UserView(generic.ListView):
         return User.objects.all().order_by("-date_joined")
 
 
+class UserViewDonated(generic.ListView):
+    template_name = 'tinyfunds/users.html'
+    content_object_name = 'user_list' 
+
+    def get_queryset(self):
+        return User.objects.all().order_by("-total_donated")
+
+class UserViewVol(generic.ListView):
+    template_name = 'tinyfunds/users.html'
+    content_object_name = 'user_list' 
+
+    def get_queryset(self):
+        return User.objects.all().order_by("-total_hours_pledged")
+
+
 
 class EventView(generic.DetailView):
     template_name = 'tinyfunds/event.html'
@@ -215,4 +230,16 @@ def delete(request, pk):
     obj = get_object_or_404(Event, id=pk)
     obj.delete()
     return HttpResponseRedirect(reverse('explore'))
+
+def categoryFilter(request):
+    if request.method == 'POST':
+        if(request.POST.get('state') == 'N/A' and request.POST.get('categories') == 'N/A'):
+            filteredDonations = Event.objects.all()
+        elif (request.POST.get('state') != 'N/A' and request.POST.get('categories') != 'N/A'):
+            filteredDonations = Event.objects.filter(state = request.POST.get('state'), category = request.POST.get('categories'))
+        elif (request.POST.get('state') == 'N/A' and request.POST.get('categories') != 'N/A'):
+            filteredDonations = Event.objects.filter(category = request.POST.get('categories'))
+        elif(request.POST.get('state') != 'N/A' and request.POST.get('categories') == 'N/A'):
+            filteredDonations = Event.objects.filter(state = request.POST.get('state'))
+        return render(request, 'donation/index.html', {'active_donation_list':filteredDonations})
 

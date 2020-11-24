@@ -37,6 +37,7 @@
 {% endblock navbar %}
 
 {% block content %}  
+<div style="max-height: 80%; overflow-x: hidden;">
 <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">
 <link rel="stylesheet" href="{% static 'tinyfunds/style.css' %}">
 
@@ -46,7 +47,7 @@
             <div class="col-sm-2">
             </div>
             <div class="col-sm-8 text-center">
-                <ul class="list-group list-group-flush" style="margin-top:12px; height: calc(100vh - 150px); overflow-y: auto;">
+                <ul class="list-group list-group-flush" style="margin-top:12px; height: calc(100vh - 250px); overflow-y: auto;">
                     {% for event in event_list %}
                     {% if event.title != None and event.title != "" %}
                     <br>
@@ -71,4 +72,5 @@
         </div>
     </div>
 </body> 
+</div>
 {% endblock content %}

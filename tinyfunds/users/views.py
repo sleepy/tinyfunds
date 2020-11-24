@@ -35,3 +35,16 @@ def user(request, pk):
         'user': user,
         'privileged': False,
     })
+
+def filter_by_donation_amt(request):
+    if (request.method == "POST"):
+        return User.objects.order_by('total_donated')
+
+def filter_by_vol_hours(request):
+    if (request.method == "POST"):
+        return User.objects.order_by('total_hours_pledged')
+
+
+
+
+

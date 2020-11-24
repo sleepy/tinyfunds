@@ -46,13 +46,10 @@
             {% if privileged == None and user.is_authenticated %}
             <form action="{% url 'user' user.id %}" method="post">
                 {% csrf_token %}
-                <input type="text" name="name" id="name" value="{{ user.name }}"><br><br>
+                <input type="text" placeholder="Name" name="name" id="name" value="{{ user.name }}"><br><br>
                 <input type="text" name="pfp" id="pfp" value="{{ user.pfp }}"><br><br>
-                <textarea type="text" rows="3" cols="25" name="bio" id="bio">{{ user.bio }}</textarea><br>
+                <textarea type="text" placeholder="Bio" rows="3" cols="25" name="bio" id="bio">{{ user.bio }}</textarea><br>
                 <input type="submit" id="update_button" class="btn-primary" value="Update">
-            </form>
-            <form action="{% url 'account_logout' %}" method="get">
-                <button id="logout_button" class="btn-danger" action="submit">Logout</button>
             </form>
             {% endif %}
         </div>
