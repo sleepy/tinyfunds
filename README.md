@@ -1,9 +1,14 @@
 # TinyFunds User Guide
 
-### General Information
+## General Information
+Tinyfunds is a gamified microdonation and microvolunteering platform designed with smaller causes and individuals in mind. 
+Users can create worthy causes that they think need additional funding as well as contribute their time or  
+their money to someone else's cause, which increases their user level!
+
 You can navigate to our site in a browser of your choice at tinyfunds.herokuapp.com.
 The site will perform optimally with browsers that support google log-ins.
 
+---
 ### <ins>User Account Management</ins>
 #### How to Login
 Tinyfunds will automatically search for a connected google account that is signed in on your browser, and log you in if it exists.  
