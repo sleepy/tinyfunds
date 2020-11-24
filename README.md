@@ -101,16 +101,15 @@ To Confirm Pledged Hours or Funds:
 
 ---
 ### <ins>Code Sources and Works Cited</ins>
-/****************************************************/
+
+
 *  Title: Google Maps Platform Overview
 *  Author: Google
 *  Date: 2020-11-20
 *  URL: https://developers.google.com/maps/documentation/javascript/overview
 *  Software License: Creative Commons Attribution 4.0 License  
 
-/****************************************************/
 
-/***************************************************/
 *  Title: Django AllAuth SocialAccount Test Cases
 *  Author: Raymond Penners (Github Username: pennersr)
 *  Date: 2020-10-05
@@ -120,4 +119,26 @@ To Confirm Pledged Hours or Funds:
     - We only used some of the helper functions as a guide to implement our own version of similar test cases in early versions. 
     - In the final release, we created our own test functions based on these concepts since we extended the base Allauth User Model in Sprint 4.  
 
-/****************************************************/
+
+*  Title: Django : Custom User Model & Allauth for OAuth
+*  Author: Sarthak Kumar
+*  Date: 2019 April 1
+*  Code version: None provided
+*  URL: https://medium.com/@ksarthak4ever/django-custom-user-model-allauth-for-oauth-20c84888c318
+*  Software License: None provided
+
+
+*  Title: Smart Payment Buttons Integration - Developer Paypal
+*  Author: Paypal
+*  Date: n.d. Last accessed November 24 2020
+*  Code version: None provided
+*  URL: https://developer.paypal.com/demo/checkout/#/pattern/client
+*  Software License: None provided
+
+
+*  Title: Customize the PayPal Checkout Button
+*  Author: Paypal
+*  Date: 2020
+*  Code version: None provided
+*  URL: https://developer.paypal.com/docs/archive/checkout/how-to/customize-button/
+*  Software License: None provided
