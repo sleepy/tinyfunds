@@ -114,7 +114,7 @@ To Confirm Pledged Hours or Funds:
 *  Title: Django AllAuth SocialAccount Test Cases
 *  Author: Raymond Penners (Github Username: pennersr)
 *  Date: 2020-10-05
-*  URL: github.com/pennersr/django-allauth/blob/master/allauth/socialaccount/tests.py
+*  URL: https://github.com/pennersr/django-allauth/blob/master/allauth/socialaccount/tests.py
 *  Software License: MIT License
 *  Additional Notes: 
     - We only used some of the helper functions as a guide to implement our own version of similar test cases in early versions. 
