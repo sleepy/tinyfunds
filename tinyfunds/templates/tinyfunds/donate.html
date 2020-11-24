@@ -1,6 +1,12 @@
 {% extends "tinyfunds/event.html" %}
 
-{% load static %} {% load bootstrap4 %} {% bootstrap_css %} {% bootstrap_javascript jquery='full' %}
+{% load static %} 
+
+{% load bootstrap4 %} 
+
+{% bootstrap_css %} 
+
+{% bootstrap_javascript jquery='full' %}
 
 {% load socialaccount %}
 
@@ -10,19 +16,16 @@
 <!DOCTYPE html>
 
 <head>
-    <!-- Add meta tags for mobile and IE -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <style>
-        /* Media query for mobile viewport */
         @media screen and (max-width: 400px) {
             #paypal-button-container {
                 width: 100%;
             }
         }
 
-        /* Media query for desktop viewport */
         @media screen and (min-width: 400px) {
             #paypal-button-container {
                 width: 250px;
@@ -86,14 +89,12 @@
             <span class=" badge badge-secondary" style="font-size: 8; margin-right: 5">Address: {{event.simple_address}}</span>
         </div>
     </div>
-    <!-- Set up a container element for the button -->
+   
 
-    <!-- Include the PayPal JavaScript SDK -->
     <script
         src="https://www.paypal.com/sdk/js?client-id=AUq7PyGuPcBGZehj4Q_tgDqQrGc8dbphshD0ysNSfTrAgBvcRXvd-0-CbegpVBZ-2fnFhWrDNRX0BzMS&currency=USD"></script>
 
     <script>
-        // Render the PayPal button into #paypal-button-container
         paypal.Buttons({
             style: {
                 color:  'black',
@@ -111,7 +112,6 @@
             },
 
             
-            // Set up the transaction
             createOrder: function (data, actions) {
                 return actions.order.create({
                     purchase_units: [{
@@ -122,10 +122,8 @@
                 });
             },
 
-            // Finalize the transaction
             onApprove: function (data, actions) {
                 return actions.order.capture().then(function (details) {
-                    // Show a success message to the buyer
                     $.ajax({
                         type: "POST",
                         url: "{% url 'confirm_paypal' %}",
