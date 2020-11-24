@@ -18,6 +18,7 @@
 
 <link rel="stylesheet" href="{% static 'tinyfunds/style.css' %}">
 <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">
+<link rel="shortcut icon" type="image/png" href="{% static 'tinyfunds/images/logo.png' %}"/>
 
 
     <!-- <nav class="navbar navbar-expand-lg transparent navbar-inverse">
@@ -52,10 +53,12 @@
   </nav> -->
 
   <!--Navbar-->
-<nav class="navbar navbar-expand-lg">
+<nav class="navbar navbar-expand-lg navbar-expand">
 
     <!-- Navbar brand -->
-    <a class="navbar-brand" href="#"><font size="+5"><strong>TinyFunds</strong></font></a>
+    <a class="navbar-brand" href="{% url 'home' %}">
+            <strong id="TinyFunds">TinyFunds</strong>
+    </a>
   
     <!-- Collapse button -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTF"
@@ -64,7 +67,7 @@
     </button>
   
     <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarTF">
+    <div class="collapse navbar-collapse" id="navbarTF" style="flex-direction: row;">
   
         {% block navbar %}
       {% endblock navbar %}
