@@ -61,29 +61,27 @@
         <div class="col-md-2">
         </div>
         <div class="col-md-8 text-center">
-            <ul class="list-group list-group-flush" style="margin-top:12px; height: calc(100vh - 300px); overflow-y: auto;">
+            <ul class="list-group list-group-flush" style="margin-top:12px; height: 250px; overflow-y: auto;">
                 {% for user in user_list %}
                 {% if user.name != None and user.name != "" %}
                 <br>
                 <div class="row border-dark" style="background-color: white; width: 100%;">
                   <div class = " border-dark" style="height: 100%; width: 33%"> 
-                    <img src="{{ user.pfp }}" class="rounded vertical-center" style="height: 85px; width: 85px; margin-left: 50px; margin-bottom: 40px; float: left; position: relative;"></img>
+                    <img src="{{ user.pfp }}" class="rounded vertical-center" style="height: 125px; width: 125px; margin-left: 35px; margin-bottom: 20px; margin-top:20px; float: left; position: relative;"></img>
                   </div> 
-                  <div class = " border-dark" style="height: 100%; width: 33%"> 
+                  <div class = "border-dark vertical-center" style="height: 100%; width: 33%"> 
                     <a class="nav-link" href="{% url 'user' user.id %}">
                         <font size="+5">{{user.name}}</font>
                     </a>
-                    <p>
-                    {{user.bio}}
-                    </p>
+                    <p> Level: {{ user.get_level }}</p>
                   </div>
                   <div class = "border-dark" style="height: 100%; width: 30%; margin-left: 20px;"> 
-                      <div class= "vertical-center">
+                      <div class= "vertical-center" style="margin-top: 50px;">
                         <div class = "justify-content-center">
                           <font size="+1"> Amount Donated: ${{user.total_donated}} </font>
                         </div>
                         <div class = "justify-content-center" >
-                          <font size="+1"> Total Hours Volunteered: {{user.total_hours_pledged}} hours </font>
+                          <font size="+1"> Time Volunteered: {{user.total_hours_pledged}} hours </font>
                         </div>
                     </div>
                   </div>
