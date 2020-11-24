@@ -101,16 +101,23 @@ To Confirm Pledged Hours or Funds:
 
 ---
 ### <ins>Code Sources and Works Cited</ins>
-/***************************************************************************************
-*  REFERENCES
-*  Title: <title of program/source code>
-*  Author: <author(s) names>
-*  Date: <date>
-*  Code version: <code version>
-*  URL: <where it's located>
-*  Software License: <license software is released under>
-*
-*  Title: ....
-*
-***************************************************************************************/
+/****************************************************/
+*  Title: Google Maps Platform Overview
+*  Author: Google
+*  Date: 2020-11-20
+*  URL: https://developers.google.com/maps/documentation/javascript/overview
+*  Software License: Creative Commons Attribution 4.0 License  
 
+/****************************************************/
+
+/***************************************************/
+*  Title: Django AllAuth SocialAccount Test Cases
+*  Author: Raymond Penners (Github Username: pennersr)
+*  Date: 2020-10-05
+*  URL: https://github.com/pennersr/django-allauth/blob/master/allauth/socialaccount/tests.py
+*  Software License: MIT License
+*  Additional Notes: 
+    - We only used some of the helper functions as a guide to implement our own version of similar test cases in early versions. 
+    - In the final release, we created our own test functions based on these concepts since we extended the base Allauth User Model in Sprint 4.  
+
+/****************************************************/
