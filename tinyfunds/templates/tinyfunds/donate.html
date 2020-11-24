@@ -15,6 +15,21 @@
 
 <!DOCTYPE html>
 
+<!--
+/***************************************************************************************
+*  REFERENCES
+*  Title: Smart Payment Buttons Integration - Developer Paypal
+*  Author: Paypal
+*  Date: n.d. Last accessed November 24 2020
+*  Code version: n.d.
+*  URL: https://developer.paypal.com/demo/checkout/#/pattern/client
+*  Software License: n.d.
+*
+*  Title: Smart Payment Buttons Integration - Developer Paypal
+*
+***************************************************************************************/
+-->
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -44,7 +59,7 @@
                 <div class="d-flex justify-content-center align-items-center"
                     style="flex-direction: column; width: 100%; background-color: white">
                     <div class="d-flex justify-content-center align-items-center" style="margin-top: 20px">
-                        <p class="font-weight-bold" style="font-size: 30">
+                        <p class="font-weight-bold" style="font-size: 30; padding: 15px; word-break: break-word;">
                             {{event.title}}
                         </p>
                     </div>
@@ -53,11 +68,11 @@
                 <div class="d-flex justify-content-center" style="flex-direction: column;">
                     {% if event.pic %}
                     <img src="{{event.pic}}" alt="Responsive image"
-                        style="height: 250;width: 100%; margin: auto; overflow: hidden; display: block;"
+                        style="height: 250px;width: auto; margin: auto; overflow: hidden; display: block;"
                         class="mt-2 card-img-top">
                     {% endif %}
                     <div class="d-flex justify-content-center" style="flex-direction: column; width: 250">
-                        <h6 class="card-text mt-3 mb-4 font-weight-lighter" style="font-size: 12">
+                        <h6 class="card-text mt-3 mb-4 font-weight-lighter" style="word-break: break-word; padding: 15px;">
                             {{event.description}}</h6>
                     </div>
                 
@@ -148,6 +163,4 @@
         }).render('#paypal-button-container');
     </script>
 </body>
-
-
 {% endblock %}
