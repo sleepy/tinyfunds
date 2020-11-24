@@ -133,7 +133,7 @@ ___
 *  Date: n.d. Last accessed November 24 2020
 *  Code version: None provided
 *  URL: https://developer.paypal.com/demo/checkout/#/pattern/client
-*  Software License: None provided
+*  Software License: Paypal Developer Agreement (https://www.paypal.com/us/webapps/mpp/ua/xdeveloper-full)
 ___
 
 *  Title: Customize the PayPal Checkout Button
@@ -141,4 +141,4 @@ ___
 *  Date: 2020
 *  Code version: None provided
 *  URL: https://developer.paypal.com/docs/archive/checkout/how-to/customize-button/
-*  Software License: None provided
+*  Software License: Paypal Developer Agreement (https://www.paypal.com/us/webapps/mpp/ua/xdeveloper-full)
