@@ -59,7 +59,7 @@ To browse events, travel using the Navbar to the "Events" tab. You will see a li
 To browse users, travel using the Navbar to the "Users" tab. You will see a list of all registered users, and can scroll up/down through them to browse through. To see more information about a user, simply click on that entry to be brought to their page. You can return to the users list by simply pressing the "user" navbar selection again, or using your browser's back button.
 
 ---
-### <ins>Donation Mechanics Guide/ins>
+### <ins>Donation Mechanics Guide</ins>
 >***Important Note:***
 >
 >Please use our testing paypal log-in information to prevent the transfer of real funds!
