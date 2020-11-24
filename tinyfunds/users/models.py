@@ -4,14 +4,13 @@ from django.utils import timezone
 
 # /***************************************************************************************
 # *  REFERENCES
+# *
 # *  Title: Django : Custom User Model & Allauth for OAuth
 # *  Author: Sarthak Kumar
 # *  Date: 2019 April 1
 # *  Code version: n.d.
 # *  URL: https://medium.com/@ksarthak4ever/django-custom-user-model-allauth-for-oauth-20c84888c318
 # *  Software License: n.d.
-# *
-# *  Title: Django : Custom User Model & Allauth for OAuth
 # *
 # ***************************************************************************************/
 
