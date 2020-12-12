@@ -1,5 +1,7 @@
 # TinyFunds User Guide
 
+Access TinyFunds [here](https://tinyfunds.herokuapp.com/).
+
 ## General Information
 Tinyfunds is a gamified microdonation and microvolunteering platform designed with smaller causes and individuals in mind. 
 Users can create worthy causes that they think need additional funding as well as contribute their time or their money to someone else's cause, which increases their user level!
